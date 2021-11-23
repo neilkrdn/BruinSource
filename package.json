@@ -1,0 +1,25 @@
+{
+  "name": "bruin-source",
+  "version": "1.0.0",
+  "description": "cs35l project fall 2021",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server",
+    "dev": "node server",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ybshah02/cs35l-project.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ybshah02/cs35l-project/issues"
+  },
+  "homepage": "https://github.com/ybshah02/cs35l-project#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "helmet": "^4.6.0"
+  }
+}

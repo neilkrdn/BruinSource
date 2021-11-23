@@ -2,10 +2,11 @@
   "name": "bruin-source",
   "version": "1.0.0",
   "description": "cs35l project fall 2021",
-  "main": "index.js",
+  "main": "server/index.js",
   "scripts": {
     "start": "node server",
-    "dev": "node server",
+    "frontend": "yarn --cwd client start",
+    "dev": "concurrently \"yarn start\" \"yarn frontend\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -19,7 +20,12 @@
   },
   "homepage": "https://github.com/ybshah02/cs35l-project#readme",
   "dependencies": {
+    "@types/react": "^17.0.36",
+    "@types/react-dom": "^17.0.11",
+    "concurrently": "^6.4.0",
     "express": "^4.17.1",
-    "helmet": "^4.6.0"
+    "helmet": "^4.6.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
   }
 }

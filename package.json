@@ -5,8 +5,8 @@
   "main": "server/index.js",
   "scripts": {
     "start": "node server",
-    "frontend": "yarn --cwd client start",
-    "dev": "concurrently \"yarn start\" \"yarn frontend\"",
+    "frontend": "cd client && npm run start",
+    "dev": "concurrently \"npm start\" \"npm run frontend\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

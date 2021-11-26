@@ -4,12 +4,8 @@ import './App.css';
 import axios from 'axios';
 
 /*to-do
-
 install react router and make header component + different pages
-create server w/ heroku and place info into .env
-figure out structure of stored data
 */
-
 
 function App() {
   const values = {

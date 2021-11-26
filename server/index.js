@@ -27,6 +27,7 @@ if u want to use db at all use following import
 
 const { Client } = require('pg');
 const { query } = require('express');
+const { resolveSoa } = require('dns');
 
 const client = new Client({
   connectionString: process.env.DB_STRING,
@@ -62,20 +63,13 @@ insert into users(id, status, username, password, email, github, year_exp, known
 
 */
 
-values = [123, false, 'hello', 'test', 'test', 'test', 1, {},{}]
-
-
-
-
 app.get('/getuserinfo', (req,res) => {
   const {username} = req.body;
   let query = `select * from users where id = ${username}`
   client.query(query)
-  .then(res => console.log(res))
+  .then(res => res.send(res))
   .catch(err => console.error(err))
 });
-
-
 
 const insertUserQuery = 'INSERT INTO users(id, status, username, password, email, github, year_exp, known_languages, projects_worked) values($1, $2, $3, $4, $5, $6, $7, $8::varchar[], $9::int[])'
 // note - have to format $8 (known_languages) to be in {1,2,3} format and same for projects_worked

@@ -12,9 +12,21 @@ figure out structure of stored data
 
 
 function App() {
+  const values = {
+    id: 1134,
+    status: false,
+    usename: 'myuser',
+    password: 'testpass',
+    email: 'howard',
+    github: 'no',
+    year_exp: 1,
+    known_languages: ['javascript', 'python'],
+    projects_worked: [1,3,]
+  } 
+  
 
   useEffect(() => {
-    axios.get('/test')
+    axios.post('/test', values)
     .then(res => console.log(res))
     .catch(err => console.log(err))
   }, )

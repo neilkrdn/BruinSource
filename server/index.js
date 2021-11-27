@@ -1,5 +1,6 @@
-// main app
+//main app
 
+/** setup server **/
 const express = require('express');
 const session = require('express-session');
 const helmet = require('helmet');
@@ -7,9 +8,12 @@ const http = require('http');
 const https = require('https');
 const fs = require('fs');
 const path = require('path');
-require('dotenv').config()
 
-console.log(process.env.DB_STRING)
+/** setup database  **/
+const {client, connectdb} = require('./db.js')
+connectdb()
+
+/** middleware **/
 const app = express();
 app.use(helmet());
 app.use(express.json());
@@ -17,49 +21,25 @@ app.use(express.urlencoded({extended: false}));
 
 const PORT = process.env.PORT || 8000;
 
+/** main connection pool **/
 
+const { } = require('./user.js')
+const { } = require('./project.js')
+const { } = require('./task.js')
 
-
-/*
-if u want to use db at all use following import
-*/
-
-
-const { Client } = require('pg');
-const { query } = require('express');
-const { resolveSoa } = require('dns');
-
-const client = new Client({
-  connectionString: process.env.DB_STRING,
-  ssl: {
-    rejectUnauthorized: false
-  }
-});
-
-client.connect();
-
-/*
-structure for users: add
-
-id
-status
-username
-password
-email
-github
-known_languages
-year_exp
-projects_worked
-*/
-
+// Routes
 
 // making this a test of inserting a user into database
-
 
 /*
 insert syntax:
 insert into users(id, status, username, password, email, github, year_exp, known_languages, projects_worked) values(1, false, 'newUser', 'testpass', 'newemail', 'newgithub', 1, '{"hello"}'::varchar[], '{1, 3}'::int[])
 */
+
+
+app.get('/users', (req, res) => {
+  res.send("Bruin Source");
+});
 
 app.post('/getuserinfo', (req,res) => {
   const {username} = req.body;
@@ -68,9 +48,6 @@ app.post('/getuserinfo', (req,res) => {
   .then(response => res.send(response))
   .catch(err => console.error(err))
 });
-
-
-
 
 const insertUserQuery = 'INSERT INTO users(status, username, password, email, github, year_exp, known_languages, projects_worked) values($1, $2, $3, $4, $5, $6, $7::varchar[], $8::int[])'
 // note - have to format $8 (known_languages) to be in {1,2,3} format and same for projects_worked
@@ -112,13 +89,12 @@ app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
 /*
 USERS TABLE
   note for yash - I set the username to unique key so that database doesn't allow duplicate usernames by default
-  id is also a primary key
+  id is also a primary key 
   I also set github to be able to be null - are we requiring github for all users?
   (note - only username is unique id rn - should I Write SQL to make email unique?)
 
   database is all done being setup with your structure - only diff is that username is unique key
-
+  
 
   maybe try to write some stuff here to link projects to users, tasks to projects?
-
 */

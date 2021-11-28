@@ -6,36 +6,37 @@
 
 .Login .MainLogo {
     position: relative;
-    width: 50%;
+    width: 45%;
     height: auto;
-    top: 200px;
+    padding: 25px;
 }
 
 .Login input {
     position: relative;
-    top: 200px;
     width: 600px;
     height: 50px;
     box-sizing: border-box;
+    border-radius: 25px;
+    border: 1px solid #000000;
+    padding: 20px;
 }
 
 .Login .Password {
     position: relative;
-    top: 25px;
+    padding: 10px;
 }
 
 .Login .NewAccount {
     position: relative;
-    top: 230px;
     background-color: white;
     border: none;
-    
+    padding:10px;
 }
 
 .Login .ForgotPassword {
     position: relative;
     margin-left: 240px;
-    top: 230px;
     background-color: white;
     border: none;
+    padding: 10px;
 }

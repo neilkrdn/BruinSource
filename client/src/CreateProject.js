@@ -8,35 +8,37 @@ class CreateProject extends React.Component {
             <div className="CreateProject">
                 <img src={mainLogo} className="MainLogo" alt="mainLogo"/>
                 <form className="Inputs">
-                    <div className="Project Name">
+                    <div className="ProjectName">
                         <input 
                         type="text" 
                         placeholder="Project Name..."
                         required
                         />
                     </div>
-                    <div className="Project Description">
-                        <input
+                    <div className="ProjectDescription">
+                        <textarea
                         type="text"
                         placeholder="Project Description..."
                         required
                         />
                     </div>
-                    <div className="Project Tags">
+                    <div className="ProjectTags">
                         <input
                         type="text"
                         placeholder="Project Tags (comma-separated)..."
                         required
                         />
                     </div>
-                    <div className="Project GitHub">
+                    <div className="ProjectGitHub">
                         <input
                         type="text"
                         placeholder="http://github.com/..."
                         />
                     </div>
-                <button type="button" className="BackToDash">Back to Projects</button>
-                <button type="button" className="CreateNewProject">Create New Project</button>
+                    <div className="Buttons">
+                        <button type="button" className="BackToProjects">Back to Projects</button>
+                        <button type="button" className="CreateNewProject">Create New Project</button>
+                    </div>
                 </form>
             </div>
         );

@@ -1,6 +1,6 @@
 import React from 'react';
 import './Login.css';
-import mainLogo from './bruinsource-logo.png'
+import mainLogo from './bruinsource_logo.png'
 
 class Login extends React.Component {
     render() {

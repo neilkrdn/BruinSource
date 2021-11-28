@@ -40,7 +40,7 @@ insert into users(id, status, username, password, email, github, year_exp, known
 app.post('api/register', user.registerUser)
 
 /** Retrieve user by login **/
-app.get('api/login')
+app.get('api/login', user.validateLogin)
 
 /** Retrieve all users query **/
 app.get('/api/users', user.getUsers);
@@ -50,6 +50,13 @@ app.get('/api/users/active', user.getActiveUsers);
 
 /** Retrieve user by username **/
 app.get('/api/users/:username', user.getUserByUsername)
+
+
+/** Retrieve user by project id **/
+// app.get('/api/users/:projectId', user.getUserByProject)
+
+/** Retrieve user by task id **/
+// app.get('/api/users/:projectId', user.getUserByTask)
 
 /** Delete a User **/
 app.post('/api/users/delete', user.deleteUser) 

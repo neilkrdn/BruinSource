@@ -24,6 +24,7 @@
   "dependencies": {
     "@types/react": "^17.0.36",
     "@types/react-dom": "^17.0.11",
+    "bcrypt": "^5.0.1",
     "concurrently": "^6.4.0",
     "connect-pg-simple": "^7.0.0",
     "dotenv": "^10.0.0",

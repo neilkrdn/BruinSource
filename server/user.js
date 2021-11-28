@@ -1,6 +1,10 @@
 const {client} = require('./db.js')
 const bcrypt = require('bcrypt')
 
+/* 
+
+Not needed atm but may need it later idk
+
 class User {
     constructor(id, status, username, password, email, github, known_languages, year_exp, projects_worked){
         this.id = id;
@@ -14,6 +18,7 @@ class User {
         this.projects_worked = projects_worked;
     }
 }
+*/
 
 // adds a user to database and returns the user object in json 
 function registerUser(req, res) {

@@ -60,7 +60,6 @@ app.post('/api/users/delete', user.deleteUser)
   retreive user by project id
   retrieve user by task id
   retrieve user by set of known languages (filtering by languages essentially)
-
   change username / password
   modify known languages, project ids, etc. 
 
@@ -80,6 +79,6 @@ USERS TABLE
 
   database is all done being setup with your structure - only diff is that username is unique key
   
-
   maybe try to write some stuff here to link projects to users, tasks to projects?
-*/
+  gonna get to that next
+  */

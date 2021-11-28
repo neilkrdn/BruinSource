@@ -111,6 +111,7 @@ function getActiveUsers(req, res){
     })
     .catch(err => res.status(201).send(err));
 }
+
 // returns json of user found by given username
 function getUserByUsername(req, res){
     const { username } = req.params;

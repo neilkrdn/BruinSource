@@ -4,6 +4,8 @@ import './App.css';
 import axios from 'axios';
 import Login from './Login.js';
 import Dashboard from './Dashboard.js'
+import CreateTask from './CreateTask.js'
+import CreateProject from './CreateProject.js'
 import {deleteUser, insertUser} from './backend-calls'
 
 /*to-do

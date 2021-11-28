@@ -17,7 +17,7 @@ class Login extends React.Component {
                     </div>
                     <div className="Password">
                         <input
-                        type="text"
+                        type="password"
                         placeholder="Password..."
                         required
                         />

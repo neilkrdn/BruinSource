@@ -7,6 +7,7 @@ class CreateProject extends React.Component {
         return (
             <div className="CreateProject">
                 <img src={mainLogo} className="MainLogo" alt="mainLogo"/>
+                <h2> Create A New Project </h2>
                 <form className="Inputs">
                     <div className="ProjectName">
                         <input 

@@ -247,9 +247,6 @@ function deleteUser(req, res){
     .catch(err => res.status(201).send({msg: 'invalid_username'}));
 }
 
-// TODO: query modify functionality
-function modifyUser(){}
-
 module.exports = {
     registerUser,
     validateLogin,
@@ -257,5 +254,4 @@ module.exports = {
     getActiveUsers,
     getUserByUsername,
     deleteUser,
-    modifyUser
 }

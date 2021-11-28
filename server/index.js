@@ -24,8 +24,8 @@ const PORT = process.env.PORT || 8000;
 /** main connection pool **/
 
 const user = require('./user.js')
-const { } = require('./project.js')
-const { } = require('./task.js')
+const project = require('./project.js')
+const task = require('./task.js')
 
 // Routes
 

@@ -1,10 +1,6 @@
 const {client} = require('./db.js')
 const bcrypt = require('bcrypt')
 
-/* 
-
-Not needed atm but may need it later idk
-
 class User {
     constructor(id, status, username, password, email, github, known_languages, year_exp, projects_worked){
         this.id = id;
@@ -18,7 +14,92 @@ class User {
         this.projects_worked = projects_worked;
     }
 }
-*/
+
+function validateUsername(username){
+    // check if username is null and if it already exists in db
+    if (username.length != 0) {
+        client
+        .query(`select * from users where u.username = '${username}'`)
+        .catch(err => {
+            // error means that username doesn't already exist, so chosen username is valid
+            return false;
+        })
+    } else {
+        return false;
+    }
+}
+
+function validateEmail(email){
+    // check if email is not null and is associated with a university
+    if (email.length != 0 && email.substring(email.length - 4) == '.edu') {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function validatePassword(password) {
+
+    // check if password has at least one upper case character
+    const hasUpper = (password) => {
+        let num = password
+            .split('')
+            .map(char => /[A-Z]/.test(char))
+            .reduce((a,b) => a + b);
+        return num > 0;
+    }
+
+    // check if password has at least one special case character
+    const hasSpecial = (password) => {
+        let num = password
+                .split('')
+                .map(char => /[^a-zA-Z\d]/.test(char))
+                .reduce((a,b) => a + b);
+        return num > 0;
+    }
+
+    // check i password has at least one number
+    const hasNum = (password) => {
+        let num = password
+                .split('')
+                .map(char => /\d/.test(char))
+                .reduce((a,b) => a + b);
+        return num > 0;
+    }
+
+    if (password.length >= 8 && hasUpper && hasSpecial && hasNum){
+        return true;
+    } else {
+        return false;
+    }
+}
+
+// format projects worked into sql type
+function formatProjectsWorked(projectsWorked){
+    let formattedProjectsWorked = '{';
+
+    projectsWorked.map(each =>{
+        formattedProjectsWorked += (each + ',');
+    });
+
+    formattedProjectsWorked= formattedProjectsWorked.substring(0, formattedProjectsWorked.length - 1);
+    formattedProjectsWorked += '}';
+    return formattedProjectsWorked;
+}
+
+// format known languages into sql type
+function formatKnownLanguages(knownLanguages){
+    let formatedKnownLanguages= '{'
+
+    knownLanguages.map(each => {
+        formatedKnownLanguages += (each + ',');
+    });
+
+    formatedKnownLanguages = formatedKnownLanguages.substring(0, formatedKnownLanguages.length - 1);
+    formatedKnownLanguages += '}';
+
+    return formatedKnownLanguages;
+}
 
 // adds a user to database and returns the user object in json 
 function registerUser(req, res) {
@@ -31,33 +112,52 @@ function registerUser(req, res) {
             known_languages, 
             projects_worked 
     } = req.body;
-    
-    /* janky way to get known languages and projects worked array into format to submit */
-    known_languages_input = '{'
-    known_languages.map(each => {
-        known_languages_input += (each + ',');
-    });
-    known_languages_input = known_languages_input.substring(0, known_languages_input.length - 1);
-    known_languages_input += '}';
-    projects_worked_input = '{';
-    projects_worked.map(each =>{
-        projects_worked_input += (each + ',');
-    });
-    projects_worked_input= projects_worked_input.substring(0, projects_worked_input.length - 1);
-    projects_worked_input += '}';
 
-    // encrypt password
-    hashed_password = bcrypt.hash(password, 10);
+    // set status to active
+    status = 1;
 
-    const query = 'INSERT INTO users(status, username, password, email, github, year_exp, known_languages, projects_worked) values($1, $2, $3, $4, $5, $6, $7::varchar[], $8::int[])';
-    const vals = [status, username, hashed_password, email, github, year_exp, known_languages_input, projects_worked_input];
+    // validate username input
+    let usernameValid = validateUsername(username);
+    if (!usernameValid){
+        res.status(201).send({msg: 'username_taken'});
+    }
 
-    client
-    .query(query,vals)
-    .then(user => {
-        res.status(200).send(user)
-    })
-    .catch(err => res.status(201).send(err));
+    // validate password input
+    let passwordValid = validatePassword(password);
+    if (passwordValid){
+        // encrypt password
+        hashed_password = bcrypt.hash(password, 10);
+    } else {
+        res.status(201).send({msg: 'invalid_password'})
+    }
+
+    // validate email input
+    let emailValid = validateEmail(email);
+    if (!emailValid){
+        res.status(201).send({msg: 'invalid_email'})
+    }
+
+    // set default to 0 years of experience
+    if (!year_exp){
+        year_exp = 0;
+    }
+
+    known_languages_input = formatKnownLanguages(known_languages);
+
+    projects_worked_input = formatProjectsWorked(projects_worked)
+
+    // make query if inputs are all valid
+    if (usernameValid && emailValid && passwordValid) { 
+        const query = 'INSERT INTO users(status, username, password, email, github, year_exp, known_languages, projects_worked) values($1, $2, $3, $4, $5, $6, $7::varchar[], $8::int[])';
+        const vals = [status, username, hashed_password, email, github, year_exp, known_languages_input, projects_worked_input];
+
+        client
+        .query(query,vals)
+        .then(user => {
+            res.status(200).send(user)
+        })
+        .catch(err => res.status(201).send(err));
+    }
 }
 
 function validateLogin(req, res){
@@ -70,10 +170,10 @@ function validateLogin(req, res){
         if (bcrypt.compare(password, user.rows.password)){
             res.status(200).send({msg: 'success'});
         } else {
-            res.status(201).send({msg: 'dne'});
+            res.status(201).send({msg: 'invalid_password'});
         }
     })
-    .catch(err => res.status(201).send({msg: 'dne'}))
+    .catch(err => res.status(201).send({msg: 'invalid_username'}))
 }
 
 
@@ -122,7 +222,7 @@ function getUserByUsername(req, res){
         res.status(200).send(user.rows);
     })
     .catch(() => {
-        res.status(201).send({msg: `dne`});
+        res.status(201).send({msg: `invalid_username`});
     })
 }
 
@@ -144,7 +244,7 @@ function deleteUser(req, res){
     .then(user => {
         res.status(200).send(user);
     })
-    .catch(err => res.status(201).send({msg: 'dne'}));
+    .catch(err => res.status(201).send({msg: 'invalid_username'}));
 }
 
 // TODO: query modify functionality

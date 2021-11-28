@@ -23,7 +23,7 @@ const PORT = process.env.PORT || 8000;
 
 /** main connection pool **/
 
-const { } = require('./user.js')
+const user = require('./user.js')
 const { } = require('./project.js')
 const { } = require('./task.js')
 
@@ -36,55 +36,40 @@ insert syntax:
 insert into users(id, status, username, password, email, github, year_exp, known_languages, projects_worked) values(1, false, 'newUser', 'testpass', 'newemail', 'newgithub', 1, '{"hello"}'::varchar[], '{1, 3}'::int[])
 */
 
+/** Register user **/
+app.post('api/register', user.registerUser)
 
-app.get('/users', (req, res) => {
-  res.send("Bruin Source");
+/** Retrieve user by login **/
+app.get('api/login')
+
+/** Retrieve all users query **/
+app.get('/api/users', user.getUsers);
+
+/** Retrieve all users query **/
+app.get('/api/users/active', user.getActiveUsers);
+
+/** Retrieve user by username **/
+app.get('/api/users/:username', user.getUserByUsername)
+
+/** Delete a User **/
+app.post('/api/users/delete', user.deleteUser) 
+
+/**
+
+  More routes we'll probably have to write in thinking about the front-end for anybody working on backend:
+  retreive user by project id
+  retrieve user by task id
+  retrieve user by set of known languages (filtering by languages essentially)
+
+  change username / password
+  modify known languages, project ids, etc. 
+
+ */
+
+app.listen(PORT, function(err) {
+  if (err) console.log(err);
+  console.log(`Server started on port ${PORT}`);
 });
-
-app.post('/getuserinfo', (req,res) => {
-  const {username} = req.body;
-  let query = `select * from users u where u.username = '${username}'`
-  client.query(query)
-  .then(response => res.send(response))
-  .catch(err => console.error(err))
-});
-
-const insertUserQuery = 'INSERT INTO users(status, username, password, email, github, year_exp, known_languages, projects_worked) values($1, $2, $3, $4, $5, $6, $7::varchar[], $8::int[])'
-// note - have to format $8 (known_languages) to be in {1,2,3} format and same for projects_worked
-app.post('/insertuser', (req,res) => { // use req.body to receive params from frontend
-  console.log(req.body)
-  const { status, username, password, email, github, year_exp, known_languages, projects_worked } = req.body;
-  /* janky way to get known languages and projects worked array into format to submit */
-  known_languages_input = '{'
-  known_languages.map(each => {
-    known_languages_input += (each + ',')
-  })
-  known_languages_input = known_languages_input.substring(0, known_languages_input.length - 1)
-  known_languages_input += '}'
-  projects_worked_input = '{'
-  projects_worked.map(each =>{
-    projects_worked_input += (each + ',')
-  })
-  projects_worked_input= projects_worked_input.substring(0, projects_worked_input.length - 1)
-  projects_worked_input += '}'
-
-  const toInsertVals = [status, username, password, email, github, year_exp, known_languages_input, projects_worked_input]
-
-  client.query(insertUserQuery, toInsertVals)
-  .then(response => res.send(response))
-  .catch(err => console.error(err))
-});
-
-
-app.post('/deleteuser', (req, res) => {
-    const {username} = req.body
-    const query = `DELETE FROM users where username = '${username}'` 
-    client.query(query)
-    .then(response => res.send(response))
-    .catch(err => res.send(err))
-})
-
-app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
 
 /*
 USERS TABLE

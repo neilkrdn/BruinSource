@@ -2,6 +2,7 @@ import React from 'react';
 import './Dashboard.css';
 import mainLogo from './bruinsource_logo.png'
 import searchIcon from './search_icon.png'
+import history from './history';
 
 class Dashboard extends React.Component {
 
@@ -21,7 +22,7 @@ class Dashboard extends React.Component {
                 <button type="button" className="Search"> 
                     <img src={searchIcon} width="50px" alt="searchIcon" ></img>
                 </button>
-                <button type="button" className="Create">CREATE A PROJECT</button>
+                <button type="button" className="Create" onClick={() => history.push('/createproject')}>Create New Project</button>
             </div>
         );
     }

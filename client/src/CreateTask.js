@@ -1,8 +1,30 @@
 import React from 'react';
 import './CreateTask.css';
 import mainLogo from './bruinsource_logo.png'
-
+import history from './history';
 class CreateTask extends React.Component {
+    constructor(props)
+    {
+        super(props)
+        this.state = 
+        {
+            name: null,
+            description: null,
+            tags: null,
+        }
+    }
+
+    onCreateTask = () => 
+    {
+        //axios.post('/api/createtask', {name: this.state.name, description: this.state.description, tags: this.state.tags, github: this.state.github})
+        /*
+                    setAlert('Task created successfully! Redirecting...')
+                    setTimeout(() => {
+                        history.push('/dashboard')
+                    }, 5000);
+        */
+    }
+
     render() {
         return (
             <div className="CreateTask">
@@ -31,8 +53,8 @@ class CreateTask extends React.Component {
                         />
                     </div>
                     <div className="Buttons">
-                        <button type="button" className="BackToTasks">Back to Projects</button>
-                        <button type="button" className="CreateNewTask">Create New Task</button>
+                        <button type="button" className="BackToTasks" >Back to Projects</button>
+                        <button type="button" className="CreateNewTask" /* onClick={this.onCreateTask} */>Create New Task</button>
                     </div>
                 </form>
             </div>

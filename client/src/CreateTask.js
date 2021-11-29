@@ -2,7 +2,7 @@ import React from 'react';
 import './CreateTask.css';
 import mainLogo from './bruinsource_logo.png'
 
-class CreateProject extends React.Component {
+class CreateTask extends React.Component {
     render() {
         return (
             <div className="CreateTask">
@@ -40,4 +40,4 @@ class CreateProject extends React.Component {
     }
 }
 
-export default CreateProject;
+export default CreateTask;

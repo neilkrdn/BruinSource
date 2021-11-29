@@ -22,7 +22,7 @@ function validateUsername(username){
         .query(`select * from users where u.username = '${username}'`)
         .catch(err => {
             // error means that username doesn't already exist, so chosen username is valid
-            return false;
+            return true;
         })
     } else {
         return false;
@@ -75,30 +75,16 @@ function validatePassword(password) {
 }
 
 // format projects worked into sql type
-function formatProjectsWorked(projectsWorked){
-    let formattedProjectsWorked = '{';
+function formatArrayToSql(arr){
+    let formatted = '{';
 
-    projectsWorked.map(each =>{
-        formattedProjectsWorked += (each + ',');
+    arr.map(each =>{
+        formatted += (each + ',');
     });
 
-    formattedProjectsWorked= formattedProjectsWorked.substring(0, formattedProjectsWorked.length - 1);
-    formattedProjectsWorked += '}';
-    return formattedProjectsWorked;
-}
-
-// format known languages into sql type
-function formatKnownLanguages(knownLanguages){
-    let formatedKnownLanguages= '{'
-
-    knownLanguages.map(each => {
-        formatedKnownLanguages += (each + ',');
-    });
-
-    formatedKnownLanguages = formatedKnownLanguages.substring(0, formatedKnownLanguages.length - 1);
-    formatedKnownLanguages += '}';
-
-    return formatedKnownLanguages;
+    formatted = formatted.substring(0, formatted.length - 1);
+    formatted += '}';
+    return formatted;
 }
 
 // adds a user to database and returns the user object in json 
@@ -142,9 +128,9 @@ function registerUser(req, res) {
         year_exp = 0;
     }
 
-    known_languages_input = formatKnownLanguages(known_languages);
+    known_languages_input = formatArrayToSql(known_languages);
 
-    projects_worked_input = formatProjectsWorked(projects_worked)
+    projects_worked_input = formatArrayToSql(projects_worked)
 
     // make query if inputs are all valid
     if (usernameValid && emailValid && passwordValid) { 
@@ -153,9 +139,6 @@ function registerUser(req, res) {
 
         client
         .query(query,vals)
-        .then(user => {
-            res.status(200).send(user)
-        })
         .catch(err => res.status(201).send(err));
     }
 }
@@ -176,10 +159,30 @@ function validateLogin(req, res){
     .catch(err => res.status(201).send({msg: 'invalid_username'}))
 }
 
-
 // TODO: be able to modify password and then ecrypt it into database
 function modifyPassword() {
 
+}
+
+/*
+   some bs to add for what we would do to improve this app but didn't get
+   time to do would be to implement hard delete vs soft delete -- usually
+   industry prefers soft deletes (i.e. using status = true / false)
+   instead of deleting straight from the table on each operation because
+   it's risky or something idfk. 
+*/
+
+// deletes a user from database and returns that user object in json
+function deleteUser(req, res){
+    const { username } = req.params;
+    const query = `DELETE FROM users where username = '${username}'`; 
+    
+    client
+    .query(query)
+    .then(user => {
+        res.status(200).send(user);
+    })
+    .catch(err => res.status(201).send({msg: 'invalid_username'}));
 }
 
 // returns json of all existing users (both active and inactive)
@@ -188,26 +191,19 @@ function getUsers(req, res){
     client
         .query(query)
         .then(users => {
-            if (users.rows.length == 0){
-                res.status(201).send(`No Users found`);
-            } else {
-                res.status(200).send(users.rows);
-            }
+            res.status(200).send(users.rows);
         })
         .catch(err => res.status(201).send(err));
 }
 
+/* Can be deleted since not using status*/
 // returns json of all active users
 function getActiveUsers(req, res){
     const query = `select * from users u where u.status = '${true}'`; // active users have a status of true
     client
     .query(query)
     .then(users => {
-        if (users.rows.length == 0){
-            res.status(201).send(`No Active Users found`);
-        } else {
-            res.status(200).send(users.rows);
-        }
+        res.status(200).send(users.rows);
     })
     .catch(err => res.status(201).send(err));
 }
@@ -224,27 +220,6 @@ function getUserByUsername(req, res){
     .catch(() => {
         res.status(201).send({msg: `invalid_username`});
     })
-}
-
-/*
-   some bs to add for what we would do to improve this app but didn't get
-   time to do would be to implement hard delete vs soft delete -- usually
-   industry prefers soft deletes (i.e. using status = true / false)
-   instead of deleting straight from the table on each operation because
-   it's risky or something idfk. 
-*/
-
-// deletes a user from database and returns that user object in json
-function deleteUser(req, res){
-    const { username } = req.body;
-    const query = `DELETE FROM users where username = '${username}'`; 
-    
-    client
-    .query(query)
-    .then(user => {
-        res.status(200).send(user);
-    })
-    .catch(err => res.status(201).send({msg: 'invalid_username'}));
 }
 
 module.exports = {

@@ -3,6 +3,7 @@ import './Dashboard.css';
 import mainLogo from './bruinsource_logo.png'
 import searchIcon from './search_icon.png'
 /*import { getProjectById } from '../../server/project';*/
+import history from './history';
 
 class Dashboard extends React.Component {
     constructor(props) {
@@ -58,6 +59,7 @@ class Dashboard extends React.Component {
                         </tbody>
                     </table>
                 </div>
+                <button type="button" className="Create" onClick={() => history.push('/createproject')}>Create New Project</button>
             </div>
         );
     }

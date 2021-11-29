@@ -1,12 +1,10 @@
 import logo from './logo.svg';
 import React, {useEffect} from 'react';
+import { BrowserRouter, Switch, Route } from "react-router-dom";
 import './App.css';
 import axios from 'axios';
-import Login from './Login.js';
-import Dashboard from './Dashboard.js'
-import CreateTask from './CreateTask.js'
-import CreateProject from './CreateProject.js'
-import Register from './Register.js'
+import Routes from "./Routes.js"
+import history from './history';
 import {deleteUser, insertUser} from './backend-calls'
 
 /*to-do
@@ -37,7 +35,7 @@ function App() {
 
   return (
     <div className="App">
-      <Login />
+      <Routes />
     </div>
   );
 }

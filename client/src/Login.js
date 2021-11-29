@@ -1,5 +1,6 @@
 import React from 'react';
 import './Login.css';
+import history from './history';
 import mainLogo from './bruinsource_logo.png'
 
 class Login extends React.Component {
@@ -22,9 +23,9 @@ class Login extends React.Component {
                         required
                         />
                     </div>
-                <button type="button" className="NewAccount">New? Create an account.</button>
+                <button type="button" className="NewAccount" onClick={() => history.push('/register')}>New? Create an account.</button>
                {/* <button type="button" className="ForgotPassword">Forgot your password?</button> */}
-                <button type="button" className="SignIn">Sign In</button>
+                <button type="button" className="SignIn" >Sign In</button>
                 </form>
             </div>
         );

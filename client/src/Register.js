@@ -1,7 +1,7 @@
 import React from 'react';
 import './Register.css';
 import mainLogo from './bruinsource_logo.png'
-
+import history from './history.js'
 class Register extends React.Component {
     render() {
         return (
@@ -60,7 +60,7 @@ class Register extends React.Component {
                     </div>
 
                     <div className="Buttons">
-                        <button type="button" className="BackToLogin">Back to Login</button>
+                        <button type="button" className="BackToLogin" onClick={() => history.push('/')}>Back to Login</button>
                         <button type="button" className="CreateNewAccount">Create New Account</button>
                     </div>
                 </form>

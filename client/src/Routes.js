@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Router, Switch, Route } from "react-router-dom";
+import { Router, Switch, Route, Link } from "react-router-dom";
 
 import Login from './Login.js';
 import Dashboard from './Dashboard.js'
@@ -13,11 +13,11 @@ export default class Routes extends Component {
         return (
             <Router history={history}>
                 <Switch>
-                    <Route path="" exact component={Login} />
-                    <Route path="/register" component={Register} />
-                    <Route path="/dashboard" component={Dashboard} />
-                    <Route path="/createtask" component={CreateTask} />
-                    <Route path="/createproject" component={CreateProject} /> 
+                    <Route exact path="/" component={Login} />
+                    <Route exact path="/register" component={Register} />
+                    <Route exact path="/dashboard" component={Dashboard} />
+                    <Route exact path="/createtask" component={CreateTask} />
+                    <Route exact path="/createproject" component={CreateProject} /> 
                 </Switch>
             </Router>
         )

@@ -23,7 +23,8 @@ class Login extends React.Component {
                         />
                     </div>
                 <button type="button" className="NewAccount">New? Create an account.</button>
-                <button type="button" className="ForgotPassword">Forgot your password?</button>
+               {/* <button type="button" className="ForgotPassword">Forgot your password?</button> */}
+                <button type="button" className="SignIn">Sign In</button>
                 </form>
             </div>
         );

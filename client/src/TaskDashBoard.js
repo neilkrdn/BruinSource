@@ -4,6 +4,8 @@ import mainLogo from './bruinsource_logo.png'
 import searchIcon from './search_icon.png'
 import history from './history';
 
+const {client} = require('./db.js')
+
 class TaskDashBoard extends React.Component {
 
     constructor(props) {

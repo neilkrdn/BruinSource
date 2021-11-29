@@ -12,7 +12,7 @@ h2
     padding: 10px;
 }
 
-.Dashboard .MainLogo
+.TaskDashBoard .MainLogo
 {
     position: relative;
     width: 20%;
@@ -22,7 +22,7 @@ h2
     filter: drop-shadow(0px 2px 3px #AFAFAF)
 }
 
-.Dashboard .Title {
+.TaskDashBoard .Title {
     margin: left;
     color: #005587;
     left: 575px;
@@ -31,7 +31,7 @@ h2
 }
 
 
-.Dashboard input {
+.TaskDashBoard input {
     position: relative;
     width: 500px;
     height: 50px;
@@ -44,20 +44,20 @@ h2
     
 }
 
-.Dashboard button {
+.TaskDashBoard button {
     position: relative;
     height: 50px;
     border-radius: 10px;
     border: none;
 }
 
-.Dashboard .Search {
+.TaskDashBoard .Search {
     position:relative;
     top: -40px;
     left: 280px;
 }
 
-.Dashboard .Create {
+.TaskDashBoard .Create {
     position:relative;
     color: white;
     left: 295px;
@@ -66,35 +66,14 @@ h2
     padding: 20px;
 }
 
-<<<<<<< HEAD
-.Dashboard .ProjectListTable {
+.TaskDashBoard .TaskListTableHead {
     position: relative;
     display: block;
-    color: black;
-    left: 180px;
+    color: #005587;
+    left: 260px;
     font-size: larger;
     border-spacing: 100px;
     font-weight: bold;
     top: -110px;
 }
 
-=======
->>>>>>> f55f339 (Dynamically allocating tables w/ project and task data)
-.Dashboard .ProjectListTableHead {
-    position: relative;
-    display: block;
-    color: #005587;
-<<<<<<< HEAD
-    font-size: larger;
-    left: 30px;
-    border-spacing: 100px;
-    font-weight: bold;
-    top: -10px;
-=======
-    left: 260px;
-    font-size: larger;
-    border-spacing: 100px;
-    font-weight: bold;
-    top: -110px;
->>>>>>> f55f339 (Dynamically allocating tables w/ project and task data)
-}

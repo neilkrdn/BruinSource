@@ -1,21 +1,30 @@
-* {
+* 
+{
     margin: 0;
     padding: 0;
-    font-family:'Courier New', Courier, monospace;
-
+    font-family:'Georgia', Georgia, serif;
 }
 
-.Dashboard .MainLogo {
-    width: 25%;
+h2
+{
+    color: #005587;
+    position: relative;
+    padding: 10px;
+}
+
+.Dashboard .MainLogo
+{
+    position: relative;
+    width: 20%;
     height: auto;
-    top: 10px;
-    left: 375px;
+    padding-top: 25px;
+    padding-bottom: 10px;
+    filter: drop-shadow(0px 2px 3px #AFAFAF)
 }
-
 
 .Dashboard .Title {
     margin: left;
-    color: #2771b8;
+    color: #005587;
     left: 575px;
     font-size: 40px;
     top: 140px;
@@ -37,50 +46,23 @@
 
 .Dashboard button {
     position: relative;
-    background-color: #2771b8;
     height: 50px;
     border-radius: 10px;
     border: none;
-    padding: 20px;
 }
 
 .Dashboard .Search {
-    width: 50px;
-    top: -45px;
-    left: 300px;
+    position:relative;
+    top: -40px;
+    left: 280px;
 }
 
 .Dashboard .Create {
+    position:relative;
     color: white;
-    font-size: 20px;
-    font-weight: bold;
-    font-stretch: ultra-expanded;
-    left: 315px;
-    top: -39px;
+    left: 295px;
+    top: -58px;
+    background-color: #005587;
+    padding: 20px;
 }
 
-.Dashboard h2 {
-    position: relative;
-    color: #2771b8;
-    top: -30px;
-    font-size: 30px;
-}
-
-.Dashboard .Name {
-    left: -325px;
-}
-
-.Dashboard .Owner {
-    left: -150px;
-    top: -63px;
-}
-
-.Dashboard .Date {
-    left: 100px;
-    top: -95px;
-}
-
-.Dashboard .Collaborators {
-    left: 425px;
-    top: -127px;
-}

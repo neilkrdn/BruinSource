@@ -35,3 +35,9 @@ export const getUserData = (username) => {
     })
     .catch(err => console.log(err))
 }
+
+
+
+export const createUser = (inputData) => {
+    axios.post('/api/')
+}

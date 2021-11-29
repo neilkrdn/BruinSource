@@ -41,13 +41,10 @@ insert into users(id, status, username, password, email, github, year_exp, known
 
 
 /** Register user **/
-app.get('/api/register', user.registerUser);
-
-/** Delete a User **/
-app.get('/api/users/:username/delete', user.deleteUser)
+app.post('/api/register', user.registerUser)
 
 /** Retrieve user by login **/
-app.get('/api/login', user.validateLogin);
+app.post('/api/login', user.validateLogin)
 
 /** Retrieve all users query **/
 app.get('/api/users', user.getUsers);

@@ -15,7 +15,7 @@ class User {
     }
 }
 
-function validateUsername(username){
+function validateUsername(username) {
     // check if username is null and if it already exists in db
     if (username.length != 0) {
         client
@@ -25,11 +25,12 @@ function validateUsername(username){
             return true;
         })
     } else {
-        return false;
+        console.log('here')
+        return true;
     }
 }
 
-function validateEmail(email){
+function validateEmail(email) {
     // check if email is not null and is associated with a university
     if (email.length != 0 && email.substring(email.length - 4) == '.edu') {
         return true;
@@ -39,7 +40,6 @@ function validateEmail(email){
 }
 
 function validatePassword(password) {
-
     // check if password has at least one upper case character
     const numUpper = password
                         .split('')
@@ -74,24 +74,27 @@ function registerUser(req, res) {
     } = req.body;
 
     // validate username input
-    let usernameValid = validateUsername(username);
-    if (!usernameValid){
-        res.status(201).send({msg: 'username_taken'});
-    }
+    // let usernameValid = validateUsername(username);
+    //if (!usernameValid){
+    //  res.status(201).send({msg: 'username_taken'});
+    //    return
+    //}
 
     // validate password input
     let passwordValid = validatePassword(password);
-    if (passwordValid){
+    if (passwordValid) {
         // encrypt password
-        hashed_password = bcrypt.hash(password, 10);
+        hashed_password = await bcrypt.hash(password, 10)
     } else {
-        res.status(201).send({msg: 'invalid_password'})
+        res.status(201).send({ msg: 'invalid_password' })
+        return
     }
 
     // validate email input
     let emailValid = validateEmail(email);
-    if (!emailValid){
-        res.status(201).send({msg: 'invalid_email'})
+    if (!emailValid) {
+        res.status(201).send({ msg: 'invalid_email' })
+        return
     }
 
     // set default to empty string
@@ -119,15 +122,23 @@ function validateLogin(req, res){
     const query = `select * from users u where u.username = '${username}'`;
 
     client
-    .query(query)
-    .then(user => {
-        if (bcrypt.compare(password, user.rows.password)){
-            res.status(200).send({msg: 'success'});
-        } else {
-            res.status(201).send({msg: 'invalid_password'});
-        }
-    })
-    .catch(err => res.status(201).send({msg: 'invalid_username'}))
+        .query(query)
+        .then(user => {
+            bcrypt.compare(password, user.rows[0].password, (err, result) => {
+                if (err) {
+                    res.status(201).send({ msg: 'invalid_password' });
+                    return
+                }
+                if (result) {
+                    res.status(200).send({ msg: 'success' });
+                    return
+                } else {
+                    res.status(201).send({ msg: 'invalid_password' });
+                    return
+                }
+            })
+        })
+        .catch(err => res.status(201).send({ msg: 'invalid_username' }))
 }
 
 // deletes a user from database and returns that user object in json
@@ -152,7 +163,7 @@ function getUsers(req, res){
 }
 
 // returns json of user found by given username
-function getUserByUsername(req, res){
+function getUserByUsername(req, res) {
     const { username } = req.params;
     const query = `select * from users u where u.username = '${username}'`;
     client

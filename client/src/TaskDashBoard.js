@@ -4,7 +4,7 @@ import mainLogo from './bruinsource_logo.png'
 import searchIcon from './search_icon.png'
 import history from './history';
 
-const {client} = require('./db.js')
+//const {client} = require('./db.js')
 
 class TaskDashBoard extends React.Component {
 
@@ -46,7 +46,8 @@ class TaskDashBoard extends React.Component {
                 <button type="button" className="Search"> 
                     <img src={searchIcon} width="50px" alt="searchIcon" ></img>
                 </button>
-                <button type="button" className="Create">CREATE A TASK</button>
+                <button type="button" className="Create" onClick={() => history.push('/createtask')}>Create a Task</button>
+                <button type="button" className="BackToProjects" onClick={() => history.push('/dashboard')}>Back to My Projects</button>
                 <div className="TaskList">
                     <table className="TaskListTable">
                         <thead className="TaskListTableHead">

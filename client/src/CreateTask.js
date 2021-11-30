@@ -53,7 +53,7 @@ class CreateTask extends React.Component {
                         />
                     </div>
                     <div className="Buttons">
-                        <button type="button" className="BackToTasks" >Back to Projects</button>
+                        <button type="button" className="BackToTasks" onClick={() => history.push('/taskdashboard')}>Back to Tasks</button>
                         <button type="button" className="CreateNewTask" /* onClick={this.onCreateTask} */>Create New Task</button>
                     </div>
                 </form>

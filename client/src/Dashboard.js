@@ -43,7 +43,8 @@ class Dashboard extends React.Component {
                 <button type="button" className="Search"> 
                     <img src={searchIcon} width="50px" alt="searchIcon" ></img>
                 </button>
-                <button type="button" className="Create">CREATE A PROJECT</button>
+                <button type="button" className="Create" onClick={() => history.push('/createproject')}>Create New Project</button>
+                
                 <div className="ProjectList">
                     <table className="ProjectListTable">
                         <thead className="ProjectListTableHead">
@@ -59,7 +60,6 @@ class Dashboard extends React.Component {
                         </tbody>
                     </table>
                 </div>
-                <button type="button" className="Create" onClick={() => history.push('/createproject')}>Create New Project</button>
             </div>
         );
     }

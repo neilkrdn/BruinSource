@@ -58,8 +58,8 @@ function createProject(req, res)
     formattedRequests = formatArrayToSql(requests);
 
     if (author && projectNameValid){
-        const query = 'INSERT INTO projects(name, description, tags, github, status, date_created, last_updated, author, collaborators) values($1, $2, $3::varchar[], $4, $5, $6, $7::varchar[], $8::int[])';
-        const vals = [ name, description, formattedTags, github, date_created, last_updated, author, collaborators, requests];
+        const query = 'INSERT INTO projects(name, description, tags, github, date_created, last_updated, author, collaborators) values($1, $2, $3::varchar[], $4, $5, $6, $7::varchar[], $8::int[])';
+        const vals = [ name, description, formattedTags, github, date_created, last_updated, author, collaborators];
         client
         .query(query,vals)
         .catch(err => res.status(201).send(err));

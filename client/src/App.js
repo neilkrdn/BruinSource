@@ -27,13 +27,6 @@ install react router and make header component + different pages
 
 function App() {
   useEffect(() => {
-    axios.post('/api/login', {username: 'Howard', password: 'deez'})
-    .then(res => console.log(res))
-    .catch(err => console.log(err))
-        
-    axios.post('/getuserinfo', {username: 'myuser'} )
-    .then(res => console.log(res.data))
-    .catch(err => console.log(err))
   }, [])
 
   return (

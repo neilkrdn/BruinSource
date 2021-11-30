@@ -11,23 +11,26 @@ import ProjectInfo from './ProjectInfo'
 import TaskDashboard from './TaskDashBoard.js'
 import AllProjects from './AllProjects.js'
 import history from './history';
+import { ProvideAuth } from "./ProvideAuth.js";
 
 export default class Routes extends Component {
     render() {
         return (
-            <Router history={history}>
-                <Switch>
-                    <Route exact path="/" component={Login} />
-                    <Route exact path="/register" component={Register} />
-                    <Route exact path="/dashboard" component={Dashboard} />
-                    <Route exact path="/createtask" component={CreateTask} />
-                    <Route exact path="/createproject" component={CreateProject} /> 
-                    <Route exact path="/taskinfo" component={TaskInfo} />
-                    <Route exact path="/projectinfo" component={ProjectInfo} />
-                    <Route exact path="/taskdashboard" component={TaskDashboard}/>
-                    <Route exact path="/allprojects" component={AllProjects}/>
-                </Switch>
-            </Router>
+            <ProvideAuth>
+                <Router history={history}>
+                    <Switch>
+                        <Route exact path="/" component={Login} />
+                        <Route exact path="/register" component={Register} />
+                        <Route exact path="/dashboard" component={Dashboard} />
+                        <Route exact path="/createtask" component={CreateTask} />
+                        <Route exact path="/createproject" component={CreateProject} />
+                        <Route exact path="/taskinfo" component={TaskInfo} />
+                        <Route exact path="/projectinfo" component={ProjectInfo} />
+                        <Route exact path="/taskdashboard" component={TaskDashboard} />
+                        <Route exact path="/allprojects" component={AllProjects} />
+                    </Switch>
+                </Router>
+            </ProvideAuth>
         )
     }
 }

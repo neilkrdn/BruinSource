@@ -63,7 +63,7 @@ function validatePassword(password) {
 }
 
 // adds a user to database and returns the user object in json 
-function registerUser(req, res) {
+async function registerUser(req, res) {
     const { username, 
             password, 
             email, 
@@ -124,8 +124,11 @@ function validateLogin(req, res){
     client
         .query(query)
         .then(user => {
+            console.log('here')
             bcrypt.compare(password, user.rows[0].password, (err, result) => {
+                console.log('here1')
                 if (err) {
+                    console.log('here')
                     res.status(201).send({ msg: 'invalid_password' });
                     return
                 }
@@ -138,7 +141,8 @@ function validateLogin(req, res){
                 }
             })
         })
-        .catch(err => res.status(201).send({ msg: 'invalid_username' }))
+        .catch(err => {
+            res.status(201).send({ msg: 'invalid_username' })})
 }
 
 // deletes a user from database and returns that user object in json

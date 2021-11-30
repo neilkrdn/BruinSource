@@ -25,7 +25,6 @@ function validateUsername(username) {
                 return true
             })
     } else {
-        console.log('here')
         return true;
     }
 }
@@ -174,11 +173,10 @@ async function registerUser(req, res) {
     known_languages_input = formatKnownLanguages(known_languages);
 
     projects_worked_input = formatProjectsWorked(projects_worked)
-
     // make query if inputs are all valid
     if (/*usernameValid*/  emailValid && passwordValid) {
-        const query = 'INSERT INTO users(status, username, password, email, github, year_exp, known_languages, projects_worked) values($1, $2, $3, $4, $5, $6, $7::varchar[], $8::int[])';
-        const vals = [status, username, hashed_password, email, github, year_exp, known_languages_input, projects_worked_input];
+        const query = 'INSERT INTO users(username, password, email, github, year_exp, known_languages, projects_worked) values($1, $2, $3, $4, $5, $6::varchar[], $7::int[])';
+        const vals = [username, hashed_password, email, github, year_exp, known_languages_input, projects_worked_input];
         client
             .query(query, vals)
             .then(user => {
@@ -208,7 +206,8 @@ function validateLogin(req, res) {
                 }
             })
         })
-        .catch(err => res.status(201).send({ msg: 'invalid_username' }))
+        .catch(err => {
+            res.status(201).send({ msg: 'invalid_username' })})
 }
 
 
@@ -259,6 +258,7 @@ function getUserByUsername(req, res) {
         .catch(() => {
             res.status(201).send({ msg: `invalid_username` });
         })
+    
 }
 
 /*

@@ -1,21 +1,34 @@
-const {client} = require('./db.js')
+const { client, formatArrayToSql } = require('./db.js');
 
 class Project {
-    constructor(id, name, description, tags, github, status, date_created, last_updated, author, collaborators){
+    constructor(id, name, description, tags, github, date_created, last_updated, author, collaborators, requests){
         this.id = id;
         this.name = name;
         this.description = description;
         this.tags = tags;
         this.github = github;
-        this.status = status;
         this.date_created = date_created;
         this.last_updated = last_updated;
         this.author = author;
         this.collaborators = collaborators;
+        this.requests = requests;
     }
 }
 
-// TODO: creates a project in db
+function validateProjectName(projectName){
+
+    //check if username doesn't have spaces
+    const numSpaces = projectName
+                        .split('')
+                        .map(char => /\s/.test(char))
+                        .reduce((curr,prev) => curr + prev);
+
+    if (numSpaces == 0) return true;
+    else return false;
+    
+}
+
+// create a project in db
 function createProject(req, res)
 {
     const {
@@ -23,31 +36,51 @@ function createProject(req, res)
         description,
         tags,
         github,
-        status, 
         date_created, 
         last_updated, 
         author, 
-        collaborators
+        collaborators,
+        requests
     } = req.body;
 
-    // set status to active
-    status = 1;
+    let projectNameValid = validateProjectName(name);
 
-    const query = 'INSERT INTO projects(name, description, tags, github, status, date_created, last_updated, author, collaborators) values($1, $2, $3::varchar[], $4, $5, $6, $7::varchar[], $8::int[])';
-    const vals = [status, username, hashed_password, email, github, year_exp, known_languages_input, projects_worked_input];
+    if (!projectNameValid) res.status(201).send({msg: 'name_invalid'});
 
-    client
-    .query(query,vals)
-    .catch(err => res.status(201).send(err));
+    if (!description) description = '';
+    if (!github) github = '';
 
+    date_created = new Date();
+    last_updated = new Date();
+    
+    formattedTags = formatArrayToSql(tags);
+    formattedCollaboraters = formatArrayToSql(collaborators);
+    formattedRequests = formatArrayToSql(requests);
+
+    if (author && projectNameValid){
+        const query = 'INSERT INTO projects(name, description, tags, github, status, date_created, last_updated, author, collaborators) values($1, $2, $3::varchar[], $4, $5, $6, $7::varchar[], $8::int[])';
+        const vals = [ name, description, formattedTags, github, date_created, last_updated, author, collaborators, requests];
+        client
+        .query(query,vals)
+        .catch(err => res.status(201).send(err));
+    } else {
+        res.status(201).send({msg: 'author_invalid'});
+    }
 }
 
-// TODO: query delete functionality 
-function deleteProject() {}
+// delete project from db
+function deleteProject(req, res) {
+    const { id } = req.params;
+    const query = `DELETE FROM projects p where p.id = '${id}'`; 
+    
+    client
+    .query(query)
+    .catch(err => res.status(201).send({msg: 'invalid_id'}));
+}
 
 // returns all active projects
 function getProjects(req, res) {
-    const query = `select * from projects where p.status = '${1}'`;
+    const query = `select * from projects p where p.status = '${1}'`;
     client
     .query(query)
     .then(projects => res.status(200).send(projects.rows))
@@ -57,7 +90,7 @@ function getProjects(req, res) {
 // returns project that correlates to id param
 function getProjectById(req, res) {
     const { projectId } = req.params;
-    const query = `select * from projects where p.id = '${projectId}'`;
+    const query = `select * from projects p where p.id = '${projectId}'`;
     client
     .query(query)
     .then(projects => res.status(200).send(projects.rows))
@@ -75,7 +108,7 @@ function getProjectsByUser(req, res) {
     .query(idQuery)
     .then(user => {
         userValid = true;
-        userId = user.rows.id;
+        userId = user.rows[0].id;
     })
     .catch(() => {
         res.status(201).send({msg: `invalid_username`});
@@ -94,11 +127,38 @@ function getProjectsByUser(req, res) {
     }
 }
 
-// TODO: return json of all projects that contains at least one tag defined by user
+// TODO: return all projects that contains at least one tag defined by user
 function getProjectsByTags() {}
 
-// TODO: returns json of collaboration requests made on project to owner
-function getProjectCollabRequests(req, res){}
+// returns all collaboration requests for all projects
+function getAllRequests(req, res){
+    const query = `select * from projects`;
+    client
+    .query(query)
+    .then(projects => res.status(200).send(projects.rows.requests))
+    .catch(err => res.status(201).send(err));
+}
+
+// returns all collaboration requests made on a project
+function getProjectRequests(req, res){
+    const { projectId } = req.params;
+    const query = `select * from projects p where p.id = '${projectId}'`;
+    client
+    .query(query)
+    .then(project => res.status(200).send(project.rows[0].requests))
+    .catch(err => res.status(201).send(err));
+}
+
+function createRequest(req, res) {
+
+
+
+}
+
+function approveRequest(req, res) {
+
+    
+}
 
 module.exports = {
     createProject,
@@ -107,5 +167,8 @@ module.exports = {
     getProjectById,
     getProjectsByUser,
     getProjectsByTags,
-    getProjectCollabRequests
+    getAllRequests,
+    getProjectRequests,
+    createRequest,
+    approveRequest
 }

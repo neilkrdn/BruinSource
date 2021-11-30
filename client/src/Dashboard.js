@@ -2,11 +2,32 @@ import React from 'react';
 import './Dashboard.css';
 import mainLogo from './bruinsource_logo.png'
 import searchIcon from './search_icon.png'
+/*import { getProjectById } from '../../server/project';*/
 
 class Dashboard extends React.Component {
-
-    // Note: gonna need to dynamically allocate headers based on the db
-    // I think these should be in a table
+    constructor(props) {
+        super(props);
+        this.state = {
+          projects: []
+        }
+    }
+    ProjectList() {
+        return fetch('https://localhost:8000/api/projects')
+        .then(res =>this.setState({projects: res.rows}));
+    }
+    renderTableData() {
+        return this.state.projects.map((project, index) => {
+            const {id, name, description, tags, date_created, last_updated, author, collaborators, requests} = project
+            return (
+                <tr key={name}>
+                    <td>{name}</td>
+                    <td>{author}</td>
+                    <td>{date_created}</td>
+                    <td>{collaborators}</td>
+                </tr>
+            )
+        })
+    }
     render() {
         return (
             <div className="Dashboard">
@@ -22,6 +43,21 @@ class Dashboard extends React.Component {
                     <img src={searchIcon} width="50px" alt="searchIcon" ></img>
                 </button>
                 <button type="button" className="Create">CREATE A PROJECT</button>
+                <div className="ProjectList">
+                    <table className="ProjectListTable">
+                        <thead className="ProjectListTableHead">
+                            <tr>
+                                <td>NAME</td>
+                                <td>OWNER</td>
+                                <td>DATE JOINED</td>
+                                <td>COLLABORATORS</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                                {this.renderTableData()}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         );
     }

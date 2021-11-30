@@ -66,3 +66,24 @@ h2
     padding: 20px;
 }
 
+.Dashboard .ProjectListTable {
+    position: relative;
+    display: block;
+    color: black;
+    left: 180px;
+    font-size: larger;
+    border-spacing: 100px;
+    font-weight: bold;
+    top: -110px;
+}
+
+.Dashboard .ProjectListTableHead {
+    position: relative;
+    display: block;
+    color: #005587;
+    font-size: larger;
+    left: 30px;
+    border-spacing: 100px;
+    font-weight: bold;
+    top: -10px;
+}

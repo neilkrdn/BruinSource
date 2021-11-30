@@ -16,7 +16,7 @@ class CreateTask extends React.Component {
 
     onCreateTask = () => 
     {
-        //axios.post('/api/createtask', {name: this.state.name, description: this.state.description, tags: this.state.tags, github: this.state.github})
+        //axios.post('/api/createtask', {name: this.state.name, description: this.state.description, tags: this.state.tags})
         /*
                     setAlert('Task created successfully! Redirecting...')
                     setTimeout(() => {

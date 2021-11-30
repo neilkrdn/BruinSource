@@ -52,9 +52,6 @@ app.get('/api/login', user.validateLogin);
 /** Retrieve all users query **/
 app.get('/api/users', user.getUsers);
 
-/** Retrieve all users query **/
-app.get('/api/users/active', user.getActiveUsers);
-
 /** Retrieve user by username **/
 app.get('/api/users/:username', user.getUserByUsername);
 
@@ -65,23 +62,31 @@ app.get('/api/users/:username', user.getUserByUsername);
 app.get('/api/projects/create', project.createProject);
 
 /** Delete a project **/
-app.get('/api/projects/delete', project.deleteProject);
+app.get('/api/projects/:projectId/delete', project.deleteProject);
 
 /** Retrieve all available projects **/
-app.get('/api/projects/active', project.getProjects);
+app.get('/api/projects', project.getProjects);
 
 /** Retrieve a project by project id **/
-app.get('/api/projects/active/:projectId', project.getProjectById);
+app.get('/api/projects/:projectId', project.getProjectById);
 
 /** Retrieve projects owned by a user **/
-app.get('/api/projects/active/:username', project.getProjectsByUser);
+app.get('/api/projects/:username', project.getProjectsByUser);
 
 /** Search through all available projects **/
-app.get('/api/projects/active/tags', project.getProjectsByTags);
+app.get('/api/projects/tags', project.getProjectsByTags);
 
 /** Retrieve collaboration requests to user for projects owned **/
-app.get('/api/projects/active/:username/requests', project.getProjectCollabRequests);
+app.get('/api/projects/requests', project.getAllRequests);
 
+/** Retrieve collaboration requests to user for projects owned **/
+app.get('/api/projects/requests/:projectId', project.getProjectRequests);
+
+/** Create a request for a project **/
+app.get('/api/projects/requests/create', project.createRequest);
+
+/** Approve a request for a project **/
+app.get('/api/projects/requests/delete', project.approveRequest);
 
 ////////  TASK APIs    ////////
 

@@ -18,7 +18,21 @@ function connectdb() {
     client.connect();
 }
 
+// format array worked into sql type
+function formatArrayToSql(arr){
+    let formatted = '{';
+
+    arr.map(each =>{
+        formatted += (each + ',');
+    });
+
+    formatted = formatted.substring(0, formatted.length - 1);
+    formatted += '}';
+    return formatted;
+}
+
 module.exports = {
     client, 
-    connectdb
+    connectdb, 
+    formatArrayToSql,
 }

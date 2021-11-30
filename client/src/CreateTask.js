@@ -20,7 +20,7 @@ class CreateTask extends React.Component {
         /*
                     setAlert('Task created successfully! Redirecting...')
                     setTimeout(() => {
-                        history.push('/dashboard')
+                        history.push('/taskdashboard')
                     }, 5000);
         */
     }

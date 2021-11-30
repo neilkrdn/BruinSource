@@ -12,7 +12,7 @@ h2
     padding: 10px;
 }
 
-.Dashboard .MainLogo
+.AllProjects .MainLogo
 {
     position: relative;
     width: 20%;
@@ -22,7 +22,7 @@ h2
     filter: drop-shadow(0px 2px 3px #AFAFAF)
 }
 
-.Dashboard .Title {
+.AllProjects .Title {
     margin: left;
     color: #005587;
     left: 575px;
@@ -31,7 +31,7 @@ h2
 }
 
 
-.Dashboard input {
+.AllProjects input {
     position: relative;
     width: 500px;
     height: 50px;
@@ -39,42 +39,34 @@ h2
     border-radius: 25px;
     border: 1px solid #000000;
     padding: 20px;
-    left: -170px;
+    left: -175px;
     top: 10px;
     
 }
 
-.Dashboard button {
+.AllProjects button {
     position: relative;
     height: 50px;
     border-radius: 10px;
     border: none;
 }
 
-.Dashboard .Search {
+.AllProjects .Search {
     position:relative;
     top: -40px;
-    left: 260px;
+    left: 265px;
 }
 
-.Dashboard .Create {
+.AllProjects .Create {
     position:relative;
     color: white;
-    left: 275px;
-    top: -58px;
-    background-color: #005587;
-    padding: 20px;
-}
-.Dashboard .AllProjects {
-    position:relative;
-    color: white;
-    left: 290px;
+    left: 280px;
     top: -58px;
     background-color: #005587;
     padding: 20px;
 }
 
-.Dashboard .ProjectListTable {
+.AllProjects .ProjectListTable {
     position: relative;
     display: block;
     color: black;
@@ -84,7 +76,7 @@ h2
     font-weight: bold;
 }
 
-.Dashboard .ProjectListTableHead {
+.AllProjects .ProjectListTableHead {
     position: relative;
     display: block;
     color: #005587;
@@ -92,4 +84,12 @@ h2
     left: 30px;
     border-spacing: 100px 10px;
     font-weight: bold;
+}
+.AllProjects .BackToProjects {
+    position:relative;
+    color: white;
+    left: 295px;
+    top: -58px;
+    background-color: #005587;
+    padding: 20px;
 }

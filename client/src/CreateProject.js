@@ -38,6 +38,7 @@ class CreateProject extends React.Component {
                         type="text" 
                         placeholder="Project Name..."
                         required
+                        onChange={(input) => this.setState({ name: input.target.value })}
                         />
                     </div>
                     <div className="ProjectDescription">
@@ -45,6 +46,7 @@ class CreateProject extends React.Component {
                         type="text"
                         placeholder="Project Description..."
                         required
+                        onChange={(input) => this.setState({ description: input.target.value })}
                         />
                     </div>
                     <div className="ProjectTags">
@@ -52,17 +54,19 @@ class CreateProject extends React.Component {
                         type="text"
                         placeholder="Project Tags (comma-separated)..."
                         required
+                        onChange={(input) => this.setState({ tags: input.target.value })}
                         />
                     </div>
                     <div className="ProjectGitHub">
                         <input
                         type="text"
                         placeholder="http://github.com/..."
+                        onChange={(input) => this.setState({ github: input.target.value })}
                         />
                     </div>
                     <div className="Buttons">
                         <button type="button" className="BackToProjects" onClick={() => history.push('/dashboard')}>Back to Projects</button>
-                        <button type="button" className="CreateNewProject" /* onClick={this.onCreateProject} */>Create New Project</button>
+                        <button type="button" className="CreateNewProject" onClick={() => console.log(this.state.description)}>Create New Project</button>
                     </div>
                 </form>
             </div>

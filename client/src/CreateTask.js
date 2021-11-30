@@ -36,6 +36,7 @@ class CreateTask extends React.Component {
                         type="text" 
                         placeholder="Task Name..."
                         required
+                        onChange={(input) => this.setState({ name: input.target.value })}
                         />
                     </div>
                     <div className="TaskDescription">
@@ -43,6 +44,7 @@ class CreateTask extends React.Component {
                         type="text"
                         placeholder="Task Description..."
                         required
+                        onChange={(input) => this.setState({ description: input.target.value })}
                         />
                     </div>
                     <div className="TaskTags">
@@ -50,6 +52,7 @@ class CreateTask extends React.Component {
                         type="text"
                         placeholder="Task Tags (comma-separated)..."
                         required
+                        onChange={(input) => this.setState({ tags: input.target.value })}
                         />
                     </div>
                     <div className="Buttons">

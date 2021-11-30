@@ -21,23 +21,22 @@ function createTask(){}
 // TODO: query delete functionality 
 function deleteTask(){}
 
-// TODO: query modify functionality to modify due date
-function modifyDateDue(){}
-
-// TODO: query modify functionality to update when a task is finished
-function updateDateFinished(){}
-
-// TODO: query modify functionality to assign a developer to a task 
-function assignTask(){}
-
-// TODO: query modify functionality to delete assigned developer 
-function deleteAssignee(){}
+// returns all tasks correlating to a project
+function getTasks(req, res) {
+    const { projectId } = req.param;
+    const query = `select * from tasks where t.project_id = '${projectId}'`;
+    client
+    .query(query)
+    .then(tasks => {
+        res.status(200).send(tasks.rows);
+    })
+    .catch(() => {
+        res.status(201).send({msg: `invalid_project_id`});
+    })
+}
 
 module.exports = {
     createTask,
     deleteTask,
-    modifyDateDue,
-    updateDateFinished,
-    assignTask,
-    deleteAssignee
+    getTasks
 }

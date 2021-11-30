@@ -10,7 +10,7 @@ const fs = require('fs');
 const path = require('path');
 
 /** setup database  **/
-const {client, connectdb} = require('./db.js')
+const {connectdb} = require('./db.js')
 connectdb()
 
 /** middleware **/
@@ -36,56 +36,74 @@ insert syntax:
 insert into users(id, status, username, password, email, github, year_exp, known_languages, projects_worked) values(1, false, 'newUser', 'testpass', 'newemail', 'newgithub', 1, '{"hello"}'::varchar[], '{1, 3}'::int[])
 */
 
+
+////////  USER APIs    ////////
+
+
 /** Register user **/
-app.post('api/register', user.registerUser)
+app.post('/api/register', user.registerUser)
 
 /** Retrieve user by login **/
-app.get('api/login', user.validateLogin)
+app.post('/api/login', user.validateLogin)
 
 /** Retrieve all users query **/
 app.get('/api/users', user.getUsers);
 
-/** Retrieve all users query **/
-app.get('/api/users/active', user.getActiveUsers);
-
 /** Retrieve user by username **/
-app.get('/api/users/:username', user.getUserByUsername)
+app.get('/api/users/:username', user.getUserByUsername);
 
 
-/** Retrieve user by project id **/
-// app.get('/api/users/:projectId', user.getUserByProject)
+////////  PROJECT APIs    ////////
 
-/** Retrieve user by task id **/
-// app.get('/api/users/:projectId', user.getUserByTask)
+/** Create a project **/
+app.get('/api/projects/create', project.createProject);
 
-/** Delete a User **/
-app.post('/api/users/delete', user.deleteUser) 
+/** Delete a project **/
+app.get('/api/projects/:projectId/delete', project.deleteProject);
 
-/**
+/** Retrieve all available projects **/
+app.get('/api/projects', project.getProjects);
 
-  More routes we'll probably have to write in thinking about the front-end for anybody working on backend:
-  retreive user by project id
-  retrieve user by task id
-  retrieve user by set of known languages (filtering by languages essentially)
-  change username / password
-  modify known languages, project ids, etc. 
+/** Retrieve a project by project id **/
+app.get('/api/projects/:projectId', project.getProjectById);
 
- */
+/** Retrieve projects owned by a user **/
+app.get('/api/projects/:username', project.getProjectsByUser);
+
+/** Search through all available projects **/
+app.get('/api/projects/tags', project.getProjectsByTags);
+
+/** Retrieve collaboration requests to user for projects owned **/
+app.get('/api/projects/requests', project.getAllRequests);
+
+/** Retrieve collaboration requests to user for projects owned **/
+app.get('/api/projects/requests/:projectId', project.getProjectRequests);
+
+/** Create a request for a project **/
+app.get('/api/projects/requests/create', project.createRequest);
+
+/** Approve a request for a project **/
+app.get('/api/projects/requests/delete', project.approveRequest);
+
+////////  TASK APIs    ////////
+
+/** Create a task for a project **/
+app.get('/api/projects/:projectId/tasks/create', task.createTask);
+
+/** Delete a task for a project **/
+app.get('/api/projects/:projectId/tasks/delete', task.deleteTask);
+
+/** Retrieve all tasks for a project **/
+app.get('/api/projects/:projectId/tasks', task.getTasks);
+
+
+/** Close a task for a project **/
+// app.get('/api/projects/:projectId/delete', task.closeTask);
+
+/** Assign a task to a user **/
+// app.get('/api/projects/:projectId/:username/tasks', task.assignUserTask);
 
 app.listen(PORT, function(err) {
   if (err) console.log(err);
   console.log(`Server started on port ${PORT}`);
 });
-
-/*
-USERS TABLE
-  note for yash - I set the username to unique key so that database doesn't allow duplicate usernames by default
-  id is also a primary key 
-  I also set github to be able to be null - are we requiring github for all users?
-  (note - only username is unique id rn - should I Write SQL to make email unique?)
-
-  database is all done being setup with your structure - only diff is that username is unique key
-  
-  maybe try to write some stuff here to link projects to users, tasks to projects?
-  gonna get to that next
-  */

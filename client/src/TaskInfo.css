@@ -10,9 +10,15 @@ h2
     color: #005587;
     position: relative;
     padding: 10px;
+    padding-top: 25px;
 }
 
-.Register .MainLogo
+p
+{
+    padding-top:25px;
+    padding-bottom:25px;
+}
+.TaskInfo .MainLogo
 {
     position: relative;
     width: 20%;
@@ -22,7 +28,7 @@ h2
     filter: drop-shadow(0px 2px 3px #AFAFAF)
 }
 
-.Register .FormBox 
+.TaskInfo .FormBox 
 {
     position: relative;
     padding: 10px;
@@ -30,7 +36,7 @@ h2
 }
 
 
-.Register textarea 
+.TaskInfo textarea 
 {
     position: relative;
     width: 600px;
@@ -42,7 +48,7 @@ h2
     resize: none;
 } 
 
-.Register input 
+.TaskInfo input 
 {
     position: relative;
     width: 600px;
@@ -52,13 +58,13 @@ h2
     padding: 20px;
 }
 
-.Register .Buttons
+.TaskInfo .Buttons
 {
     padding-top:10px;
     padding-bottom:50px;
 }
 
-.Register .BackToLogin
+.TaskInfo .BackToTasks
 {
     position: relative;
     background-color: white;
@@ -68,7 +74,12 @@ h2
     filter: drop-shadow(0px 2px 2px #2F2F2F)
 }
 
-.Register .CreateNewAccount
+h4
+{
+    padding-bottom: 20px;
+}
+
+.TaskInfo .SubmitTask
 {
     position: relative;
     margin-left: 240px;
@@ -80,7 +91,3 @@ h2
     filter: drop-shadow(0px 2px 2px #2F2F2F)
 }
 
-
-#error-text {
-    color: red;
-}

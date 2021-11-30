@@ -1,11 +1,11 @@
 import React from 'react';
-import './Dashboard.css';
+import './AllProjects.css';
 import mainLogo from './bruinsource_logo.png'
 import searchIcon from './search_icon.png'
 /*import { getProjectById } from '../../server/project';*/
 import history from './history';
 
-class Dashboard extends React.Component {
+class AllProjects extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -31,20 +31,20 @@ class Dashboard extends React.Component {
     }
     render() {
         return (
-            <div className="Dashboard">
+            <div className="AllProjects">
                 <img src={mainLogo} className="MainLogo" alt="mainLogo"/>
-                <h2> My Projects </h2>
+                <h2> All Projects </h2>
                 <form>
                     <input
                     type="text"
-                    placeholder="Search for a project..."
+                    placeholder="Search from all projects..."
                     />
                 </form>
                 <button type="button" className="Search"> 
                     <img src={searchIcon} width="50px" alt="searchIcon" ></img>
                 </button>
                 <button type="button" className="Create" onClick={() => history.push('/createproject')}>Create New Project</button>
-                <button type="button" className="AllProjects" onClick={() => history.push('/allprojects')}>See All Projects</button>
+                <button type="button" className="BackToProjects" onClick={() => history.push('/dashboard')}>Back to My Projects</button>
                 
                 <div className="ProjectList">
                     <table className="ProjectListTable">
@@ -66,4 +66,4 @@ class Dashboard extends React.Component {
     }
 }
 
-export default Dashboard;
+export default AllProjects;

@@ -110,16 +110,6 @@ const Dashboard = (props) => {
                 </button>
                 <button type="button" className="Create" onClick={() => history.push('/createproject')}>Create New Project</button>
                 <button type="button" className="AllProjects" onClick={() => history.push('/allprojects')}>See All Projects</button>
-                <form className="tags">
-                    <input
-                        type="checkbox"
-                        id="frontend"
-                        className="tags"
-                        name="frontend"
-                        value="frontend"
-                    />
-                </form>
-
                 <div className="ProjectList">
                     {!dataLoaded ?
                         <div className="LoadingDiv"> <Bars fill="#005587" /> </div>

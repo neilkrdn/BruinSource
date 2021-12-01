@@ -117,11 +117,12 @@ function registerUser(req, res) {
    
     // make query if inputs are all valid
     if (usernameValid && emailValid && passwordValid) {
-        const query = 'INSERT INTO users(status, username, password, email, github, year_exp, known_languages) values($1, $2, $3, $4, $5, $6, $7::varchar[])';
+        const query = 'INSERT INTO users(username, password, email, github, year_exp, known_languages) values($1, $2, $3, $4, $5, $6::varchar[])';
         const vals = [username, password, email, github, year_exp, known_languages_input];
 
         client
             .query(query, vals)
+            .then(res => res.send)
             .catch(err => res.status(201).send(err));
     } else {
         res.status(201).send({msg: 'something_wrong'});

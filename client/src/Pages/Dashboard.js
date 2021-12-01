@@ -22,6 +22,7 @@ const Dashboard = (props) => {
 
     const [dataLoaded, setDataLoaded] = useState(false)
 
+    
     const submitSearch = () => {
         let userID = auth.ID
         console.log(userID)

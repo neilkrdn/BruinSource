@@ -14,6 +14,7 @@ class CreateTask extends React.Component {
         }
     }
 
+
     onCreateTask = () => 
     {
         //axios.post('/api/createtask', {name: this.state.name, description: this.state.description, tags: this.state.tags})
@@ -23,11 +24,6 @@ class CreateTask extends React.Component {
                         history.push('/taskdashboard')
                     }, 5000);
         */
-    }
-
-
-    componentDidMount() {
-        console.log(history.location.state[0])
     }
 
     render() {

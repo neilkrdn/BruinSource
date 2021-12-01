@@ -49,7 +49,7 @@ export default function ProjectTable(props) {
 
       const onClickFunction = () => {
         console.log(project_id)
-        history.push('/createtask', [project_id])
+        history.push('/projectinfo', [project_id])
       }
 
       return (

@@ -5,7 +5,7 @@ import './App.css';
 import axios from 'axios';
 import Routes from "./Routes.js"
 import history from './history';
-import {deleteUser, insertUser} from './backend-calls'
+import {deleteUser, insertUser} from './Shared/backend-calls'
 
 /*to-do
 install react router and make header component + different pages

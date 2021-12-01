@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import './CreateProject.css';
-import mainLogo from './bruinsource_logo.png'
-import history from './history';
+import mainLogo from '../Files/bruinsource_logo.png'
+import history from '../history';
 import axios from 'axios';
-import { useAuth } from './ProvideAuth';
-import { getIDfromUsername } from './backend-calls';
-import { getCurrentDate } from './CommonFunctions';
+import { useAuth } from '../Shared/ProvideAuth';
+import { getCurrentDate } from '../Shared/CommonFunctions';
 
 const CreateProject = (props) => {
     const [name, setName] = useState(null)
@@ -18,7 +17,6 @@ const CreateProject = (props) => {
     const [requests, setRequests] = useState([])
 
     const [alert, setAlert] = useState(null)
-
 
     const auth = useAuth()
 

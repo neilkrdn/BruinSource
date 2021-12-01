@@ -1,7 +1,7 @@
 import React from 'react';
 import './TaskInfo.css';
-import mainLogo from './bruinsource_logo.png'
-import history from './history.js'
+import mainLogo from '../Files/bruinsource_logo.png'
+import history from '../history.js'
 class TaskInfo extends React.Component {
     render() {
         return (

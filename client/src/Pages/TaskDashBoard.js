@@ -1,8 +1,8 @@
 import React from 'react';
 import './TaskDashBoard.css';
-import mainLogo from './bruinsource_logo.png'
-import searchIcon from './search_icon.png'
-import history from './history';
+import mainLogo from '../Files/bruinsource_logo.png'
+import searchIcon from '../Files/search_icon.png'
+import history from '../history';
 
 //const {client} = require('./db.js')
 

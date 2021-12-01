@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import './AllProjects.css';
-import mainLogo from './bruinsource_logo.png'
-import searchIcon from './search_icon.png'
+import mainLogo from '../Files/bruinsource_logo.png'
+import searchIcon from '../Files/search_icon.png'
 /*import { getProjectById } from '../../server/project';*/
-import history from './history';
+import history from '../history';
 import axios from 'axios';
 import { Bars } from 'react-loading-icons'
 

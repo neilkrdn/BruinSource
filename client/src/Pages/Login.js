@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import './Login.css';
-import history from './history';
-import mainLogo from './bruinsource_logo.png'
+import history from '../history';
+import mainLogo from '../Files/bruinsource_logo.png'
 import axios from 'axios';
-import { useAuth } from '../src/ProvideAuth'
+import { useAuth } from '../Shared/ProvideAuth'
 
 function Login(props) {
 

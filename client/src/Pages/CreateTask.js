@@ -1,7 +1,7 @@
 import React from 'react';
 import './CreateTask.css';
-import mainLogo from './bruinsource_logo.png'
-import history from './history';
+import mainLogo from '../Files/bruinsource_logo.png'
+import history from '../history';
 class CreateTask extends React.Component {
     constructor(props)
     {

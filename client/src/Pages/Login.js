@@ -33,6 +33,10 @@ function Login(props) {
                 if (res.data.msg === 'success') {
                     auth.signin(username, password);
                     history.push('/dashboard')
+                } else if (res.data.msg === 'invalid_password') {
+                    setReponseText('Password incorrect.')
+                } else {
+                    setReponseText('Something went wrong')
                 }
                 console.log(res)
             })

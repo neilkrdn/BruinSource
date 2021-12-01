@@ -125,19 +125,11 @@ function validateLogin(req, res) {
     client
         .query(query)
         .then(user => {
-            bcrypt.compare(password, user.rows[0].password, (err, result) => {
-                if (err) {
-                    res.status(201).send({ msg: 'invalid_password' });
-                    return
-                }
-                if (result) {
-                    res.status(200).send({ msg: 'success' });
-                    return
-                } else {
-                    res.status(201).send({ msg: 'invalid_password' });
-                    return
-                }
-            })
+            if (password === user.rows[0].password) {
+                res.status(200).send({msg: 'success'})
+            } else {
+                res.status(201).send({ msg: 'invalid_password' })
+            }
         })
         .catch(err => {
             res.status(201).send({ msg: 'invalid_username' })

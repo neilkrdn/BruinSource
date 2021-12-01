@@ -87,7 +87,7 @@ function deleteProject(req, res) {
 
 // returns all active projects
 function getProjects(req, res) {
-    const query = `select * from projects p where p.status = '${1}'`;
+    const query = `select * from projects`;
     client
     .query(query)
     .then(projects => res.status(200).send(projects.rows))
@@ -100,7 +100,7 @@ function getProjectById(req, res) {
     const query = `select * from projects p where p.id = '${projectId}'`;
     client
     .query(query)
-    .then(projects => res.status(200).send(projects.rows))
+    .then(projects => res.status(200).send(projects.rows[0]))
     .catch(err => res.status(201).send(err))
 }
 

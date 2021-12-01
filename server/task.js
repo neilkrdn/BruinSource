@@ -41,10 +41,18 @@ function createTask(req, res){
 
 }
 
-// TODO: query delete functionality 
-function deleteTask(){}
+function deleteTask(req, res){
+    const { taskId } = req.param;
 
-// returns all tasks correlating to a project
+    const query = `delete from tasks t where t.id = '${taskId}'`;
+    client
+    .query(query)
+    .catch(err => {
+        console.log(err);
+        res.status(201).send(err);
+    });
+}
+
 function getTasks(req, res) {
     const { projectId } = req.param;
     const query = `select * from tasks t where t.project_id = '${projectId}'`;

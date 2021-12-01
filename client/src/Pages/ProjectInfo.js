@@ -5,10 +5,17 @@ import history from '../history.js'
 import axios from 'axios';
 import { red } from '@mui/material/colors';
 import { Typography } from '@mui/material';
+import {makeStyles} from '@mui/styles';
 import { Bars } from 'react-loading-icons';
-
 import DeleteIcon from '@mui/icons-material/Delete';
 import MyList from '../Components/List';
+
+const useStyles2 = makeStyles({
+    custom: {
+      color: "black",
+      fontFamily: "Georgia"
+    }
+  });
 
 const ProjectInfo = (props) => {
     const [projectInfo, setProjectInfo] = useState(null)
@@ -63,16 +70,16 @@ const ProjectInfo = (props) => {
             <React.Fragment>
                 <div className="MainInfoGrid">
                     <div className="ProjectText">
-                        <Typography variant="h3" gutterBottom component="div">
+                        <Typography variant="h3" gutterBottom component="div" sx={{fontFamily: 'Georgia', fontWeight: 'bold'}}>
                             {projectInfo.name}
                         </Typography>
-                        <Typography variant="h6" gutterBottom component="div">
+                        <Typography variant="h6" gutterBottom component="div" sx={{fontFamily: 'Georgia'}}>
                             Date Created: {projectInfo.date_created}
                         </Typography>
-                        <Typography variant="body1" gutterBottom component="div">
+                        <Typography variant="body1" gutterBottom component="div" sx={{fontFamily: 'Georgia'}}>
                             {projectInfo.description}
                         </Typography>
-                        <Typography variant="h6" gutterBottom component="div">
+                        <Typography variant="h6" gutterBottom component="div" sx={{fontFamily: 'Georgia'}}>
                             <a href={`${projectInfo.github}`}>Project Github</a>
                         </Typography>
                     </div>

@@ -15,6 +15,9 @@ import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 
 const MyList = (props) => {
     const { data } = props;
+    const text = {
+        fontFamily: 'Georgia'
+    }
     const renderItems = () => {
         console.log(data)
         if (data) {
@@ -32,7 +35,7 @@ const MyList = (props) => {
                             <PersonOutlineIcon />
                         </Avatar>
                     </ListItemAvatar>
-                    <ListItemText
+                    <ListItemText primaryTypographyProps={{ style: text }}
                         primary={each}
                     />
                 </ListItem>
@@ -41,7 +44,7 @@ const MyList = (props) => {
         } else {
             return (
             <ListItem>
-                <ListItemText
+                <ListItemText primaryTypographyProps={{ style: text }}
                 primary="No team members exist.">
                 </ListItemText>
             </ListItem>
@@ -53,7 +56,7 @@ const MyList = (props) => {
 
     return (
         <div className="ListContainer">
-            <Typography variant="h4" gutterBottom component="div">
+            <Typography sx={{fontFamily: 'Georgia', fontWeight: 'bold'}} variant="h4" gutterBottom component="div">
                 Team Members
             </Typography>
             <List sx={{ width: '100%' }}>

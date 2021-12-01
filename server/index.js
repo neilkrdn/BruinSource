@@ -84,7 +84,7 @@ app.get('/api/projects/requests/:projectId', project.getProjectRequests);
 app.get('/api/projects/requests/create', project.createRequest);
 
 /** Approve a request for a project **/
-app.get('/api/projects/requests/delete', project.approveRequest);
+app.get('/api/projects/requests/approve/:requestId', project.approveRequest);
 
 /** Search for a project **/
 app.get('/api/projects/searchproject/:search', project.searchProjects)
@@ -92,13 +92,13 @@ app.get('/api/projects/searchproject/:search', project.searchProjects)
 ////////  TASK APIs    ////////
 
 /** Create a task for a project **/
-app.get('/api/projects/:projectId/tasks/create', task.createTask);
+app.get('/api/projects/tasks/create', task.createTask);
 
 /** Delete a task for a project **/
-app.get('/api/projects/:projectId/tasks/delete', task.deleteTask);
+app.get('/api/projects/tasks/delete/:taskId', task.deleteTask);
 
 /** Retrieve all tasks for a project **/
-app.get('/api/projects/:projectId/tasks', task.getTasks);
+app.get('/api/projects/tasks/:projectId', task.getTasks);
 
 
 /** Close a task for a project **/

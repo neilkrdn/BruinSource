@@ -108,7 +108,7 @@ function deleteProject(req, res) {
 
 // returns all active projects
 function getProjects(req, res) {
-    const query = `select * from projects p` // where p.status = '${1}'`;
+    const query = `select * from projects`;
     client
         .query(query)
         .then(projects => res.status(200).send(projects.rows))
@@ -167,11 +167,11 @@ function getProjectsByTags() { }
 
 // returns all collaboration requests for all projects
 function getAllRequests(req, res) {
-    const query = `select * from projects`;
+    const query = `select * from requests`;
     client
-        .query(query)
-        .then(projects => res.status(200).send(projects.rows.requests))
-        .catch(err => res.status(201).send(err));
+    .query(query)
+    .then(requests => res.status(200).send(requests.rows))
+    .catch(err => res.status(201).send(err));
 }
 
 // returns all collaboration requests made on a project
@@ -186,12 +186,62 @@ function getProjectRequests(req, res) {
 
 function createRequest(req, res) {
 
+    const { user, project_id, date_created } = req.body;
+    
+    if (user && project_id){
 
+        date_created = new Date();
 
+        const query = `INSERT INTO projects(user, project_id, date_created) values($1, $2, $3)`;
+        const vals = [user, project_id, date_created];
+
+        client
+        .query(query, vals)
+        .catch(err => {
+            console.log(err);
+            res.status(201).send(err);
+        });
+    } else {
+        res.status(201).send({msg: 'invalid_input'});
+    }
 }
 
 function approveRequest(req, res) {
 
+    const { requestId } = req.param;
+
+    let userId = null;
+    let projectId = null;
+
+    const userQuery = `select * from requests r where r.id = '${requestId}'`;
+    client
+    .query(userQuery)
+    .then(request => {
+        userId = request.rows[0].id;
+        projectId = request.rows[0].project_id;
+    })
+    .catch(err => {
+        console.log(err);
+        res.status(201).send(err);
+    });
+
+    let updatedCollaborators = null;
+    const getProjectQuery = `select * from projects p where p.id = '${projectId}'`;
+    client
+    .query(getProjectQuery)
+    .then(project => {
+        updatedCollaborators = project.rows[0].collaborators;
+        console.log(typeof(updatedCollaborators));
+        // find way to add to this array
+    })
+
+    const modifyUserQuery = `update projects set collaborators = '${updatedCollaborators}' where id = '${projectId}'`;
+    client
+    .query(modifyUserQuery)
+    .catch(err => {
+        console.log(err);
+        res.status(201).send(err);
+    })
 
 }
 

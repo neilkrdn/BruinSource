@@ -63,7 +63,7 @@ const Register = (props) => {
     return (
         <div className="Register">
             <img src={mainLogo} className="MainLogo" alt="mainLogo" />
-            <h2> Create Your New Account</h2>
+            <h2> Create a New Account</h2>
             <form className="Inputs">
                 <div className="FormBox">
                     <input
@@ -115,7 +115,7 @@ const Register = (props) => {
                 <div className="FormBox">
                     <input
                         type="text"
-                        placeholder="Projects you've done... (list exact name)"
+                        placeholder="Projects you've done (list exact name)..."
                         onChange={(input) => setNumProjects(input.target.value)}
                     />
                 </div>

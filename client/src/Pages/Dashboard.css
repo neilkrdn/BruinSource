@@ -10,6 +10,7 @@ h2
     color: #005587;
     position: relative;
     padding: 10px;
+    font-size: xx-large;
 }
 
 .Dashboard .MainLogo
@@ -30,7 +31,6 @@ h2
     top: 140px;
 }
 
-
 .Dashboard input {
     position: relative;
     width: 500px;
@@ -39,9 +39,10 @@ h2
     border-radius: 25px;
     border: 1px solid #000000;
     padding: 20px;
-    left: -170px;
+    font-size: large;
+    left: -200px;
     top: 10px;
-    
+    filter: drop-shadow(0px 2px 2px #2F2F2F)
 }
 
 .Dashboard button {
@@ -54,42 +55,33 @@ h2
 .Dashboard .Search {
     position:relative;
     top: -40px;
-    left: 260px;
+    left: 270px;
+    filter: drop-shadow(0px 2px 2px #2F2F2F)
 }
 
 .Dashboard .Create {
     position:relative;
     color: white;
-    left: 275px;
-    top: -58px;
+    left: 285px;
+    top: -56px;
     background-color: #005587;
+    font-size: large;
     padding: 20px;
+    line-height: 15px;
+    filter: drop-shadow(0px 2px 2px #2F2F2F)
 }
 .Dashboard .AllProjects {
     position:relative;
     color: white;
-    left: 290px;
-    top: -58px;
+    left: 300px;
+    top: -56px;
+    line-height: 15px;
+    font-size: large;
     background-color: #005587;
     padding: 20px;
+    filter: drop-shadow(0px 2px 2px #2F2F2F)
 }
 
-.Dashboard .ProjectListTable {
-    position: relative;
-    display: block;
-    color: black;
-    left: 180px;
-    font-size: larger;
-    border-spacing: 100px 10px;
-    font-weight: bold;
-}
-
-.Dashboard .ProjectListTableHead {
-    position: relative;
-    display: block;
-    color: #005587;
-    font-size: larger;
-    left: 30px;
-    border-spacing: 100px 10px;
-    font-weight: bold;
+.Dashboard .ProjectList {
+    font-family: 'Georgia', Georgia, serif;
 }

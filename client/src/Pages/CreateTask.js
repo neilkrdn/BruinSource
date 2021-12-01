@@ -50,7 +50,7 @@ const CreateProject = (props) => {
         }
         
 
-        axios.post(`/api/projects/${project_id}/tasks/create`, taskData)
+        axios.post('/api/projects/tasks/create', taskData)
             .then(res => {
                 console.log(res)
             })

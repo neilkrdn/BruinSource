@@ -61,6 +61,7 @@ const CreateProject = (props) => {
             .catch(err => {
                 console.error(err)
             })
+        history.push('/dashboard')
     }
 
     return (

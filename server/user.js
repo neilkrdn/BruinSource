@@ -2,11 +2,7 @@ const { client, formatArrayToSql } = require('./db.js')
 const bcrypt = require('bcrypt')
 
 class User {
-<<<<<<< HEAD
     constructor(id, username, password, email, github, known_languages, year_exp){
-=======
-    constructor(id, username, password, email, github, known_languages, year_exp, projects_owned) {
->>>>>>> ff29b23 (User fix)
         this.id = id;
         this.username = username;
         this.password = password;

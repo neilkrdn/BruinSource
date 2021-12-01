@@ -9,6 +9,8 @@ import {
     useLocation
 } from "react-router-dom";
 
+import { getIDfromUsername } from "./backend-calls";
+
 /** For more details on
  * `authContext`, `ProvideAuth`, `useAuth` and `useProvideAuth`
  * refer to: https://usehooks.com/useAuth/
@@ -33,13 +35,16 @@ function useProvideAuth() {
     const [username, setUsername] = useState(null);
     const [password, setPassword] = useState(null);
     const [signedIn, setSignedIn] = useState(false)
+    const [ID, setID] = useState(null)
+
 
     // Wrap any Firebase methods we want to use making sure ...
     // ... to save the user to state.
-    const signin = (usernamep, passwordp) => {
+    const signin = async (usernamep, passwordp) => {
         setUsername(usernamep)
         setPassword(passwordp)
         setSignedIn(true)
+        setID(await getIDfromUsername(usernamep))
     };
 
     const signOut = () => {
@@ -71,6 +76,7 @@ function useProvideAuth() {
         password,
         signin,
         signedIn,
-        signOut
+        signOut,
+        ID
     };
 }

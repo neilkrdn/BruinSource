@@ -6,6 +6,7 @@ import searchIcon from '../Files/search_icon.png'
 import history from '../history';
 import axios from 'axios';
 import { Bars } from 'react-loading-icons'
+import ProjectTable from '../Components/ProjectTable';
 
 
 const AllProjects = (props) => {
@@ -93,19 +94,7 @@ const AllProjects = (props) => {
                 {!dataLoaded ?
                     <div className="LoadingDiv"> <Bars fill="#005587" /> </div>
                     :
-                    <table className="ProjectListTable">
-                        <thead className="ProjectListTableHead">
-                            <tr>
-                                <td>Name</td>
-                                <td>Owner</td>
-                                <td>Date Started</td>
-                                <td>Collaborators</td>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {renderTableData()}
-                        </tbody>
-                    </table>
+                    <ProjectTable data={projects} ></ProjectTable>
                 }
             </div>
         </div>

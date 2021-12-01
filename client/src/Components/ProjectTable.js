@@ -8,6 +8,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import './ProjectTable.css'
 import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
 
 
 
@@ -44,6 +45,11 @@ export default function ProjectTable(props) {
           collaboratorsExist = true
         }
       }
+
+      const onClickFunction = () => {
+        props.openParentModal(id)
+      }
+
       return (
         <TableRow
           key={index}
@@ -55,6 +61,7 @@ export default function ProjectTable(props) {
           <TableCell align="right">{project.author}</TableCell>
           <TableCell align="right">{d}</TableCell>
           <TableCell align="right">{collaboratorsExist ? collaborators : 'No collaborators'}</TableCell>
+          <TableCell align="right" size="xs" color="secondary"><Button>View</Button></TableCell>
         </TableRow>);
     })
   }
@@ -69,6 +76,7 @@ export default function ProjectTable(props) {
               <TableCell align="right"><Typography variant="h6" color="inherit" className="flex">Author</Typography></TableCell>
               <TableCell align="right"><Typography variant="h6" color="inherit" className="flex">Date Created</Typography></TableCell>
               <TableCell align="right"><Typography variant="h6" color="inherit" className="flex">Collaborators</Typography></TableCell>
+              <TableCell></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

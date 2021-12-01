@@ -6,24 +6,35 @@ import IconButton from '@mui/material/IconButton'
 import './List.css'
 import CheckIcon from '@mui/icons-material/Check';
 import { Button } from '@mui/material';
+import { Typography } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { ListItemAvatar } from '@mui/material';
+import { Avatar } from '@mui/material';
+import FolderIcon from '@mui/icons-material/Folder';
+import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 
 const MyList = (props) => {
     const { data } = props;
     const renderItems = () => {
         console.log(data)
-
         if (data) {
             return data.map(each => {
                 console.log(each)
                 return (<ListItem
+                    secondaryAction={
+                        <IconButton edge="end" aria-label="delete">
+                            <DeleteIcon />
+                        </IconButton>
+                    }
                 >
-                    {each}
-                    <Button variant="outlined" color="">
-                        Accept
-                    </Button>
-                    <Button variant="outlined" color="">
-                        Deny
-                    </Button>
+                    <ListItemAvatar>
+                        <Avatar>
+                            <PersonOutlineIcon />
+                        </Avatar>
+                    </ListItemAvatar>
+                    <ListItemText
+                        primary={each}
+                    />
                 </ListItem>
                 );
             })
@@ -36,7 +47,10 @@ const MyList = (props) => {
 
     return (
         <div className="ListContainer">
-            <List sx={{ width: '30%' }}>
+            <Typography variant="h4" gutterBottom component="div">
+                Team Members
+            </Typography>
+            <List sx={{ width: '100%' }}>
                 {renderItems()}
             </List>
         </div>

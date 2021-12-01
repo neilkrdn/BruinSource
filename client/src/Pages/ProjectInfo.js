@@ -22,6 +22,15 @@ const ProjectInfo = (props) => {
             .then(res => {
                 var d = new Date(res.data.date_created)
                 d = d.toDateString()
+                
+                let usernames = []
+                res.data.requests.forEach(element => {
+                    axios.get(`/api/users/idtouser/${element}`)
+                    .then(res => {
+                        console.log(res)
+                    })
+                });
+                
                 let myObject = {
                     name: res.data.name,
                     date_created: d,
@@ -38,19 +47,25 @@ const ProjectInfo = (props) => {
         console.log('called')
         return (
             <React.Fragment>
-                <Typography variant="h3" gutterBottom component="div">
-                    {projectInfo.name}
-                </Typography>
-                <Typography variant="h6" gutterBottom component="div">
-                    Date Created: {projectInfo.date_created}
-                </Typography>
-                <Typography variant="body1" gutterBottom component="div">
-                    {projectInfo.description}
-                </Typography>
-                <Typography variant="h6" gutterBottom component="div">
-                    <a href={`${projectInfo.github}`}>Project Github</a>
-                </Typography>
-                <MyList data={projectInfo.requests}></MyList>
+                <div className="MainInfoGrid">
+                    <div className="ProjectText">
+                        <Typography variant="h3" gutterBottom component="div">
+                            {projectInfo.name}
+                        </Typography>
+                        <Typography variant="h6" gutterBottom component="div">
+                            Date Created: {projectInfo.date_created}
+                        </Typography>
+                        <Typography variant="body1" gutterBottom component="div">
+                            {projectInfo.description}
+                        </Typography>
+                        <Typography variant="h6" gutterBottom component="div">
+                            <a href={`${projectInfo.github}`}>Project Github</a>
+                        </Typography>
+                    </div>
+                    <div>
+                        <MyList data={projectInfo.requests}></MyList>
+                    </div>
+                </div>
             </React.Fragment>
         )
     }
@@ -59,8 +74,7 @@ const ProjectInfo = (props) => {
         <div className="ProjectInfo">
             <img src={mainLogo} className="MainLogo" alt="mainLogo" />
             {projectInfo ?
-                allProjectInfo() 
-                
+                allProjectInfo()
                 :
                 <div className="LoadingDiv"> <Bars fill="#005587" /> </div>
             }

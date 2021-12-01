@@ -90,7 +90,6 @@ const SearchByInterest = (props) => {
         }
     }
 
-
     return (
         <div className="SearchByInterest">
             <img src={mainLogo} className="MainLogo" alt="mainLogo" />

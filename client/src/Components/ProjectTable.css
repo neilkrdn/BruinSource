@@ -1,0 +1,8 @@
+.ProjectTableContainer {
+    max-width: '80%';
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    padding: 0em 10em;
+    margin-bottom: 5em
+}

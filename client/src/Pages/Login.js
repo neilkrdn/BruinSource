@@ -14,6 +14,18 @@ function Login(props) {
     const auth = useAuth()
 
     const onLogin = () => {
+
+        if (username === '') {
+            setReponseText('Please enter a username.')
+            return
+        }
+
+        if (password === '') {
+            setReponseText('Please enter a password.')
+            return
+        }
+
+
         axios.post('/api/login', { username: username, password: password })
             .then(res => {
                 if (res.data.msg === 'success') {
@@ -50,6 +62,11 @@ function Login(props) {
                             setPassword(input.target.value);
                         }}
                     />
+                </div>
+                <div>
+                    <p>
+                        {responseText}
+                    </p>
                 </div>
                 <button type="button" className="NewAccount" onClick={() => history.push('/register')}>New? Create an account.</button>
                 {/* <button type="button" className="ForgotPassword">Forgot your password?</button> */}

@@ -7,7 +7,7 @@ import history from '../history';
 import axios from 'axios';
 import { useAuth } from '../Shared/ProvideAuth';
 import { Bars } from 'react-loading-icons'
-
+import ProjectTable from '../Components/ProjectTable';
 const Dashboard = (props) => {
 
     const [projects, setProjects] = useState(null);
@@ -102,19 +102,7 @@ const Dashboard = (props) => {
                 {!dataLoaded ?
                     <div className="LoadingDiv"> <Bars fill="#005587" /> </div>
                     :
-                    <table className="ProjectListTable">
-                        <thead className="ProjectListTableHead">
-                            <tr>
-                                <td>Name</td>
-                                <td>Owner</td>
-                                <td>Date Started</td>
-                                <td>Collaborators</td>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {renderTableData()}
-                        </tbody>
-                    </table>
+                    <ProjectTable data={projects}/>
                 }
             </div>
         </div>

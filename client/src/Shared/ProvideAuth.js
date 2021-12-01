@@ -32,13 +32,21 @@ export const useAuth = () => {
 function useProvideAuth() {
     const [username, setUsername] = useState(null);
     const [password, setPassword] = useState(null);
+    const [signedIn, setSignedIn] = useState(false)
 
     // Wrap any Firebase methods we want to use making sure ...
     // ... to save the user to state.
     const signin = (usernamep, passwordp) => {
         setUsername(usernamep)
         setPassword(passwordp)
+        setSignedIn(true)
     };
+
+    const signOut = () => {
+        setUsername(null)
+        setPassword(null)
+        setSignedIn(false)
+    }
 
     /*    const signout = () => {
             return firebase
@@ -62,5 +70,7 @@ function useProvideAuth() {
         username,
         password,
         signin,
+        signedIn,
+        signOut
     };
 }

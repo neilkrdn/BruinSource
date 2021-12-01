@@ -71,12 +71,16 @@ function createProject(req, res)
 // search for a project
 function searchProjects(req, res) {
     const { search } = req.params;
-    const query = `SELECT * FROM projects WHERE name LIKE '%${search}%`;
+    const query = `select * from projects p where p."name" like '%${search}%'`;
 
     client
     .query(query)
-    .then(projects => res.status(200).send(projects.rows))
-    .catch(err => res.status(201).send(err))
+    .then(projects =>{
+        console.log(projects)
+        res.status(200).send(projects.rows)})
+    .catch(err =>{ 
+        console.log(err)
+        res.status(201).send(err)})
 }
 
 // delete project from db

@@ -25,6 +25,11 @@ class CreateTask extends React.Component {
         */
     }
 
+
+    componentDidMount() {
+        console.log(history.location.state[0])
+    }
+
     render() {
         return (
             <div className="CreateTask">

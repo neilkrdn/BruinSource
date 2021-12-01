@@ -30,7 +30,6 @@ const AllProjects = (props) => {
             });
     }
 
-
     useEffect(() => {
         if (projects) {
             setDataLoaded(true)

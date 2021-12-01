@@ -52,6 +52,8 @@ app.get('/api/users', user.getUsers);
 /** Retrieve user by username **/
 app.get('/api/users/:username', user.getUserByUsername);
 
+/* ID TO USERNAME */
+app.get('/api/users/idtouser/:id', user.getUserByID);
 
 ////////  PROJECT APIs    ////////
 

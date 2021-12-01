@@ -190,6 +190,20 @@ function getUserByUsername(req, res) {
         })
 }
 
+function getUserByID(req, res) {
+    const { id } = req.params;
+    const query = `select * from users u where u.id = ${id}`;
+    client.query(query)
+    .then(user => {
+        console.log(user)
+        res.status(200).send(user.rows[0])
+    })
+    .catch(err => {
+        console.log(err)
+        res.status(201).send({msg: 'error'})
+    })
+}
+
 module.exports = {
     registerUser,
     formatArrayToSql,
@@ -197,4 +211,5 @@ module.exports = {
     getUsers,
     getUserByUsername,
     deleteUser,
+    getUserByID
 }

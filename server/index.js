@@ -71,7 +71,7 @@ app.get('/api/projects/projectidpath/:projectId', project.getProjectById);
 app.get('/api/projects/user/:username', project.getProjectsByUser);
 
 /** Search through all available projects **/
-app.get('/api/projects/tags', project.getProjectsByTags);
+app.post('/api/projects/tags', project.searchProjectsByTags);
 
 /** Retrieve collaboration requests to user for projects owned **/
 app.get('/api/projects/requests', project.getAllRequests);

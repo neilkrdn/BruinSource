@@ -30,7 +30,7 @@ const Dashboard = (props) => {
             return 
         }
 
-        axios.get(`/api/projects/${auth.username}`)
+        axios.get(`/api/projects/user/${auth.username}`)
             .then(res => {
                 console.log(res)
                 setProjects(res.data)

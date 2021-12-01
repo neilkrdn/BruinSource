@@ -34,7 +34,7 @@ const CreateProject = (props) => {
 
         await axios.get(`/api/users/${userName}`)
             .then(res => {
-                id = res.data[0].id
+                id = res.data.id
             })
             .catch(err => console.log(err))
 

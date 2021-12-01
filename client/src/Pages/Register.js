@@ -3,6 +3,7 @@ import './Register.css';
 import mainLogo from '../Files/bruinsource_logo.png'
 import history from '../history.js'
 import axios from 'axios';
+import { Dialog, DialogTitle } from '@mui/material';
 
 const Register = (props) => {
     const [username, setUsername] = useState(null)
@@ -15,6 +16,17 @@ const Register = (props) => {
 
     const [alert, setAlert] = useState(null)
 
+    const [open, setOpen] = useState(false);
+
+    const onSuccess = () => {
+        setOpen(true)
+        setTimeout(() => {
+            setOpen(false)
+            history.push('/')
+        }, 2000)
+    }
+
+
     const submitFunc = () => {
         const userInfo = {
             username: username,
@@ -23,29 +35,29 @@ const Register = (props) => {
             github: github,
             known_languages: languages,
             year_exp: years,
-            projects_worked: numProjects,
         }
 
         axios.post('/api/register', userInfo)
             .then(err => {
+                console.log(err)
                 if (err.data.msg) {
                     if (err.data.msg === 'invalid_password') {
                         setAlert('Please enter a password that is at least 8 characters long, contains one uppercase letter, one number, and one special character.')
                     } else if (err.data.msg === 'invalid_email') {
                         setAlert('Please enter a valid email ending with .edu')
+                    } else if (err.data.msg === 'something_wrong') {
+                        setAlert('Something went wrong')
                     }
                 } else if (err.data.constraint) {
                     if (err.data.constraint === 'users_un') {
                         setAlert("Username already exists in the database")
                     }
                 } else {
-                    setAlert('Account created successfully! Redirecting...')
-                    setTimeout(() => {
-                        history.push('/')
-                    }, 5000);
+                    onSuccess()
                 }
             })
             .catch(err => {
+                console.log(err)
                 if (err.data.msg) {
                     if (err.data.msg === 'invalid_password') {
                         setAlert('Please enter a password that is at least 8 characters long, contains one uppercase letter, one number, and one special character.')
@@ -112,13 +124,6 @@ const Register = (props) => {
                         onChange={(input) => setYears(input.target.value)}
                     />
                 </div>
-                <div className="FormBox">
-                    <input
-                        type="text"
-                        placeholder="Projects you've done... (list exact name)"
-                        onChange={(input) => setNumProjects(input.target.value)}
-                    />
-                </div>
                 <div>
                     <p id="error-text">
                         {alert}
@@ -130,6 +135,11 @@ const Register = (props) => {
                     <button type="button" onClick={submitFunc} className="CreateNewAccount">Create New Account</button>
                 </div>
             </form>
+            <Dialog open={open}>
+                <DialogTitle>
+                    Account successfully created! You may now sign in.
+                </DialogTitle>
+            </Dialog>
         </div>
     );
 }

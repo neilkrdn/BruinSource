@@ -25,7 +25,7 @@ const Register = (props) => {
             year_exp: years,
             projects_worked: numProjects,
         }
-
+        console.log('did this run?')
         axios.post('/api/register', userInfo)
             .then(err => {
                 if (err.data.msg) {

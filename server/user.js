@@ -70,13 +70,6 @@ async function registerUser(req, res) {
     } = req.body;
 
     // validate username input
-    /*
-    let usernameValid = validateUsername(username);
-    if (!usernameValid){
-        res.status(201).send({msg: 'username_taken'});
-        return:
-    }
-    */
 
     // validate password input
     let passwordValid = validatePassword(password);
@@ -104,8 +97,8 @@ async function registerUser(req, res) {
     known_languages_input = formatArrayToSql(known_languages);
 
     // make query if inputs are all valid
-    if (usernameValid && emailValid && passwordValid) { 
-        const query = 'INSERT INTO users(status, username, password, email, github, year_exp, known_languages) values($1, $2, $3, $4, $5, $6, $7::varchar[], $8::int[])';
+    if (emailValid && passwordValid) { 
+        const query = 'INSERT INTO users(status, username, password, email, github, year_exp, known_languages) values($1, $2, $3, $4, $5, $6, $7::varchar[])';
         const vals = [username, hashed_password, email, github, year_exp, known_languages_input];
 
         client

@@ -62,7 +62,6 @@ function createProject(req, res) {
     formattedCollaboraters = formatArrayToSql(collaborators);
     formattedRequests = formatArrayToSql(requests);
 
-
     let finalAuthor = parseInt(author)
 
     if (author && name) {
@@ -150,7 +149,6 @@ async function getProjectsByUser(req, res) {
             return
         })
 
-
     if (userValid) {
         const isAuthorQuery = `select *, p.id as project_id from projects p join users u on p.author = u.id where p.author = '${userId}'`;
         client
@@ -209,7 +207,7 @@ function createRequest(req, res) {
     }
 }
 
-function approveRequest(req, res) {
+async function approveRequest(req, res) {
 
     const { requestId } = req.param;
 
@@ -217,7 +215,7 @@ function approveRequest(req, res) {
     let projectId = null;
 
     const userQuery = `select * from requests r where r.id = '${requestId}'`;
-    client
+    await client
     .query(userQuery)
     .then(request => {
         userId = request.rows[0].id;
@@ -230,13 +228,13 @@ function approveRequest(req, res) {
 
     let updatedCollaborators = null;
     const getProjectQuery = `select * from projects p where p.id = '${projectId}'`;
-    client
+    await client
     .query(getProjectQuery)
     .then(project => {
         updatedCollaborators = project.rows[0].collaborators;
         console.log(typeof(updatedCollaborators));
         // find way to add to this array
-    })
+    });
 
     const modifyUserQuery = `update projects set collaborators = '${updatedCollaborators}' where id = '${projectId}'`;
     client
@@ -244,8 +242,20 @@ function approveRequest(req, res) {
     .catch(err => {
         console.log(err);
         res.status(201).send(err);
-    })
+    });
+}
 
+function deleteRequest(req, res) {
+    
+    const { requestID } = req.param;
+
+    const query = `delete from requests r where r.id = '${requestID}'`;
+    client
+    .query(query)
+    .catch(err => {
+        console.log(err);
+        res.status(201).send(err);
+    });
 }
 
 module.exports = {
@@ -259,5 +269,6 @@ module.exports = {
     getProjectRequests,
     createRequest,
     approveRequest,
+    deleteRequest,
     searchProjects
 }

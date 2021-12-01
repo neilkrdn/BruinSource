@@ -9,7 +9,7 @@ import Paper from '@mui/material/Paper';
 import './ProjectTable.css'
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-
+import history from '../history';
 
 
 function createData(name, calories, fat, carbs, protein) {
@@ -34,7 +34,8 @@ export default function ProjectTable(props) {
 
   const renderTableRows = () => {
     return data.map((project, index) => {
-      const { id, name, description, tags, date_created, last_updated, author, collaborators, requests } = project
+      const { id, name, description, tags, date_created, last_updated, author, collaborators, requests, username, project_id } = project
+
 
       var d = new Date(date_created)
       d = d.toDateString()
@@ -47,7 +48,8 @@ export default function ProjectTable(props) {
       }
 
       const onClickFunction = () => {
-        props.openParentModal(id)
+        console.log(project_id)
+        history.push('/createtask', [project_id])
       }
 
       return (
@@ -58,10 +60,10 @@ export default function ProjectTable(props) {
           <TableCell component="th" scope="row">
             {project.name}
           </TableCell>
-          <TableCell align="right">{project.author}</TableCell>
+          <TableCell align="right">{project.username}</TableCell>
           <TableCell align="right">{d}</TableCell>
           <TableCell align="right">{collaboratorsExist ? collaborators : 'No collaborators'}</TableCell>
-          <TableCell align="right" size="xs" color="secondary"><Button>View</Button></TableCell>
+          <TableCell align="right" color="secondary"><Button onClick={onClickFunction}>View</Button></TableCell>
         </TableRow>);
     })
   }

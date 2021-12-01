@@ -65,7 +65,6 @@ app.get('/api/projects/:projectId/delete', project.deleteProject);
 app.get('/api/projects', project.getProjects);
 
 /** Retrieve a project by project id **/
-
 app.get('/api/projects/projectidpath/:projectId', project.getProjectById);
 
 /** Retrieve projects owned by a user **/
@@ -84,7 +83,7 @@ app.get('/api/projects/requests/:projectId', project.getProjectRequests);
 app.get('/api/projects/requests/create', project.createRequest);
 
 /** Approve a request for a project **/
-app.get('/api/projects/requests/approve/:requestId', project.approveRequest);
+app.get('/api/projects/requests/approve/:requestId', project.approveRequest, project.deleteRequest);
 
 /** Search for a project **/
 app.get('/api/projects/searchproject/:search', project.searchProjects)
@@ -94,18 +93,11 @@ app.get('/api/projects/searchproject/:search', project.searchProjects)
 /** Create a task for a project **/
 app.get('/api/projects/tasks/create', task.createTask);
 
-/** Delete a task for a project **/
+/** Delete a task **/
 app.get('/api/projects/tasks/delete/:taskId', task.deleteTask);
 
 /** Retrieve all tasks for a project **/
 app.get('/api/projects/tasks/:projectId', task.getTasks);
-
-
-/** Close a task for a project **/
-// app.get('/api/projects/:projectId/delete', task.closeTask);
-
-/** Assign a task to a user **/
-// app.get('/api/projects/:projectId/:username/tasks', task.assignUserTask);
 
 app.listen(PORT, function(err) {
   if (err) console.log(err);

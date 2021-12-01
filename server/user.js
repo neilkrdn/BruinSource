@@ -1,9 +1,8 @@
 const { client, formatArrayToSql } = require('./db.js')
 const bcrypt = require('bcrypt')
 
-
 class User {
-    constructor(id, username, password, email, github, known_languages, year_exp, projects_owned){
+    constructor(id, username, password, email, github, known_languages, year_exp, projects_worked){
         this.id = id;
         this.username = username;
         this.password = password;
@@ -11,7 +10,7 @@ class User {
         this.github = github;
         this.known_languages = known_languages;
         this.year_exp = year_exp;
-        this.projects_owned = projects_owned;
+        this.projects_worked = projects_worked;
     }
 }
 

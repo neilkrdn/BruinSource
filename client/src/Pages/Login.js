@@ -26,6 +26,8 @@ function Login(props) {
         }
 
 
+        console.log('called')
+
         axios.post('/api/login', { username: username, password: password })
             .then(res => {
                 if (res.data.msg === 'success') {

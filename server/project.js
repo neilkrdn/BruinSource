@@ -74,7 +74,7 @@ function createProject(req, res) {
 // search for a project
 function searchProjects(req, res) {
     const { search } = req.params;
-    const query = `select * from projects p where p."name" like '%${search}%'`;
+    const query = `select * from projects p join users u on p.author = u.id where p."name" like '%${search}%'`;
 
     client
         .query(query)

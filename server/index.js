@@ -85,6 +85,9 @@ app.get('/api/projects/requests/create', project.createRequest);
 /** Approve a request for a project **/
 app.get('/api/projects/requests/delete', project.approveRequest);
 
+/** Search for a project **/
+app.get('/api/projects/searchproject/:search', project.searchProjects)
+
 ////////  TASK APIs    ////////
 
 /** Create a task for a project **/

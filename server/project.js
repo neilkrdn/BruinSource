@@ -75,6 +75,21 @@ function createProject(req, res)
     }
 }
 
+// search for a project
+function searchProjects(req, res) {
+    const { search } = req.params;
+    const query = `select * from projects p where p."name" like '%${search}%'`;
+
+    client
+    .query(query)
+    .then(projects =>{
+        console.log(projects)
+        res.status(200).send(projects.rows)})
+    .catch(err =>{ 
+        console.log(err)
+        res.status(201).send(err)})
+}
+
 // delete project from db
 function deleteProject(req, res) {
     const { id } = req.params;
@@ -87,7 +102,12 @@ function deleteProject(req, res) {
 
 // returns all active projects
 function getProjects(req, res) {
+<<<<<<< HEAD
     const query = `select * from projects`;
+=======
+    //TODO - check status thing, commenting out for now
+    const query = `select * from projects p` // where p.status = '${1}'`;
+>>>>>>> c529731ee6c45e3a8264bc2cb82f1a25b0daea4c
     client
     .query(query)
     .then(projects => res.status(200).send(projects.rows))
@@ -177,5 +197,6 @@ module.exports = {
     getAllRequests,
     getProjectRequests,
     createRequest,
-    approveRequest
+    approveRequest,
+    searchProjects
 }

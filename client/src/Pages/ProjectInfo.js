@@ -1,7 +1,7 @@
 import React from 'react';
 import './ProjectInfo.css';
-import mainLogo from './bruinsource_logo.png'
-import history from './history.js'
+import mainLogo from '../Files/bruinsource_logo.png'
+import history from '../history.js'
 class ProjectInfo extends React.Component {
     render() {
         return (

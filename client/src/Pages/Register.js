@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './Register.css';
-import mainLogo from './bruinsource_logo.png'
-import history from './history.js'
+import mainLogo from '../Files/bruinsource_logo.png'
+import history from '../history.js'
 import axios from 'axios';
 
 const Register = (props) => {

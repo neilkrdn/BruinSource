@@ -1,17 +1,17 @@
 import React, { Component } from "react";
 import { Router, Switch, Route, Link } from "react-router-dom";
 
-import Login from './Login.js';
-import Dashboard from './Dashboard.js'
-import CreateTask from './CreateTask.js'
-import CreateProject from './CreateProject.js'
-import Register from './Register.js'
-import TaskInfo from './TaskInfo.js'
-import ProjectInfo from './ProjectInfo'
-import TaskDashboard from './TaskDashBoard.js'
-import AllProjects from './AllProjects.js'
+import Login from './Pages/Login.js';
+import Dashboard from './Pages/Dashboard.js'
+import CreateTask from './Pages/CreateTask.js'
+import CreateProject from './Pages/CreateProject.js'
+import Register from './Pages/Register.js'
+import TaskInfo from './Pages/TaskInfo.js'
+import ProjectInfo from './Pages/ProjectInfo'
+import TaskDashboard from './Pages/TaskDashBoard.js'
+import AllProjects from './Pages/AllProjects.js'
 import history from './history';
-import { ProvideAuth } from "./ProvideAuth.js";
+import { ProvideAuth } from "./Shared/ProvideAuth.js";
 
 export default class Routes extends Component {
     render() {

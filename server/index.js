@@ -69,7 +69,7 @@ app.get('/api/projects', project.getProjects);
 app.get('/api/projects/projectidpath/:projectId', project.getProjectById);
 
 /** Retrieve projects owned by a user **/
-app.get('/api/projects/:username', project.getProjectsByUser);
+app.get('/api/projects/user/:username', project.getProjectsByUser);
 
 /** Search through all available projects **/
 app.get('/api/projects/tags', project.getProjectsByTags);

@@ -74,11 +74,13 @@ async function registerUser(req, res) {
     } = req.body;
 
     // validate username input
-    // let usernameValid = validateUsername(username);
-    //if (!usernameValid){
-    //  res.status(201).send({msg: 'username_taken'});
-    //    return/:
-    //}
+    /*
+    let usernameValid = validateUsername(username);
+    if (!usernameValid){
+        res.status(201).send({msg: 'username_taken'});
+        return:
+    }
+    */
 
     // validate password input
     let passwordValid = validatePassword(password);
@@ -87,14 +89,14 @@ async function registerUser(req, res) {
         hashed_password = await bcrypt.hash(password, 10)
     } else {
         res.status(201).send({ msg: 'invalid_password' })
-        return
+        return;
     }
 
     // validate email input
     let emailValid = validateEmail(email);
     if (!emailValid) {
         res.status(201).send({ msg: 'invalid_email' })
-        return
+        return;
     }
 
     // set default to empty string
@@ -108,7 +110,7 @@ async function registerUser(req, res) {
 
     // make query if inputs are all valid
     if (usernameValid && emailValid && passwordValid) { 
-        const query = 'INSERT INTO users(status, username, password, email, github, year_exp, known_languages, projects_owned) values($1, $2, $3, $4, $5, $6, $7::varchar[], $8::int[])';
+        const query = 'INSERT INTO users(status, username, password, email, github, year_exp, known_languages, projects_worked) values($1, $2, $3, $4, $5, $6, $7::varchar[], $8::int[])';
         const vals = [username, hashed_password, email, github, year_exp, known_languages_input, projects_owned_input];
 
         client
@@ -124,11 +126,8 @@ function validateLogin(req, res){
     client
         .query(query)
         .then(user => {
-            console.log('here')
             bcrypt.compare(password, user.rows[0].password, (err, result) => {
-                console.log('here1')
                 if (err) {
-                    console.log('here')
                     res.status(201).send({ msg: 'invalid_password' });
                     return
                 }
@@ -173,7 +172,7 @@ function getUserByUsername(req, res) {
     client
     .query(query)
     .then(user => {
-        res.status(200).send(user.rows);
+        res.status(200).send(user.rows[0]);
     })
     .catch(err => {
         res.status(201).send({msg: `invalid_username`});

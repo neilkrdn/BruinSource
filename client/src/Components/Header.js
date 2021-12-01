@@ -33,13 +33,17 @@ const Header = (props) => {
                         <Typography variant="h6" component="div" textAlign="left" fontFamily="Georgia" sx={{ flexGrow: 1 }}>
                             BruinSource
                         </Typography>
-
-
                         {!auth.signedIn ?
                             null
                             :
-                            <Button style={{ marginRight: '1em' }} onClick={buttonClick} color="inherit" fontFamily="inherit">Log Out</Button>
+                            <Button style={{ marginRight: '1em' }} onClick={() => history.push('/searchinterest')} color="inherit" fontFamily="inherit">Search Projects by Tags</Button>
                         }
+                        {!auth.signedIn ?
+                            null
+                            :
+                            <Button style={{ marginRight: '1em' }} onClick={buttonClick} color="inherit" fontFamily='inherit'>Log Out</Button>
+                        }
+
                     </Toolbar>
                 </AppBar>
             </Box>

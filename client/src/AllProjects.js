@@ -1,60 +1,94 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './AllProjects.css';
 import mainLogo from './bruinsource_logo.png'
 import searchIcon from './search_icon.png'
 /*import { getProjectById } from '../../server/project';*/
 import history from './history';
 import axios from 'axios';
+import { Bars } from 'react-loading-icons'
+
 
 const AllProjects = (props) => {
 
-    const [projects, setProjects] = useState([]);
+    const [projects, setProjects] = useState(null);
     const [search, setSearch] = useState(null);
 
-
-    const ProjectList = () => {
-        return fetch('https://localhost:8000/api/projects')
-        .then(res => setProjects(res.rows));
-    }
+    const [dataLoaded, setDataLoaded] = useState(false)
 
     const submitSearch = () => {
-        return axios.get(`api/projects/searchproject/${search}`)
-        .then(res => setProjects(res.rows));
+        axios.get(`api/projects/searchproject/${search}`)
+            .then(res => {
+                setProjects(res.data)
+            });
     }
+
+    const getDefaultProjects = () => {
+        axios.get('/api/projects')
+            .then(res => {
+                setProjects(res.data)
+            });
+    }
+
+
+    useEffect(() => {
+        if (projects) {
+            setDataLoaded(true)
+            if (projects.length == 0) {
+                // make some text to show that none exist for this search term
+            }
+        }
+    }, [projects])
+
+    useEffect(() => {
+        getDefaultProjects()
+    }, [])
 
     const renderTableData = () => {
         return projects.map((project, index) => {
-            const {id, name, description, tags, date_created, last_updated, author, collaborators, requests} = project
+            const { id, name, description, tags, date_created, last_updated, author, collaborators, requests } = project
+
+            var d = new Date(date_created)
+
+            d = d.toDateString()
+
+            var collaboratorsExist = false
+            if (collaborators && collaborators.length) {
+                if (collaborators.length > 0) {
+                    collaboratorsExist = true
+                }
+            }
+
             return (
-                <tr key={name}>
+                <tr key={index}>
                     <td>{name}</td>
                     <td>{author}</td>
-                    <td>{date_created}</td>
-                    <td>{collaborators}</td>
+                    <td>{d}</td>
+                    <td>{collaboratorsExist ? collaborators : 'No collaborators'}</td>
                 </tr>
             )
         })
     }
 
-
-        return (
-            <div className="AllProjects">
-                <img src={mainLogo} className="MainLogo" alt="mainLogo"/>
-                <h2> All Projects </h2>
-                <form>
-                    <input
+    return (
+        <div className="AllProjects">
+            <img src={mainLogo} className="MainLogo" alt="mainLogo" />
+            <h2> All Projects </h2>
+            <form>
+                <input
                     type="text"
                     placeholder="Search from all projects..."
                     onChange={(input) => setSearch(input.target.value)}
-                    />
-                </form>
-                <button type="button" className="Search" onClick={submitSearch}> 
-                    <img src={searchIcon} width="50px" alt="searchIcon" ></img>
-                </button>
-                <button type="button" className="Create" onClick={() => history.push('/createproject')}>Create New Project</button>
-                <button type="button" className="BackToProjects" onClick={() => history.push('/dashboard')}>Back to My Projects</button>
-                
-                <div className="ProjectList">
+                />
+            </form>
+            <button type="button" className="Search" onClick={submitSearch}>
+                <img src={searchIcon} width="50px" alt="searchIcon" ></img>
+            </button>
+            <button type="button" className="Create" onClick={() => history.push('/createproject')}>Create New Project</button>
+            <button type="button" className="BackToProjects" onClick={() => history.push('/dashboard')}>Back to My Projects</button>
+            <div className="ProjectList">
+                {!dataLoaded ?
+                    <div className="LoadingDiv"> <Bars fill="#005587" /> </div>
+                    :
                     <table className="ProjectListTable">
                         <thead className="ProjectListTableHead">
                             <tr>
@@ -65,12 +99,13 @@ const AllProjects = (props) => {
                             </tr>
                         </thead>
                         <tbody>
-                                {renderTableData()}
+                            {renderTableData()}
                         </tbody>
                     </table>
-                </div>
+                }
             </div>
-        );
+        </div>
+    );
 }
 
 export default AllProjects;

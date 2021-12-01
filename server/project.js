@@ -91,7 +91,8 @@ function deleteProject(req, res) {
 
 // returns all active projects
 function getProjects(req, res) {
-    const query = `select * from projects p where p.status = '${1}'`;
+    //TODO - check status thing, commenting out for now
+    const query = `select * from projects p` // where p.status = '${1}'`;
     client
     .query(query)
     .then(projects => res.status(200).send(projects.rows))

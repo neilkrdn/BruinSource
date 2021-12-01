@@ -13,6 +13,7 @@ import AllProjects from './Pages/AllProjects.js'
 import history from './history';
 import { ProvideAuth } from "./Shared/ProvideAuth.js";
 import Header from "./Components/Header.js";
+import SearchByInterest from './Pages/SearchByInterest.js';
 
 export default class Routes extends Component {
     render() {
@@ -31,6 +32,7 @@ export default class Routes extends Component {
                             <Route exact path="/projectinfo" component={ProjectInfo} />
                             <Route exact path="/taskdashboard" component={TaskDashboard} />
                             <Route exact path="/allprojects" component={AllProjects} />
+                            <Route exact path="/searchinterest" component={SearchByInterest} />
                         </Switch>
                     </div>
                 </Router>

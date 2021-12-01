@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import './AllProjects.css';
+import './SearchByInterest.css';
 import mainLogo from '../Files/bruinsource_logo.png'
 import searchIcon from '../Files/search_icon.png'
 /*import { getProjectById } from '../../server/project';*/
@@ -9,7 +9,7 @@ import { Bars } from 'react-loading-icons'
 import ProjectTable from '../Components/ProjectTable';
 
 
-const AllProjects = (props) => {
+const SearchByInterest = (props) => {
 
     const [projects, setProjects] = useState(null);
     const [search, setSearch] = useState(null);
@@ -74,9 +74,9 @@ const AllProjects = (props) => {
     }
 
     return (
-        <div className="AllProjects">
+        <div className="SearchByInterest">
             <img src={mainLogo} className="MainLogo" alt="mainLogo" />
-            <h2> All Projects </h2>
+            <h2> Search By Interest </h2>
             <form>
                 <input
                     type="text"
@@ -88,8 +88,7 @@ const AllProjects = (props) => {
                 <img src={searchIcon} width="50px" alt="searchIcon" ></img>
             </button>
             <button type="button" className="Create" onClick={() => history.push('/createproject')}>Create New Project</button>
-            <button type="button" className="BackToProjects" onClick={() => history.push('/dashboard')}>Back to My Projects</button>
-            <button type="button" className="Interest" onClick={() => history.push('/searchinterest')}>Search By Interest</button>
+            <button type="button" className="BackToProjects" onClick={() => history.push('/allprojects')}>Back to All Projects</button>
             <div className="ProjectList">
                 {!dataLoaded ?
                     <div className="LoadingDiv"> <Bars fill="#005587" /> </div>
@@ -101,4 +100,4 @@ const AllProjects = (props) => {
     );
 }
 
-export default AllProjects;
+export default SearchByInterest;

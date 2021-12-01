@@ -44,29 +44,33 @@ const AllProjects = (props) => {
     }, [])
 
     const renderTableData = () => {
-        return projects.map((project, index) => {
-            const { id, name, description, tags, date_created, last_updated, author, collaborators, requests } = project
+        console.log(projects)
+        if (!projects || projects.length == 0) {
+            return <tr> No entries exist for this search. </tr>
+        } else {
+            return projects.map((project, index) => {
+                const { id, name, description, tags, date_created, last_updated, author, collaborators, requests } = project
 
-            var d = new Date(date_created)
+                var d = new Date(date_created)
+                d = d.toDateString()
 
-            d = d.toDateString()
-
-            var collaboratorsExist = false
-            if (collaborators && collaborators.length) {
-                if (collaborators.length > 0) {
-                    collaboratorsExist = true
+                var collaboratorsExist = false
+                if (collaborators && collaborators.length) {
+                    if (collaborators.length > 0) {
+                        collaboratorsExist = true
+                    }
                 }
-            }
 
-            return (
-                <tr key={index}>
-                    <td>{name}</td>
-                    <td>{author}</td>
-                    <td>{d}</td>
-                    <td>{collaboratorsExist ? collaborators : 'No collaborators'}</td>
-                </tr>
-            )
-        })
+                return (
+                    <tr key={index}>
+                        <td>{name}</td>
+                        <td>{author}</td>
+                        <td>{d}</td>
+                        <td>{collaboratorsExist ? collaborators : 'No collaborators'}</td>
+                    </tr>
+                )
+            })
+        }
     }
 
     return (
@@ -92,10 +96,10 @@ const AllProjects = (props) => {
                     <table className="ProjectListTable">
                         <thead className="ProjectListTableHead">
                             <tr>
-                                <td>NAME</td>
-                                <td>OWNER</td>
-                                <td>DATE JOINED</td>
-                                <td>COLLABORATORS</td>
+                                <td>Name</td>
+                                <td>Owner</td>
+                                <td>Date Started</td>
+                                <td>Collaborators</td>
                             </tr>
                         </thead>
                         <tbody>

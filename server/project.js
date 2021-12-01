@@ -44,19 +44,12 @@ function createProject(req, res) {
 
     console.log(req.body)
 
-    //let projectNameValid = validateProjectName(name);
+    // let projectNameValid = validateProjectName(name);
 
     if (!name) {
         res.status(201).send({ msg: 'name_invalid' })
         return
     };
-
-    if (!description) description = '';
-    if (!github) github = '';
-
-
-
-    // we make them enter them with comments on the front end...
 
     formattedTags = formatArrayToSql(tags);
     formattedCollaboraters = formatArrayToSql(collaborators);
@@ -81,7 +74,7 @@ function createProject(req, res) {
 // search for a project
 function searchProjects(req, res) {
     const { search } = req.params;
-    const query = `select * from projects p where p."name" like '%${search}%'`;
+    const query = `select * from projects p join users u on p.author = u.id where p."name" like '%${search}%'`;
 
     client
         .query(query)

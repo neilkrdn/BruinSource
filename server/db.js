@@ -20,6 +20,11 @@ function connectdb() {
 // format array worked into sql type
 function formatArrayToSql(arr) {
     let splitArr = null;
+
+    if (!arr) {
+        return null
+    }
+    
     if (arr.includes(',')) {
         splitArr = arr.split(',')
         arr.map(each => {

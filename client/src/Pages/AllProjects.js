@@ -89,6 +89,7 @@ const AllProjects = (props) => {
             </button>
             <button type="button" className="Create" onClick={() => history.push('/createproject')}>Create New Project</button>
             <button type="button" className="BackToProjects" onClick={() => history.push('/dashboard')}>Back to My Projects</button>
+            <button type="button" className="Interest" onClick={() => history.push('searchinterest')}>Search By Interest</button>
             <div className="ProjectList">
                 {!dataLoaded ?
                     <div className="LoadingDiv"> <Bars fill="#005587" /> </div>

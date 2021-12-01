@@ -22,6 +22,7 @@ const Dashboard = (props) => {
 
     const [dataLoaded, setDataLoaded] = useState(false)
 
+    
     const submitSearch = () => {
         let userID = auth.ID
         console.log(userID)
@@ -110,7 +111,6 @@ const Dashboard = (props) => {
                 </button>
                 <button type="button" className="Create" onClick={() => history.push('/createproject')}>Create New Project</button>
                 <button type="button" className="AllProjects" onClick={() => history.push('/allprojects')}>See All Projects</button>
-
                 <div className="ProjectList">
                     {!dataLoaded ?
                         <div className="LoadingDiv"> <Bars fill="#005587" /> </div>

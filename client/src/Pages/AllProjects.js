@@ -19,6 +19,7 @@ const AllProjects = (props) => {
     const submitSearch = () => {
         axios.get(`api/projects/searchproject/${search}`)
             .then(res => {
+                console.log(res)
                 setProjects(res.data)
             });
     }
@@ -26,6 +27,7 @@ const AllProjects = (props) => {
     const getDefaultProjects = () => {
         axios.get('/api/projects')
             .then(res => {
+                console.log(res)
                 setProjects(res.data)
             });
     }

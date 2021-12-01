@@ -39,7 +39,13 @@ const MyList = (props) => {
                 );
             })
         } else {
-            return null
+            return (
+            <ListItem>
+                <ListItemText
+                primary="No team members exist.">
+                </ListItemText>
+            </ListItem>
+            );
         }
 
         return null

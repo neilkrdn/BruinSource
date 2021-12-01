@@ -20,27 +20,39 @@ const ProjectInfo = (props) => {
     useEffect(() => {
         axios.get(`/api/projects/projectidpath/${history.location.state[0]}`)
             .then(res => {
+                console.log(res)
                 var d = new Date(res.data.date_created)
                 d = d.toDateString()
-                let usernames = []
-                let length11 = res.data.requests.length
-                res.data.requests.forEach((element, index) => {
-                    axios.get(`/api/users/idtouser/${element}`)
-                        .then(res => {
-                            usernames.push(res.data.username)
-                            if (index === (length11 - 1)) {
-                                console.log(usernames)
-                                let myObject = {
-                                    name: res.data.name,
-                                    date_created: d,
-                                    description: res.data.description,
-                                    github: res.data.github,
-                                    requests: usernames
+                if (res.data.requests) {
+                    let usernames = []
+                    let length11 = res.data.requests.length
+                    res.data.requests.forEach((element, index) => {
+                        axios.get(`/api/users/idtouser/${element}`)
+                            .then(res => {
+                                usernames.push(res.data.username)
+                                if (index === (length11 - 1)) {
+                                    console.log(usernames)
+                                    let myObject = {
+                                        name: res.data.name,
+                                        date_created: d,
+                                        description: res.data.description,
+                                        github: res.data.github,
+                                        requests: usernames
+                                    }
+                                    setProjectInfo(myObject)
                                 }
-                                setProjectInfo(myObject)
-                            }
-                        })
-                });
+                            })
+                    });
+                } else {
+                    let myObject = {
+                        name: res.data.name,
+                        date_created: d,
+                        description: res.data.description,
+                        github: res.data.github,
+                        requests: null
+                    }
+                    setProjectInfo(myObject)
+                }
             })
             .catch(err => console.error(err))
     }, [])

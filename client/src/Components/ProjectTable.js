@@ -31,14 +31,6 @@ function createData(name, calories, fat, carbs, protein) {
   return { name, calories, fat, carbs };
 }
 
-const rows = [
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-  createData('Eclair', 262, 16.0, 24, 6.0),
-  createData('Cupcake', 305, 3.7, 67, 4.3),
-  createData('Gingerbread', 356, 16.0, 49, 3.9),
-];
-
 export default function ProjectTable(props) {
 
   // must parse input data
@@ -53,7 +45,6 @@ export default function ProjectTable(props) {
     return data.map((project, index) => {
       const { id, name, description, tags, date_created, last_updated, author, collaborators, requests, username, project_id } = project
 
-
       var d = new Date(date_created)
       d = d.toDateString()
 
@@ -65,8 +56,8 @@ export default function ProjectTable(props) {
       }
 
       const onClickFunction = () => {
-        console.log(project_id)
-        history.push('/projectinfo', [project_id])
+        console.log(id)
+        history.push('/projectinfo', [id])
       }
 
       return (
@@ -75,7 +66,7 @@ export default function ProjectTable(props) {
           sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
         >
           <TableCell component="th" scope="row" className={classes2.custom}>
-            {project.name}
+            {name}
           </TableCell>
           <TableCell align="right" className={classes2.custom}>{project.username}</TableCell>
           <TableCell align="right" className={classes2.custom}>{d}</TableCell>

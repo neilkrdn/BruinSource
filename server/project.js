@@ -74,8 +74,7 @@ function createProject(req, res) {
 // search for a project
 function searchProjects(req, res) {
     const { search } = req.params;
-    const query = `select * from projects p join users u on p.author = u.id where p."name" like '%${search}%'`;
-
+    const query = `select *, p.id as project_id from users u join projects p on u.id = p.author where p."name" like '%${search}%'`;
     client
         .query(query)
         .then(projects => {
@@ -100,7 +99,7 @@ function deleteProject(req, res) {
 
 // returns all active projects
 function getProjects(req, res) {
-    const query = `select * from projects`;
+    const query = `select *, p.id as project_id from users u join projects p on u.id = p.author`;
     client
         .query(query)
         .then(projects => {
@@ -112,7 +111,7 @@ function getProjects(req, res) {
 // returns project that correlates to id param
 function getProjectById(req, res) {
     const { projectId } = req.params;
-    const query = `select * from projects p join users u on p.author = u.id where p.id = '${projectId}'`;
+    const query = `select *, p.id as project_id from users u join projects p on u.id = p.author where p.id = '${projectId}'`;
     client
         .query(query)
         .then(projects => res.status(200).send(projects.rows[0]))
@@ -143,7 +142,7 @@ async function getProjectsByUser(req, res) {
         })
 
     if (userValid) {
-        const isAuthorQuery = `select *, p.id as project_id from projects p join users u on p.author = u.id where p.author = '${userId}'`;
+        const isAuthorQuery = `select *, p.id as project_id from users u join projects p on p.author = u.id where p.author = '${userId}'`;
         client
             .query(isAuthorQuery)
             .then(projects => {

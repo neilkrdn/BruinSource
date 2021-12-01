@@ -60,7 +60,6 @@ function validatePassword(password) {
 }
 
 // adds a user to database and returns the user object in json 
-<<<<<<< HEAD
 async function registerUser(req, res) {
     const { username, 
             password, 
@@ -68,16 +67,6 @@ async function registerUser(req, res) {
             github, 
             year_exp, 
             known_languages
-=======
-function registerUser(req, res) {
-    const { username,
-        password,
-        email,
-        github,
-        year_exp,
-        known_languages,
-        projects_owned
->>>>>>> ff29b23 (User fix)
     } = req.body;
 
     // validate username input
@@ -108,10 +97,7 @@ function registerUser(req, res) {
     // set default to 0 years of experience if no input
     if (!year_exp) year_exp = 0;
 
-<<<<<<< HEAD
     known_languages_input = formatArrayToSql(known_languages);
-=======
->>>>>>> ff29b23 (User fix)
 
     if (!known_languages) {
         res.status(201).send({ msg: 'invalid_languages' })
@@ -120,16 +106,9 @@ function registerUser(req, res) {
     known_languages_input = formatArrayToSql(known_languages);
    
     // make query if inputs are all valid
-<<<<<<< HEAD
     if (emailValid && passwordValid) { 
         const query = 'INSERT INTO users(status, username, password, email, github, year_exp, known_languages) values($1, $2, $3, $4, $5, $6, $7::varchar[])';
         const vals = [username, hashed_password, email, github, year_exp, known_languages_input];
-=======
-    if (usernameValid && emailValid && passwordValid) {
-        const query = 'INSERT INTO users(username, password, email, github, year_exp, known_languages) values($1, $2, $3, $4, $5, $6::varchar[])';
-        const vals = [username, password, email, github, year_exp, known_languages_input];
->>>>>>> ff29b23 (User fix)
-
         client
             .query(query, vals)
             .then(res => res.send)

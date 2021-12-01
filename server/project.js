@@ -157,10 +157,35 @@ async function getProjectsByUser(req, res) {
 }
 
 // TODO: return all projects that contains at least one tag defined by user
-function getProjectsByTags(req, res) { 
+function searchProjectsByTags(req, res) { 
 
     const { tags } = req.body;
+    
+    const query = `select * from projects`;
+    client
+    .query(query)
+    .then(projects => {
+        let allProjects = projects.rows;
+        let projectsWithTags = {};
 
+        for (const project in allProjects){
+            for (const tag in tags){
+                if (project.tags.includes(tag)){
+                    if (!projectsWithTags[project.id]){
+                        projectsWithTags[project.id] = 1;
+                    } else {
+                        projectsWithTags[project.id] += 1;
+                    }
+                }
+            }
+        }
+        
+        res.status(200).send(projectsWithTags);
+    })
+    .catch(err => {
+        console.log(err);
+        res.status(201).send(err);
+    })
 }
 
 // returns all collaboration requests for all projects
@@ -261,11 +286,11 @@ module.exports = {
     getProjects,
     getProjectById,
     getProjectsByUser,
-    getProjectsByTags,
     getAllRequests,
     getProjectRequests,
     createRequest,
     approveRequest,
     deleteRequest,
-    searchProjects
+    searchProjects,
+    searchProjectsByTags,
 }

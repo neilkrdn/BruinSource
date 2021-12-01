@@ -1,23 +1,29 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './AllProjects.css';
 import mainLogo from './bruinsource_logo.png'
 import searchIcon from './search_icon.png'
 /*import { getProjectById } from '../../server/project';*/
 import history from './history';
+import axios from 'axios';
 
-class AllProjects extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-          projects: []
-        }
-    }
-    ProjectList() {
+const AllProjects = (props) => {
+
+    const [projects, setProjects] = useState([]);
+    const [search, setSearch] = useState(null);
+
+
+    const ProjectList = () => {
         return fetch('https://localhost:8000/api/projects')
-        .then(res =>this.setState({projects: res.rows}));
+        .then(res => setProjects(res.rows));
     }
-    renderTableData() {
-        return this.state.projects.map((project, index) => {
+
+    const submitSearch = () => {
+        return axios.get(`api/projects/searchproject/${search}`)
+        .then(res => setProjects(res.rows));
+    }
+
+    const renderTableData = () => {
+        return projects.map((project, index) => {
             const {id, name, description, tags, date_created, last_updated, author, collaborators, requests} = project
             return (
                 <tr key={name}>
@@ -29,7 +35,8 @@ class AllProjects extends React.Component {
             )
         })
     }
-    render() {
+
+
         return (
             <div className="AllProjects">
                 <img src={mainLogo} className="MainLogo" alt="mainLogo"/>
@@ -38,9 +45,10 @@ class AllProjects extends React.Component {
                     <input
                     type="text"
                     placeholder="Search from all projects..."
+                    onChange={(input) => setSearch(input.target.value)}
                     />
                 </form>
-                <button type="button" className="Search"> 
+                <button type="button" className="Search" onClick={submitSearch}> 
                     <img src={searchIcon} width="50px" alt="searchIcon" ></img>
                 </button>
                 <button type="button" className="Create" onClick={() => history.push('/createproject')}>Create New Project</button>
@@ -57,13 +65,12 @@ class AllProjects extends React.Component {
                             </tr>
                         </thead>
                         <tbody>
-                                {this.renderTableData()}
+                                {renderTableData()}
                         </tbody>
                     </table>
                 </div>
             </div>
         );
-    }
 }
 
 export default AllProjects;

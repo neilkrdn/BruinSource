@@ -24,7 +24,11 @@ function createTask(req, res){
 
     if (name){
 
+        // assigned_user = 
         date_created = new Date();
+        date_due = new Date()
+        is_finished = false;
+        date_finished = new Date();
 
         const query = `INSERT INTO tasks(name, description, tags, project_id, assigned_user, date_created, date_due, is_finished, date_finished) values($1, $2, $3::varchar[], $4, $5, $6, $7, $8, $9)`;
         const vals = [name, description, formattedTags, project_id, assigned_user, date_created, date_due, is_finished, date_finished];

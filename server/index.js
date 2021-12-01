@@ -100,12 +100,8 @@ app.get('/api/projects/tasks/delete/:taskId', task.deleteTask);
 /** Retrieve all tasks for a project **/
 app.get('/api/projects/tasks/:projectId', task.getTasks);
 
-
 /** Close a task for a project **/
 // app.get('/api/projects/:projectId/delete', task.closeTask);
-
-/** Assign a task to a user **/
-// app.get('/api/projects/:projectId/:username/tasks', task.assignUserTask);
 
 app.listen(PORT, function(err) {
   if (err) console.log(err);

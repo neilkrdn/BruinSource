@@ -2,7 +2,7 @@ const { client, formatArrayToSql } = require('./db.js')
 const bcrypt = require('bcrypt')
 
 class User {
-    constructor(id, username, password, email, github, known_languages, year_exp, projects_worked){
+    constructor(id, username, password, email, github, known_languages, year_exp){
         this.id = id;
         this.username = username;
         this.password = password;
@@ -10,7 +10,6 @@ class User {
         this.github = github;
         this.known_languages = known_languages;
         this.year_exp = year_exp;
-        this.projects_worked = projects_worked;
     }
 }
 
@@ -68,8 +67,7 @@ async function registerUser(req, res) {
             email, 
             github, 
             year_exp, 
-            known_languages, 
-            projects_owned 
+            known_languages
     } = req.body;
 
     // validate username input
@@ -105,12 +103,11 @@ async function registerUser(req, res) {
     if (!year_exp) year_exp = 0;
 
     known_languages_input = formatArrayToSql(known_languages);
-    projects_owned_input = formatArrayToSql(projects_owned)
 
     // make query if inputs are all valid
     if (usernameValid && emailValid && passwordValid) { 
-        const query = 'INSERT INTO users(status, username, password, email, github, year_exp, known_languages, projects_worked) values($1, $2, $3, $4, $5, $6, $7::varchar[], $8::int[])';
-        const vals = [username, hashed_password, email, github, year_exp, known_languages_input, projects_owned_input];
+        const query = 'INSERT INTO users(status, username, password, email, github, year_exp, known_languages) values($1, $2, $3, $4, $5, $6, $7::varchar[])';
+        const vals = [username, hashed_password, email, github, year_exp, known_languages_input];
 
         client
         .query(query,vals)

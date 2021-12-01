@@ -102,12 +102,8 @@ function deleteProject(req, res) {
 
 // returns all active projects
 function getProjects(req, res) {
-<<<<<<< HEAD
-    const query = `select * from projects`;
-=======
     //TODO - check status thing, commenting out for now
-    const query = `select * from projects p` // where p.status = '${1}'`;
->>>>>>> c529731ee6c45e3a8264bc2cb82f1a25b0daea4c
+    const query = `select * from projects`;
     client
     .query(query)
     .then(projects => res.status(200).send(projects.rows))
@@ -128,11 +124,10 @@ function getProjectById(req, res) {
 async function getProjectsByUser(req, res) {
     const { username } = req.params;
 
-    console.log('called')
-
     let userValid = false;
+    let userId = null;
     const idQuery = `select * from users u where u.username = '${username}'`;
-    let userId = null
+
     await client
     .query(idQuery)
     .then(user => {
@@ -146,7 +141,6 @@ async function getProjectsByUser(req, res) {
         res.status(201).send({msg: `invalid_username`});
         return
     })
-
     
     if (userValid){
         const isAuthorQuery = `select * from projects p where p.author = '${userId}'`;

@@ -22,23 +22,26 @@ const ProjectInfo = (props) => {
             .then(res => {
                 var d = new Date(res.data.date_created)
                 d = d.toDateString()
-                
+
                 let usernames = []
-                res.data.requests.forEach(element => {
+                let length11 = res.data.requests.length
+                res.data.requests.forEach((element, index) => {
                     axios.get(`/api/users/idtouser/${element}`)
-                    .then(res => {
-                        console.log(res)
-                    })
+                        .then(res => {
+                            usernames.push(res.data.username)
+                            if (index === (length11 - 1)) {
+                                console.log(usernames)
+                                let myObject = {
+                                    name: res.data.name,
+                                    date_created: d,
+                                    description: res.data.description,
+                                    github: res.data.github,
+                                    requests: usernames
+                                }
+                                setProjectInfo(myObject)
+                            }
+                        })
                 });
-                
-                let myObject = {
-                    name: res.data.name,
-                    date_created: d,
-                    description: res.data.description,
-                    github: res.data.github,
-                    requests: res.data.requests
-                }
-                setProjectInfo(myObject)
             })
             .catch(err => console.error(err))
     }, [])

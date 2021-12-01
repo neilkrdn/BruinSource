@@ -3,7 +3,6 @@ import { Router, Switch, Route, Link } from "react-router-dom";
 
 import Login from './Pages/Login.js';
 import Dashboard from './Pages/Dashboard.js'
-import CreateTask from './Pages/CreateTask.js'
 import CreateProject from './Pages/CreateProject.js'
 import Register from './Pages/Register.js'
 import TaskInfo from './Pages/TaskInfo.js'
@@ -26,7 +25,6 @@ export default class Routes extends Component {
                             <Route exact path="/" component={Login} />
                             <Route exact path="/register" component={Register} />
                             <Route exact path="/dashboard" component={Dashboard} />
-                            <Route exact path="/createtask" component={CreateTask} />
                             <Route exact path="/createproject" component={CreateProject} />
                             <Route exact path="/taskinfo" component={TaskInfo} />
                             <Route exact path="/projectinfo" component={ProjectInfo} />

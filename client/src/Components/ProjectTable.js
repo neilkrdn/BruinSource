@@ -20,6 +20,13 @@ const useStyles = makeStyles({
   }
 });
 
+const useStyles2 = makeStyles({
+  custom: {
+    color: "black",
+    fontFamily: "Georgia"
+  }
+});
+
 function createData(name, calories, fat, carbs, protein) {
   return { name, calories, fat, carbs };
 }
@@ -39,6 +46,8 @@ export default function ProjectTable(props) {
   const { data } = props;
 
   const classes = useStyles();
+
+  const classes2 = useStyles2();
 
   const renderTableRows = () => {
     return data.map((project, index) => {
@@ -65,13 +74,13 @@ export default function ProjectTable(props) {
           key={index}
           sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
         >
-          <TableCell component="th" scope="row">
+          <TableCell component="th" scope="row" className={classes2.custom}>
             {project.name}
           </TableCell>
-          <TableCell align="right">{project.username}</TableCell>
-          <TableCell align="right">{d}</TableCell>
-          <TableCell align="right">{collaboratorsExist ? collaborators : 'No collaborators'}</TableCell>
-          <TableCell align="right" color="secondary"><Button onClick={onClickFunction}>View</Button></TableCell>
+          <TableCell align="right" className={classes2.custom}>{project.username}</TableCell>
+          <TableCell align="right" className={classes2.custom}>{d}</TableCell>
+          <TableCell align="right" className={classes2.custom}>{collaboratorsExist ? collaborators : 'No collaborators'}</TableCell>
+          <TableCell align="right"><Button onClick={onClickFunction}>View</Button></TableCell>
         </TableRow>);
     })
   }

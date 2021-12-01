@@ -7,17 +7,24 @@ import history from '../history';
 import axios from 'axios';
 import { Bars } from 'react-loading-icons'
 import ProjectTable from '../Components/ProjectTable';
+import { TagFacesSharp, VideoCameraBackTwoTone } from '@mui/icons-material';
 
 
 const SearchByInterest = (props) => {
 
     const [projects, setProjects] = useState(null);
     const [search, setSearch] = useState(null);
+    const [frontend_tag, setFrontEndTag] = useState(false);
+    const [backend_tag, setBackEndTag] = useState(false);
+    const [python_tag, setPythonTag] = useState(false);
+    const [cpp_tag, setCppTag] = useState(false);
+    const [javascript_tag, setJavascriptTag] = useState(false);
+    const [tags, setTags] = useState([]);
 
     const [dataLoaded, setDataLoaded] = useState(false)
 
     const submitSearch = () => {
-        axios.get(`api/projects/searchproject/${search}`)
+        axios.get('/api/projects/tags', {tags: tags})
             .then(res => {
                 setProjects(res.data)
             });
@@ -42,6 +49,16 @@ const SearchByInterest = (props) => {
     useEffect(() => {
         getDefaultProjects()
     }, [])
+
+    const submitTag = () => {
+        let arr = new Array(search)
+        let temp = tags.concat(arr)
+        if (!tags.includes(search)) {
+        setTags(temp)
+        }
+        console.log(tags)
+        submitSearch()
+    }
 
     const renderTableData = () => {
         console.log(projects)
@@ -73,18 +90,19 @@ const SearchByInterest = (props) => {
         }
     }
 
+
     return (
         <div className="SearchByInterest">
             <img src={mainLogo} className="MainLogo" alt="mainLogo" />
             <h2> Search By Interest </h2>
             <form>
-                <input
-                    type="text"
-                    placeholder="Search from all projects..."
-                    onChange={(input) => setSearch(input.target.value)}
-                />
-            </form>
-            <button type="button" className="Search" onClick={submitSearch}>
+                    <input
+                        type="text"
+                        placeholder="Search for a project..."
+                        onChange={event => setSearch(event.target.value)}
+                    />
+                </form>
+            <button type="button" className="Search" onClick={submitTag}>
                 <img src={searchIcon} width="50px" alt="searchIcon" ></img>
             </button>
             <button type="button" className="Create" onClick={() => history.push('/createproject')}>Create New Project</button>

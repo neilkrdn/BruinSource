@@ -24,8 +24,10 @@ const SearchByInterest = (props) => {
     const [dataLoaded, setDataLoaded] = useState(false)
 
     const submitSearch = () => {
-        axios.get('/api/projects/tags', {tags: tags})
+        console.log('im hit');
+        axios.post('/api/projects/tags', {tags: tags})
             .then(res => {
+                // console.log(tags);
                 setProjects(res.data)
             });
     }
@@ -40,7 +42,7 @@ const SearchByInterest = (props) => {
     useEffect(() => {
         if (projects) {
             setDataLoaded(true)
-            if (projects.length == 0) {
+            if (projects.length === 0) {
                 // make some text to show that none exist for this search term
             }
         }
@@ -62,7 +64,7 @@ const SearchByInterest = (props) => {
 
     const renderTableData = () => {
         console.log(projects)
-        if (!projects || projects.length == 0) {
+        if (!projects || projects.length === 0) {
             return <tr> No entries exist for this search. </tr>
         } else {
             return projects.map((project, index) => {

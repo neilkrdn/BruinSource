@@ -159,7 +159,8 @@ async function getProjectsByUser(req, res) {
 function searchProjectsByTags(req, res) { 
 
     const { tags } = req.body;
-    
+    console.log('im hit mom');
+    console.log(req.body);
     const query = `select * from projects`;
     client
     .query(query)

@@ -42,6 +42,7 @@ export default function ProjectTable(props) {
   const classes2 = useStyles2();
 
   const renderTableRows = () => {
+    console.log(data);
     return data.map((project, index) => {
       const { id, name, description, tags, date_created, last_updated, author, collaborators, requests, username, project_id } = project
 
@@ -60,6 +61,16 @@ export default function ProjectTable(props) {
         history.push('/projectinfo', [id])
       }
 
+      let formattedTags = '';
+
+      tags.forEach(val => {
+        if (tags.indexOf(val) !== tags.length - 1 ){
+          formattedTags += val + ', ';
+        } else {
+          formattedTags += val;
+        }
+      });
+
       return (
         <TableRow
           key={index}
@@ -70,6 +81,7 @@ export default function ProjectTable(props) {
           </TableCell>
           <TableCell align="right" className={classes2.custom}>{project.username}</TableCell>
           <TableCell align="right" className={classes2.custom}>{d}</TableCell>
+          <TableCell align="right" className={classes2.custom}>{formattedTags}</TableCell>
           <TableCell align="right" className={classes2.custom}>{collaboratorsExist ? collaborators : 'No collaborators'}</TableCell>
           <TableCell align="right"><Button onClick={onClickFunction}>View</Button></TableCell>
         </TableRow>);
@@ -85,6 +97,7 @@ export default function ProjectTable(props) {
               <TableCell><Typography variant="h6" color="inherit" className={classes.custom}>Project Name</Typography></TableCell>
               <TableCell align="right"><Typography variant="h6" color="inherit" className={classes.custom}>Author</Typography></TableCell>
               <TableCell align="right"><Typography variant="h6" color="inherit" className={classes.custom}>Date Created</Typography></TableCell>
+              <TableCell align="right"><Typography variant="h6" color="inherit" className={classes.custom}>Tags</Typography></TableCell>
               <TableCell align="right"><Typography variant="h6" color="inherit" className={classes.custom}>Collaborators</Typography></TableCell>
               <TableCell></TableCell>
             </TableRow>

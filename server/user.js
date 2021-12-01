@@ -61,7 +61,7 @@ function validatePassword(password) {
 
 // adds a user to database and returns the user object in json 
 async function registerUser(req, res) {
-    const { username, 
+    let { username, 
             password, 
             email, 
             github, 

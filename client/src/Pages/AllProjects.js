@@ -47,7 +47,7 @@ const AllProjects = (props) => {
 
     const renderTableData = () => {
         console.log(projects)
-        if (!projects || projects.length == 0) {
+        if (!projects || projects.length === 0) {
             return <tr> No entries exist for this search. </tr>
         } else {
             return projects.map((project, index) => {
@@ -68,6 +68,7 @@ const AllProjects = (props) => {
                         <td>{name}</td>
                         <td>{author}</td>
                         <td>{d}</td>
+                        <td>{tags}</td>
                         <td>{collaboratorsExist ? collaborators : 'No collaborators'}</td>
                     </tr>
                 )

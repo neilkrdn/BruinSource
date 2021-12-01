@@ -7,32 +7,34 @@ require('dotenv').config()
 const client = new Client({
     connectionString: process.env.DB_STRING,
     ssl: {
-      rejectUnauthorized: false
+        rejectUnauthorized: false
     }
-  });
+});
 
 function connectdb() {
     // connect to postgres
     console.log('Connecting to Postgres...');
-    console.log(process.env.DB_STRING);
-    client.connect();
+    client.connect().catch(err => console.log(err))
 }
 
 // format array worked into sql type
-function formatArrayToSql(arr){
-    let formatted = '{';
-
-    arr.map(each =>{
-        formatted += (each + ',');
-    });
-
-    formatted = formatted.substring(0, formatted.length - 1);
-    formatted += '}';
-    return formatted;
+function formatArrayToSql(arr) {
+    let splitArr = null;
+    if (arr.includes(',')) {
+        splitArr = arr.split(',')
+        arr.map(each => {
+            formatted += (each + ',');
+        });
+        formatted = formatted.substring(0, formatted.length - 1);
+        formatted += '}';
+    } else {
+        splitArr = '{' + arr + '}'
+    }
+    return splitArr;
 }
 
 module.exports = {
-    client, 
-    connectdb, 
+    client,
+    connectdb,
     formatArrayToSql,
 }

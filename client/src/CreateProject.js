@@ -1,120 +1,116 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './CreateProject.css';
 import mainLogo from './bruinsource_logo.png'
 import history from './history';
 import axios from 'axios';
+import { useAuth } from './ProvideAuth';
+import { getIDfromUsername } from './backend-calls';
+import { getCurrentDate } from './CommonFunctions';
 
-class CreateProject extends React.Component {
-    constructor(props)
-    {
-        super(props);
+const CreateProject = (props) => {
+    const [name, setName] = useState(null)
+    const [description, setDescription] = useState(null)
+    const [tags, setTags] = useState(null)
+    const [github, setGithub] = useState(null)
+    const [date_created, setDateCreated] = useState(null)
+    const [last_updated, setLastUpdated] = useState(null)
+    const [collaborators, setCollaborators] = useState([])
+    const [requests, setRequests] = useState([])
 
-        var today = new Date();
-        var dd = String(today.getDate()).padStart(2, '0');
-        var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-        var yyyy = today.getFullYear();
-    
-        today = yyyy + '-' + dd + '-' + mm;
+    const [alert, setAlert] = useState(null)
 
-        this.state = 
-        {
-            name: null,
-            description: null,
-            tags: null,
-            github: null,
-            author: null,
-            date_created: today,
-            last_updated: today,
-            collaborators: [],
-            requests: [],
 
-            alert: null,
+    const auth = useAuth()
+
+    const onCreateProject = async () => {
+
+        let userName = auth.username
+
+        if (userName === null) {
+            setAlert('Must be logged in to create a project.')
+            setTimeout(() => history.push('/'), 3000)
+            return
         }
+
+        let id = null
+
+        await axios.get(`/api/users/${userName}`)
+            .then(res => {
+                id = res.data[0].id
+            })
+            .catch(err => console.log(err))
+
+
+        let projectData = {
+            name: name,
+            description: description,
+            tags: tags,
+            github: github,
+            date_created: getCurrentDate(),
+            last_updated: getCurrentDate(),
+            author: id,
+            collaborators: collaborators,
+            requests: requests,
+        }
+        
+
+        axios.post('/api/projects/create', projectData)
+            .then(res => {
+                console.log(res)
+            })
+            .catch(err => {
+                console.error(err)
+            })
     }
 
- /*   testLogs = () => {
-
-
-        console.log(this.state.name);
-        console.log(this.state.description);
-        console.log(this.state.tags);
-        console.log(this.state.github);
-        console.log(this.state.author);
-        console.log(this.state.date_created);
-        console.log(this.state.last_updated);
-        console.log(this.state.collaborators);
-        console.log(this.state.requests);
-    }
-*/
-
-
-     onCreateProject = () => 
-      {
-
-        axios.post('/api/projects/create', 
-        {
-            name: this.state.name, 
-            description: this.state.description, 
-            tags: this.state.tags, 
-            github: this.state.github,
-            date_created: this.state.date_created,
-            last_updated: this.state.last_updated,
-            author: this.state.author,
-            collaborators: this.state.collaborators,
-                requests: this.state.requests,
-        })
-        
-        //        this.setState({
-       //             alert: 'Project created successfully! Redirecting...'
-       //         })
-        
-       }
-
-    render() {
-        return (
-            <div className="CreateProject">
-                <img src={mainLogo} className="MainLogo" alt="mainLogo"/>
-                <h2> Create A New Project </h2>
-                <form className="Inputs">
-                    <div className="ProjectName">
-                        <input 
-                        type="text" 
+    return (
+        <div className="CreateProject">
+            <img src={mainLogo} className="MainLogo" alt="mainLogo" />
+            <h2> Create A New Project </h2>
+            <form className="Inputs">
+                <div className="ProjectName">
+                    <input
+                        type="text"
                         placeholder="Project Name..."
                         required
-                        onChange={(input) => this.setState({ name: input.target.value })}
-                        />
-                    </div>
-                    <div className="ProjectDescription">
-                        <textarea
+                        onChange={(input) => setName(input.target.value)}
+                    />
+                </div>
+                <div className="ProjectDescription">
+                    <textarea
                         type="text"
                         placeholder="Project Description..."
                         required
-                        onChange={(input) => this.setState({ description: input.target.value })}
-                        />
-                    </div>
-                    <div className="ProjectTags">
-                        <input
+                        onChange={(input) => setDescription(input.target.value)}
+                    />
+                </div>
+                <div className="ProjectTags">
+                    <input
                         type="text"
                         placeholder="Project Tags (comma-separated)..."
                         required
-                        onChange={(input) => this.setState({ tags: input.target.value })}
-                        />
-                    </div>
-                    <div className="ProjectGitHub">
-                        <input
+                        onChange={(input) => setTags(input.target.value)}
+                    />
+                </div>
+                <div className="ProjectGitHub">
+                    <input
                         type="text"
                         placeholder="http://github.com/..."
-                        onChange={(input) => this.setState({ github: input.target.value })}
-                        />
-                    </div>
-                    <div className="Buttons">
-                        <button type="button" className="BackToProjects" onClick={() => history.push('/dashboard')}>Back to Projects</button>
-                        <button type="button" className="CreateNewProject" onClick={this.onCreateProject()}>Create New Project</button>
-                    </div>
-                </form>
-            </div>
-        );
-    }
+                        onChange={(input) => setGithub(input.target.value)}
+                    />
+                </div>
+                <div>
+                    <p id="error-text">
+                        {alert}
+                    </p>
+                </div>
+                <div className="Buttons">
+                    <button type="button" className="BackToProjects" onClick={() => history.push('/dashboard')}>Back to Projects</button>
+                    <button type="button" className="CreateNewProject" onClick={onCreateProject}>Create New Project</button>
+                </div>
+            </form>
+        </div>
+    );
 }
 
 export default CreateProject;

@@ -16,28 +16,31 @@ export const insertUser = (userValues) => {
     }
 
     axios.post('/insertuser', values)
-    .then(res => console.log(res))
-    .catch(err => console.log(err)) // add error handling here
+        .then(res => console.log(res))
+        .catch(err => console.log(err)) // add error handling here
 }
 
 export const deleteUser = (username) => {
-    axios.post('/deleteuser', {username: username})
-    .then(res => console.log(res))
-    .catch(err => console.log(err))
+    axios.post('/deleteuser', { username: username })
+        .then(res => console.log(res))
+        .catch(err => console.log(err))
 }
 
 export const getUserData = (username) => {
     let data = null;
-    axios.post('/getuserinfo', {username: username})
-    .then(res => {
-        data = res.data
-        return data // note - this will be an async function, be careful on front end writing things that depend on this state change for example
-    })
-    .catch(err => console.log(err))
+    axios.post('/getuserinfo', { username: username })
+        .then(res => {
+            data = res.data
+            return data // note - this will be an async function, be careful on front end writing things that depend on this state change for example
+        })
+        .catch(err => console.log(err))
 }
 
-
-
-export const createUser = (inputData) => {
-    axios.post('/api/')
+export const getIDfromUsername = async (username) => {
+    console.log(username)
+    axios.get(`/api/users/${username}`)
+        .then(res => {
+            return res.data[0].id
+        })
+        .catch(err => console.log(err))
 }

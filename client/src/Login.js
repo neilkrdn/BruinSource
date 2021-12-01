@@ -27,10 +27,6 @@ function Login(props) {
             })
     }
 
-    const setContextLogin = () => {
-
-    }
-
     return (
         <div className="Login">
             <img src={mainLogo} className="MainLogo" alt="mainLogo" />

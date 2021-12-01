@@ -77,7 +77,7 @@ async function registerUser(req, res) {
     // let usernameValid = validateUsername(username);
     //if (!usernameValid){
     //  res.status(201).send({msg: 'username_taken'});
-    //    return
+    //    return/:
     //}
 
     // validate password input

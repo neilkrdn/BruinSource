@@ -43,6 +43,8 @@ function createProject(req, res)
         requests
     } = req.body;
 
+    console.log(req.body)
+
     let projectNameValid = validateProjectName(name);
 
     if (!projectNameValid) res.status(201).send({msg: 'name_invalid'});
@@ -50,19 +52,24 @@ function createProject(req, res)
     if (!description) description = '';
     if (!github) github = '';
 
-    date_created = new Date();
-    last_updated = new Date();
+
+
+    // we make them enter them with comments on the front end...
     
-    formattedTags = formatArrayToSql(tags);
+    formattedTags = formatArrayToSql(tags); 
     formattedCollaboraters = formatArrayToSql(collaborators);
     formattedRequests = formatArrayToSql(requests);
+    
+
+    let finalAuthor = parseInt(author)
 
     if (author && projectNameValid){
-        const query = 'INSERT INTO projects(name, description, tags, github, date_created, last_updated, author, collaborators) values($1, $2, $3::varchar[], $4, $5, $6, $7::varchar[], $8::int[])';
-        const vals = [ name, description, formattedTags, github, date_created, last_updated, author, collaborators];
+        const query = 'INSERT INTO projects(name, description, tags, github, date_created, last_updated, author, collaborators) values($1, $2, $3::varchar[], $4, $5, $6, $7, $8::int[])';
+        const vals = [ name, description, formattedTags, github, date_created, last_updated, finalAuthor, collaborators];
         client
         .query(query,vals)
-        .catch(err => res.status(201).send(err));
+        .catch(err => {console.log(err)
+            res.status(201).send(err)});
     } else {
         res.status(201).send({msg: 'author_invalid'});
     }

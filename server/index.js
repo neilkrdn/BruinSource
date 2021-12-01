@@ -56,7 +56,7 @@ app.get('/api/users/:username', user.getUserByUsername);
 ////////  PROJECT APIs    ////////
 
 /** Create a project **/
-app.get('/api/projects/create', project.createProject);
+app.post('/api/projects/create', project.createProject);
 
 /** Delete a project **/
 app.get('/api/projects/:projectId/delete', project.deleteProject);

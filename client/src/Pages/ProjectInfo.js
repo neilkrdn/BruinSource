@@ -22,7 +22,6 @@ const ProjectInfo = (props) => {
             .then(res => {
                 var d = new Date(res.data.date_created)
                 d = d.toDateString()
-
                 let usernames = []
                 let length11 = res.data.requests.length
                 res.data.requests.forEach((element, index) => {

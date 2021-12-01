@@ -65,7 +65,8 @@ app.get('/api/projects/:projectId/delete', project.deleteProject);
 app.get('/api/projects', project.getProjects);
 
 /** Retrieve a project by project id **/
-app.get('/api/projects/:projectId', project.getProjectById);
+
+app.get('/api/projects/projectidpath/:projectId', project.getProjectById);
 
 /** Retrieve projects owned by a user **/
 app.get('/api/projects/:username', project.getProjectsByUser);

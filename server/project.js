@@ -121,22 +121,29 @@ function getProjectById(req, res) {
 }
 
 // returns projects being worked on by a user
-function getProjectsByUser(req, res) {
+async function getProjectsByUser(req, res) {
     const { username } = req.params;
 
-    let userId = 0;
+    console.log('called')
+
     let userValid = false;
     const idQuery = `select * from users u where u.username = '${username}'`;
-    client
+    let userId = null
+    await client
     .query(idQuery)
     .then(user => {
+        if (user.rowCount === 0) {
+            res.status(201).send({msg: `invalid_username`});
+        }
         userValid = true;
         userId = user.rows[0].id;
     })
     .catch(() => {
         res.status(201).send({msg: `invalid_username`});
+        return
     })
 
+    
     if (userValid){
         const isAuthorQuery = `select * from projects p where p.author = '${userId}'`;
         client

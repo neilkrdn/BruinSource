@@ -7,8 +7,7 @@ class TaskInfo extends React.Component {
         return (
             <div className="TaskInfo">
                 <img src={mainLogo} className="MainLogo" alt="mainLogo"/>
-                <h1>Project Name</h1>
-                <h2>Task Name</h2>
+                <h1>Task Name</h1>
                 <p>Lorem ipsum dolor amet</p>
                     <div className="Buttons">
                         <button type="button" className="BackToTasks" onClick={() => history.push('')}>Back to Tasks</button>

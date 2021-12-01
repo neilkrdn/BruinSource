@@ -69,8 +69,9 @@ p
     position: relative;
     background-color: white;
     border: none;
-    padding: 10px;
+    padding: 15px;
     border-radius: 25px;
+    font-size: large;
     filter: drop-shadow(0px 2px 2px #2F2F2F)
 }
 
@@ -82,12 +83,13 @@ h4
 .TaskInfo .SubmitTask
 {
     position: relative;
-    margin-left: 240px;
     border-radius: 25px;
+    margin-left: 240px;
     border-color: #FFB81C;
     border: 2px solid #FFB81C;
     background-color: #FFB81C;
-    padding: 10px;
+    font-size: large;
+    padding: 15px;
     filter: drop-shadow(0px 2px 2px #2F2F2F)
 }
 

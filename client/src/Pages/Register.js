@@ -112,13 +112,6 @@ const Register = (props) => {
                         onChange={(input) => setYears(input.target.value)}
                     />
                 </div>
-                <div className="FormBox">
-                    <input
-                        type="text"
-                        placeholder="Projects you've done (list exact name)..."
-                        onChange={(input) => setNumProjects(input.target.value)}
-                    />
-                </div>
                 <div>
                     <p id="error-text">
                         {alert}

@@ -68,9 +68,11 @@ function Login(props) {
                         {responseText}
                     </p>
                 </div>
-                <button type="button" className="NewAccount" onClick={() => history.push('/register')}>New? Create an account.</button>
-                {/* <button type="button" className="ForgotPassword">Forgot your password?</button> */}
-                <button type="button" onClick={onLogin} className="SignIn" >Sign In</button>
+                <div className ="Buttons">
+                    <button type="button" className="NewAccount" onClick={() => history.push('/register')}>New? Create an account.</button>
+                    {/* <button type="button" className="ForgotPassword">Forgot your password?</button> */}
+                    <button type="button" onClick={onLogin} className="SignIn" >Sign In</button>
+                </div>
             </form>
         </div>
     );

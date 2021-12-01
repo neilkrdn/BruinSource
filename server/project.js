@@ -23,7 +23,7 @@ function validateProjectName(projectName) {
         .map(char => /\s/.test(char))
         .reduce((curr, prev) => curr + prev);
 
-    if (numSpaces == 0) return true;
+    if (numSpaces === 0) return true;
     else return false;
 
 }

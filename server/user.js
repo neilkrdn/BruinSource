@@ -30,7 +30,7 @@ function validateUsername(username) {
 
 function validateEmail(email) {
     // check if email is not null and is associated with a university
-    if (email.length != 0 && email.substring(email.length - 4) == '.edu') {
+    if (email.length != 0 && email.substring(email.length - 4) === '.edu') {
         return true;
     } else {
         return false;

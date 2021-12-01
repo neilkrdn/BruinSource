@@ -44,19 +44,12 @@ function createProject(req, res) {
 
     console.log(req.body)
 
-    //let projectNameValid = validateProjectName(name);
+    // let projectNameValid = validateProjectName(name);
 
     if (!name) {
         res.status(201).send({ msg: 'name_invalid' })
         return
     };
-
-    if (!description) description = '';
-    if (!github) github = '';
-
-
-
-    // we make them enter them with comments on the front end...
 
     formattedTags = formatArrayToSql(tags);
     formattedCollaboraters = formatArrayToSql(collaborators);
@@ -164,7 +157,11 @@ async function getProjectsByUser(req, res) {
 }
 
 // TODO: return all projects that contains at least one tag defined by user
-function getProjectsByTags() { }
+function getProjectsByTags(req, res) { 
+
+    const { tags } = req.body;
+
+}
 
 // returns all collaboration requests for all projects
 function getAllRequests(req, res) {

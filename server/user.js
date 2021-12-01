@@ -23,13 +23,12 @@ function validateUsername(username) {
             return true;
         })
     } else {
-        console.log('here')
         return true;
     }
 }
 
 function validateEmail(email) {
-    // check if email is not null and is associated with a university
+    // check if email is not null and is associated with a university edu account 
     if (email.length != 0 && email.substring(email.length - 4) === '.edu') {
         return true;
     } else {
@@ -106,7 +105,7 @@ async function registerUser(req, res) {
 
     // make query if inputs are all valid
     if (usernameValid && emailValid && passwordValid) { 
-        const query = 'INSERT INTO users(status, username, password, email, github, year_exp, known_languages) values($1, $2, $3, $4, $5, $6, $7::varchar[])';
+        const query = 'INSERT INTO users(status, username, password, email, github, year_exp, known_languages) values($1, $2, $3, $4, $5, $6, $7::varchar[], $8::int[])';
         const vals = [username, hashed_password, email, github, year_exp, known_languages_input];
 
         client

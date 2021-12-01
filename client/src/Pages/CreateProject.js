@@ -20,6 +20,13 @@ const CreateProject = (props) => {
 
     const auth = useAuth()
 
+    let axiosConfig = {
+        headers: {
+            'Content-Type': 'application/json;charset=UTF-8',
+            "Access-Control-Allow-Origin": "*",
+        }
+      };
+
     const onCreateProject = async () => {
 
         let userName = auth.username
@@ -52,7 +59,7 @@ const CreateProject = (props) => {
         }
         
 
-        axios.post('/api/projects/create', projectData)
+        axios.post('/api/projects/create', projectData, axiosConfig)
             .then(res => {
                 console.log(res)
             })

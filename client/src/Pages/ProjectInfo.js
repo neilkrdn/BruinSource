@@ -11,7 +11,9 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import MyList from '../Components/List';
 import { useAuth } from '../Shared/ProvideAuth';
 import { getCurrentDate } from '../Shared/CommonFunctions';
-
+import DialogTitle from '@mui/material/DialogTitle';
+import Dialog from '@mui/material/Dialog';
+import Box from '@mui/material/Box';
 
 const useStyles2 = makeStyles({
     custom: {
@@ -21,12 +23,14 @@ const useStyles2 = makeStyles({
 });
 
 const ProjectInfo = (props) => {
+    const [open, setOpen] = useState(false)
+    const [already, setAlready] = useState(false)
     const [projectInfo, setProjectInfo] = useState(null)
     const [shouldButtonDisplay, setShouldButtonDisplay] = useState(true)
     if (!history) {
         history.push('/');
     }
-    if (!history.location.state && !history.location.state[0]) {
+    else if (!history.location.state && !history.location.state[0]) {
         history.push('/dashboard')
     }
 
@@ -86,18 +90,41 @@ const ProjectInfo = (props) => {
 
         console.log(requesterData)
         if (newCollaborator) {
-            axios.post('/api/projects/requests/join', requesterData)
-                .then(res => {
-                    console.log(res)
-                    setTimeout((() => history.push('/dashboard'), 3000))
-                    return
-                })
+            console.log("new collaborator!")
+            await axios.post('/api/projects/requests/join', requesterData)
+                .then(res => 
+                    {
+                        console.log(res)
+                        console.log("new collaborator")
+                        setOpen(true)
+                        setTimeout(() =>
+                        {
+                            setOpen(false)
+                            history.push('/dashboard')
+                        }, 2000)                    
+                        return
+                    })
                 .catch(err => {
+                        console.log("new collaborator2")
+                        setOpen(true)
+                        setTimeout(() =>
+                        {
+                            setOpen(false)
+                            history.push('/dashboard')
+                        }, 2000) 
                     console.error(err)
                 })
         }
-        else {
-            // alert the user?
+        else 
+        {  
+            console.log("Already true.")
+            setAlready(true)
+            setTimeout(() => 
+            {
+                setAlready(false)
+                history.push('/dashboard')
+            }, 2000)
+            return
         }
     }
 
@@ -198,6 +225,12 @@ const ProjectInfo = (props) => {
                         <button type="button" className="RequestAccess" onClick={onJoinTeam}>Join Team</button>
                     }
                 </div>
+                <Dialog open={open}>
+                    <DialogTitle>Joined the team! Redirecting...</DialogTitle>
+                </Dialog>
+                <Dialog already={already}>
+                    <DialogTitle>Already on the team! Redirecting...</DialogTitle>
+                </Dialog>
             </React.Fragment>
         )
     }

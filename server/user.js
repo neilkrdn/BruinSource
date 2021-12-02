@@ -80,8 +80,6 @@ async function registerUser(req, res) {
     // set default to 0 years of experience if no input
     if (!year_exp) year_exp = 0;
 
-    known_languages_input = formatArrayToSql(known_languages);
-
     if (!known_languages) {
         res.status(201).send({ msg: 'invalid_languages' })
         return;

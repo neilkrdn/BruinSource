@@ -53,16 +53,14 @@ const SearchByInterest = (props) => {
     }, [])
 
     const submitTag = () => {
-        const searches = search.split(',');
-        let arr = [];
-        searches.forEach(tag => {
-            arr.push(tag.trim());
-        });
-        console.log(arr)
-        setTags(arr);
+        if (!tags.includes(search)) {
+        setTags([...tags, search]);
+        }
         console.log(tags);
 
+        if (tags.length > 0) {
         submitSearch()
+        }
     }
     /*
     useEffect(() => {

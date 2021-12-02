@@ -35,7 +35,7 @@ const ProjectInfo = (props) => {
     if (!auth.username) {
         history.push('/')
     }
-
+    
     const onJoinTeam = async () =>
         {
 
@@ -87,7 +87,7 @@ const ProjectInfo = (props) => {
                             console.log(res2)
                             var d = new Date(res2.data.date_created)
                             d = d.toDateString()
-                            if (res2.data.collaborators) {
+                            if (res2.data.collaborators && res2.data.collaborators.length > 0) {
                                 let usernames = []
                                 let length11 = res2.data.collaborators.length
                                 res2.data.collaborators.forEach((element, index) => {

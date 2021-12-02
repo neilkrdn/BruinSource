@@ -35,14 +35,16 @@ const Dashboard = (props) => {
             .then(res => {
                 axios.get(`/api/users/${auth.username}`)
                     .then(res2 => {
-                        let finalData = res.data.filter(each => {
-                            return each.author == res2.data.id
-                        })
-                        setProjects(finalData)
+                        if (res.data.collaborators && res.data.collaborators.length > 0) {
+                            let finalData = res.data.filter(each => {
+                                return (each.author == res2.data.id || each.collaborators.includes(`${res2.data.id}`))
+                            })
+                            setProjects(finalData)
+                        }
                     })
             });
     }
-    
+
     const getUserProjects = () => {
         if (auth.username == null) {
             return

@@ -146,7 +146,7 @@ async function getProjectsByUser(req, res) {
         })
 
     if (userValid) {
-        const isAuthorQuery = `select *, p.id as project_id from users u join projects p on p.author = u.id where p.author = '${userId}'`;
+        const isAuthorQuery = `select *, p.id as project_id from users u join projects p on p.author = u.id where p.author = '${userId}' or '${userId}' = any (p.collaborators)`;
         client
             .query(isAuthorQuery)
             .then(projects => {

@@ -87,6 +87,9 @@ app.post('/api/projects/requests/create', project.createRequest);
 /** Join a team for a project **/
 app.post('/api/projects/requests/join', project.joinTeam);
 
+/** Remove a user from a team **/
+app.post('/api/projects/requests/remove', project.deleteRequest);
+
 /** Search for a project **/
 app.get('/api/projects/searchproject/:search', project.searchProjects)
 

@@ -11,6 +11,7 @@ import Typography from '@mui/material/Typography';
 import {makeStyles} from '@mui/styles';
 import Button from '@mui/material/Button';
 import history from '../history';
+import axios from 'axios';
 
 const useStyles = makeStyles({
   custom: {
@@ -26,10 +27,6 @@ const useStyles2 = makeStyles({
     fontFamily: "Georgia"
   }
 });
-
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs };
-}
 
 export default function ProjectTable(props) {
 
@@ -47,7 +44,6 @@ export default function ProjectTable(props) {
 
       var d = new Date(date_created)
       d = d.toDateString()
-
       var collaboratorsExist = false
       if (collaborators) {
           collaboratorsExist = true

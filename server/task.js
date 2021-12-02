@@ -1,3 +1,4 @@
+/*
 const {client, formatArrayToSql} = require('./db.js')
 
 class Task {
@@ -71,3 +72,4 @@ module.exports = {
     deleteTask,
     getTasks
 }
+*/

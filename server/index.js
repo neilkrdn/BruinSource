@@ -25,17 +25,9 @@ const PORT = process.env.PORT || 8000;
 
 const user = require('./user.js')
 const project = require('./project.js')
-const task = require('./task.js')
+// const task = require('./task.js')
 
-// Routes
-
-// making this a test of inserting a user into database
-
-/*
-insert syntax:
-insert into users(id, status, username, password, email, github, year_exp, known_languages, projects_worked) values(1, false, 'newUser', 'testpass', 'newemail', 'newgithub', 1, '{"hello"}'::varchar[], '{1, 3}'::int[])
-*/
-
+/**  routes **/
 
 ////////  USER APIs    ////////
 
@@ -96,13 +88,13 @@ app.get('/api/projects/searchproject/:search', project.searchProjects)
 ////////  TASK APIs    ////////
 
 /** Create a task for a project **/
-app.post('/api/projects/tasks/create', task.createTask);
+// app.post('/api/projects/tasks/create', task.createTask);
 
 /** Delete a task **/
-app.get('/api/projects/tasks/delete/:taskId', task.deleteTask);
+// app.get('/api/projects/tasks/delete/:taskId', task.deleteTask);
 
 /** Retrieve all tasks for a project **/
-app.get('/api/projects/tasks/:projectId', task.getTasks);
+// app.get('/api/projects/tasks/:projectId', task.getTasks);
 
 app.listen(PORT, function(err) {
   if (err) console.log(err);

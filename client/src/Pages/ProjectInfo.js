@@ -38,18 +38,7 @@ const ProjectInfo = (props) => {
 
     const onJoinTeam = async () =>
         {
-    /* let historyProject;
 
-        const auth = useAuth()
-
-        if (!auth.signedIn) {
-            history.push('/')
-        }
-        else 
-        {
-            historyProject = history.location.state[0];
-        }
-        */
         let userName = auth.username
         
         if (userName === null) 
@@ -68,22 +57,22 @@ const ProjectInfo = (props) => {
 
         let requesterData = 
         {
-            user: id,
-            project_id: historyProject,
+            userId: id,
+            projectId: historyProject,
             date_created: getCurrentDate(),
         }
         console.log(requesterData)
-        axios.post('/api/projects/requests/create', requesterData)
+        axios.post('/api/projects/requests/join', requesterData)
             .then(res => 
                 {
+                    setAlert('Team Joined!')
                     console.log(res)
                 })
             .catch(err => {
                 console.error(err)
             })
-            setAlert('Team Joined!')
     }
-    
+
     let historyProject = history.location.state[0];
 
     useEffect(() => {

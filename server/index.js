@@ -84,8 +84,8 @@ app.get('/api/projects/requests/:projectId', project.getProjectRequests);
 /** Create a request for a project **/
 app.post('/api/projects/requests/create', project.createRequest);
 
-/** Approve a request for a project **/
-app.get('/api/projects/requests/approve/:requestId', project.approveRequest, project.deleteRequest);
+/** Join a team for a project **/
+app.post('/api/projects/requests/join', project.joinTeam);
 
 /** Search for a project **/
 app.get('/api/projects/searchproject/:search', project.searchProjects)

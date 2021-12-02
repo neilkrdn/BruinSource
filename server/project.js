@@ -245,25 +245,17 @@ function createRequest(req, res) {
     }
 }
 
-async function approveRequest(req, res) {
+async function joinTeam(req, res) {
 
-    const { requestId } = req.param;
+    const { userId, projectId, date_created } = req.body;
+    console.log("user", userId)
+    console.log("proj", projectId)
+    console.log("d8", date_created)
 
-    let userId = null;
-    let projectId = null;
-
-    const userQuery = `select * from requests r where r.id = '${requestId}'`;
-    await client
-    .query(userQuery)
-    .then(request => {
-        userId = request.rows[0].id;
-        projectId = request.rows[0].project_id;
-    })
-    .catch(err => {
-        console.log(err);
-        res.status(201).send(err);
-    });
-
+    if (typeof(userId) === "string")
+    {
+        userId = parseInt(userId)
+    }
     let updatedCollaborators = null;
     const getProjectQuery = `select * from projects p where p.id = '${projectId}'`;
     await client
@@ -272,10 +264,17 @@ async function approveRequest(req, res) {
         updatedCollaborators = project.rows[0].collaborators;
         console.log(typeof(updatedCollaborators));
         // find way to add to this array
+        console.log("before", updatedCollaborators)
+        updatedCollaborators.push(userId);
+        console.log("after",updatedCollaborators)
+    })
+    .catch(err => {
+        console.log(err)
+        res.status(201).send({msg: "u stink"});
     });
-
-    const modifyUserQuery = `update projects set collaborators = '${updatedCollaborators}' where id = '${projectId}'`;
-    client
+    let formattedCollaborators = formatArrayToSql(updatedCollaborators);
+   const modifyUserQuery = `update projects set collaborators = '${formattedCollaborators}' where id = '${projectId}'`;
+   client
     .query(modifyUserQuery)
     .catch(err => {
         console.log(err);
@@ -305,7 +304,7 @@ module.exports = {
     getAllRequests,
     getProjectRequests,
     createRequest,
-    approveRequest,
+    joinTeam,
     deleteRequest,
     searchProjects,
     searchProjectsByTags,

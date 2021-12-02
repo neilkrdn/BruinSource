@@ -11,7 +11,6 @@ import { TagFacesSharp, VideoCameraBackTwoTone } from '@mui/icons-material';
 
 
 const SearchByInterest = (props) => {
-
     const [projects, setProjects] = useState(null);
     const [search, setSearch] = useState(null);
     const [frontend_tag, setFrontEndTag] = useState(false);

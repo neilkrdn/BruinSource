@@ -53,6 +53,7 @@ const Dashboard = (props) => {
             .catch(err => console.error(err))
     }
 
+
     useEffect(() => {
         if (projects) {
             setDataLoaded(true)
@@ -61,6 +62,7 @@ const Dashboard = (props) => {
             }
         }
     }, [projects])
+
 
     useEffect(() => {
         getUserProjects()

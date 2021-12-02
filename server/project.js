@@ -161,11 +161,10 @@ async function getProjectsByUser(req, res) {
 
 // TODO: return all projects that contains at least one tag defined by user
 function searchProjectsByTags(req, res) { 
-
     const tags = req.body.tags;
-    console.log(tags);
 
-    const query = `select * from projects`;
+    const query = `select * from projects p join users u on p.author = u.id`;
+
     client
     .query(query)
     .then(projects => {
@@ -182,6 +181,7 @@ function searchProjectsByTags(req, res) {
                 }
             }
         }
+        
         console.log('projects: ', projectsWithTags);
         res.status(200).send(projectsWithTags);
     })

@@ -44,7 +44,7 @@ const ProjectInfo = (props) => {
         
         if (userName === null) 
         {
-               setTimeout((() => history.push('/'), 3000))
+            setTimeout((() => history.push('/'), 3000))
             return
         }
         
@@ -55,22 +55,59 @@ const ProjectInfo = (props) => {
             })
             .catch(err => console.log(err))
 
+        
         let requesterData = 
         {
             userId: id,
             projectId: historyProject,
             date_created: getCurrentDate(),
         }
-        console.log(requesterData)
-        axios.post('/api/projects/requests/join', requesterData)
-            .then(res => 
+        
+        if (typeof(requesterData.userId) === "string")
+        {
+            requesterData.userId = parseInt(requesterData.userId)
+        }
+
+        let newCollaborator = true;
+        await axios.get(`/api/projects/projectidpath/${requesterData.projectId}`)
+        .then(res => 
+            {
+            console.log(res)
+            let existingCollaborators = res.data.collaborators;
+            existingCollaborators.forEach(element => 
                 {
-                     console.log(res)
+                    console.log(element)
+                    if (typeof(element === "string")) {
+                        element = parseInt(element)
+                    }
+                    if (requesterData.userId === element) 
+                    {
+                        //this means the user is already on the collaborator list
+                        console.log(newCollaborator);
+                        newCollaborator = false;
+                    }
                 })
-            .catch(err => {
-                console.error(err)
-            })
-        history.push('/dashboard')
+            }
+        )
+        .catch(err => {console.log(err)})
+        
+        console.log(requesterData)
+        if (newCollaborator) {
+            axios.post('/api/projects/requests/join', requesterData)
+                .then(res => 
+                    {
+                        console.log(res)
+                        setTimeout((() => history.push('/'), 3000))
+                        return
+                    })
+                .catch(err => {
+                    console.error(err)
+                })
+        }
+        else 
+        {  
+            // alert the user?
+        }
     }
 
     let historyProject = history.location.state[0];

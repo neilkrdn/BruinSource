@@ -44,7 +44,7 @@ const MyList = (props) => {
                         </Avatar>
                     </ListItemAvatar>
                     <ListItemText primaryTypographyProps={{ style: text }}
-                        primary={`${each[0]} ${each[1]}`}
+                        primary={each[0]}
                     >
                     </ListItemText>
                 </ListItem>

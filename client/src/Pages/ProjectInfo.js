@@ -121,17 +121,15 @@ const ProjectInfo = (props) => {
                                 res2.data.collaborators.forEach((element, index) => {
                                     axios.get(`/api/users/idtouser/${element}`)
                                         .then(res3 => {
-                                            console.log(res3)
-                                            usernames.push(res3.data.username)
+                                            usernames.push([res3.data.username, res3.data.id])
                                             if (index === (length11 - 1)) {
-                                                console.log(userid)
-                                                console.log(usernames)
                                                 let myObject = {
                                                     name: res2.data.name,
                                                     date_created: d,
                                                     description: res2.data.description,
                                                     github: res2.data.github,
                                                     requests: usernames,
+                                                    project_id: res2.data.id,
                                                     isOwner: false,
                                                 }
                                                 if (userid == res2.data.author) {
@@ -140,7 +138,6 @@ const ProjectInfo = (props) => {
                                                     myObject = copy
                                                     setShouldButtonDisplay(false)
                                                 }
-                                                console.log(myObject)
                                                 setProjectInfo(myObject)
                                             }
                                         })
@@ -153,6 +150,7 @@ const ProjectInfo = (props) => {
                                     github: res2.data.github,
                                     requests: null,
                                     isOwner: false,
+                                    project_id: res2.data.id,
                                 }
                                 if (userid == res2.data.author) {
                                     let copy = myObject
@@ -160,7 +158,6 @@ const ProjectInfo = (props) => {
                                     myObject = copy
                                     setShouldButtonDisplay(false)
                                 }
-                                console.log(myObject)
                                 setProjectInfo(myObject)
                             }
                         })
@@ -170,6 +167,8 @@ const ProjectInfo = (props) => {
                 }
             })
     }, [])
+
+
 
     const allProjectInfo = () => {
         return (
@@ -190,7 +189,7 @@ const ProjectInfo = (props) => {
                         </Typography>
                     </div>
                     <div>
-                        <MyList data={projectInfo.requests} isOwner={projectInfo.isOwner}></MyList>
+                        <MyList data={projectInfo.requests} isOwner={projectInfo.isOwner} projectID={projectInfo.project_id} ></MyList>
                     </div>
                 </div>
                 <div className="Buttons">

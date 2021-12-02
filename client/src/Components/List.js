@@ -12,27 +12,31 @@ import { ListItemAvatar } from '@mui/material';
 import { Avatar } from '@mui/material';
 import FolderIcon from '@mui/icons-material/Folder';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
+import React, { useState } from 'react'
+import axios from 'axios';
+
 
 const MyList = (props) => {
-    const { data, isOwner } = props;
+    const { data, isOwner, projectID } = props;
     const text = {
         fontFamily: 'Georgia'
     }
+
+    const deleteUser = (userID, projectID) => {
+        axios.post('/api/projects/requests/remove', { userId: userID, projectID: projectID })
+            .then(res => {
+                console.log(res)
+            })
+            .catch(err => {
+                console.log(err)
+            })
+    }
+
     const renderItems = () => {
-        console.log(data)
         if (data) {
             return data.map(each => {
                 console.log(each)
                 return (<ListItem
-                    secondaryAction={
-                        isOwner 
-                        ?
-                        <IconButton edge="end" aria-label="delete">
-                            <DeleteIcon />
-                        </IconButton>
-                        :
-                        null
-                    }
                 >
                     <ListItemAvatar>
                         <Avatar>
@@ -40,18 +44,19 @@ const MyList = (props) => {
                         </Avatar>
                     </ListItemAvatar>
                     <ListItemText primaryTypographyProps={{ style: text }}
-                        primary={each}
-                    />
+                        primary={`${each[0]} ${each[1]}`}
+                    >
+                    </ListItemText>
                 </ListItem>
                 );
             })
         } else {
             return (
-            <ListItem>
-                <ListItemText primaryTypographyProps={{ style: text }}
-                primary="No team members exist.">
-                </ListItemText>
-            </ListItem>
+                <ListItem>
+                    <ListItemText primaryTypographyProps={{ style: text }}
+                        primary="No team members exist.">
+                    </ListItemText>
+                </ListItem>
             );
         }
 
@@ -60,7 +65,7 @@ const MyList = (props) => {
 
     return (
         <div className="ListContainer">
-            <Typography sx={{fontFamily: 'Georgia', fontWeight: 'bold'}} variant="h4" gutterBottom component="div">
+            <Typography sx={{ fontFamily: 'Georgia', fontWeight: 'bold' }} variant="h4" gutterBottom component="div">
                 Team Members
             </Typography>
             <List sx={{ width: '100%' }}>

@@ -283,10 +283,10 @@ async function joinTeam(req, res) {
 }
 
 async function deleteRequest(req, res) {
-    
     const { userId, projectId } = req.body;
 
     const getProjectQuery = `select * from projects p where p.id = '${projectId}'`;
+    
     await client
     .query(getProjectQuery)
     .then(project => {

@@ -1,31 +1,16 @@
 const { client, formatArrayToSql } = require('./db.js')
 const bcrypt = require('bcrypt')
 
-class User {
-    constructor(id, username, password, email, github, known_languages, year_exp){
-        this.id = id;
-        this.username = username;
-        this.password = password;
-        this.email = email;
-        this.github = github;
-        this.known_languages = known_languages;
-        this.year_exp = year_exp;
-    }
-}
-
-function validateUsername(username) {
-    // check if username is null and if it already exists in db
-    if (username.length != 0) {
-        client
-            .query(`select * from users u where u.username = '${username}'`)
-            .catch(err => {
-                // error means that username doesn't already exist, so chosen username is valid
-                return true;
-            })
-    } else {
-        return true;
-    }
-}
+/**
+ * Users db representation
+ * id: int
+ * username: string
+ * password: string
+ * email: string
+ * github: string
+ * known_languages: [strings]
+ * year_ex: int
+ */
 
 function validateEmail(email) {
     // check if email is not null and is associated with a university edu account 
@@ -68,8 +53,6 @@ async function registerUser(req, res) {
             year_exp, 
             known_languages
     } = req.body;
-
-    // validate username input
 
     let usernameValid = true
     if (username == '') {
@@ -114,7 +97,7 @@ async function registerUser(req, res) {
             .then(response => res.status(200).send(response))
             .catch(err => res.status(201).send(err));
     } else {
-        res.status(201).send({msg: 'something_wrong'});
+        res.status(201).send({msg: 'error'});
     }
 }
 

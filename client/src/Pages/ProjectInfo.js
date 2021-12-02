@@ -5,7 +5,7 @@ import history from '../history.js'
 import axios from 'axios';
 import { red } from '@mui/material/colors';
 import { Typography } from '@mui/material';
-import {makeStyles} from '@mui/styles';
+import { makeStyles } from '@mui/styles';
 import { Bars } from 'react-loading-icons';
 import DeleteIcon from '@mui/icons-material/Delete';
 import MyList from '../Components/List';
@@ -15,16 +15,15 @@ import { getCurrentDate } from '../Shared/CommonFunctions';
 
 const useStyles2 = makeStyles({
     custom: {
-      color: "black",
-      fontFamily: "Georgia"
+        color: "black",
+        fontFamily: "Georgia"
     }
-  });
+});
 
 const ProjectInfo = (props) => {
     const [projectInfo, setProjectInfo] = useState(null)
     const [shouldButtonDisplay, setShouldButtonDisplay] = useState(true)
-    if (!history)
-    {
+    if (!history) {
         history.push('/');
     }
     if (!history.location.state && !history.location.state[0]) {
@@ -36,18 +35,16 @@ const ProjectInfo = (props) => {
     if (!auth.username) {
         history.push('/')
     }
-    
-    const onJoinTeam = async () =>
-        {
+
+    const onJoinTeam = async () => {
 
         let userName = auth.username
-        
-        if (userName === null) 
-        {
+
+        if (userName === null) {
             setTimeout((() => history.push('/'), 3000))
             return
         }
-        
+
         let id = null
         await axios.get(`api/users/${userName}`)
             .then(res => {
@@ -55,57 +52,51 @@ const ProjectInfo = (props) => {
             })
             .catch(err => console.log(err))
 
-        
-        let requesterData = 
+
+        let requesterData =
         {
             userId: id,
             projectId: historyProject,
             date_created: getCurrentDate(),
         }
-        
-        if (typeof(requesterData.userId) === "string")
-        {
+
+        if (typeof (requesterData.userId) === "string") {
             requesterData.userId = parseInt(requesterData.userId)
         }
 
         let newCollaborator = true;
         await axios.get(`/api/projects/projectidpath/${requesterData.projectId}`)
-        .then(res => 
-            {
-            console.log(res)
-            let existingCollaborators = res.data.collaborators;
-            existingCollaborators.forEach(element => 
-                {
+            .then(res => {
+                console.log(res)
+                let existingCollaborators = res.data.collaborators;
+                existingCollaborators.forEach(element => {
                     console.log(element)
-                    if (typeof(element === "string")) {
+                    if (typeof (element === "string")) {
                         element = parseInt(element)
                     }
-                    if (requesterData.userId === element) 
-                    {
+                    if (requesterData.userId === element) {
                         //this means the user is already on the collaborator list
                         console.log(newCollaborator);
                         newCollaborator = false;
                     }
                 })
             }
-        )
-        .catch(err => {console.log(err)})
-        
+            )
+            .catch(err => { console.log(err) })
+
         console.log(requesterData)
         if (newCollaborator) {
             axios.post('/api/projects/requests/join', requesterData)
-                .then(res => 
-                    {
-                        console.log(res)
-                        setTimeout((() => history.push('/dashboard'), 3000))
-                        return
-                    })
+                .then(res => {
+                    console.log(res)
+                    setTimeout((() => history.push('/dashboard'), 3000))
+                    return
+                })
                 .catch(err => {
                     console.error(err)
                 })
         }
-        else 
-        {  
+        else {
             // alert the user?
         }
     }
@@ -140,11 +131,16 @@ const ProjectInfo = (props) => {
                                                     date_created: d,
                                                     description: res2.data.description,
                                                     github: res2.data.github,
-                                                    requests: usernames
+                                                    requests: usernames,
+                                                    isOwner: false,
                                                 }
-                                                if (userid == res.data.author) {
+                                                if (userid == res2.data.author) {
+                                                    let copy = myObject
+                                                    copy.isOwner = true
+                                                    myObject = copy
                                                     setShouldButtonDisplay(false)
                                                 }
+                                                console.log(myObject)
                                                 setProjectInfo(myObject)
                                             }
                                         })
@@ -155,11 +151,16 @@ const ProjectInfo = (props) => {
                                     date_created: d,
                                     description: res2.data.description,
                                     github: res2.data.github,
-                                    requests: null
+                                    requests: null,
+                                    isOwner: false,
                                 }
                                 if (userid == res2.data.author) {
+                                    let copy = myObject
+                                    copy.isOwner = true
+                                    myObject = copy
                                     setShouldButtonDisplay(false)
                                 }
+                                console.log(myObject)
                                 setProjectInfo(myObject)
                             }
                         })
@@ -175,26 +176,26 @@ const ProjectInfo = (props) => {
             <React.Fragment>
                 <div className="MainInfoGrid">
                     <div className="ProjectText">
-                        <Typography variant="h3" gutterBottom component="div" sx={{fontFamily: 'Georgia', fontWeight: 'bold'}}>
+                        <Typography variant="h3" gutterBottom component="div" sx={{ fontFamily: 'Georgia', fontWeight: 'bold' }}>
                             {projectInfo.name}
                         </Typography>
-                        <Typography variant="h6" gutterBottom component="div" sx={{fontFamily: 'Georgia'}}>
+                        <Typography variant="h6" gutterBottom component="div" sx={{ fontFamily: 'Georgia' }}>
                             Date Created: {projectInfo.date_created}
                         </Typography>
-                        <Typography variant="body1" gutterBottom component="div" sx={{fontFamily: 'Georgia'}}>
+                        <Typography variant="body1" gutterBottom component="div" sx={{ fontFamily: 'Georgia' }}>
                             {projectInfo.description}
                         </Typography>
-                        <Typography variant="h6" gutterBottom component="div" sx={{fontFamily: 'Georgia'}}>
+                        <Typography variant="h6" gutterBottom component="div" sx={{ fontFamily: 'Georgia' }}>
                             <a href={`${projectInfo.github}`}>Project Github</a>
                         </Typography>
                     </div>
                     <div>
-                        <MyList data={projectInfo.requests}></MyList>
+                        <MyList data={projectInfo.requests} isOwner={projectInfo.isOwner}></MyList>
                     </div>
                 </div>
                 <div className="Buttons">
                     <button type="button" className="BackToProjects" onClick={() => history.push('/dashboard')}>Back to Dashboard</button>
-                    { shouldButtonDisplay && 
+                    {shouldButtonDisplay &&
                         <button type="button" className="RequestAccess" onClick={onJoinTeam}>Join Team</button>
                     }
                 </div>

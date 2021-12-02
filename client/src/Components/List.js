@@ -14,7 +14,7 @@ import FolderIcon from '@mui/icons-material/Folder';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 
 const MyList = (props) => {
-    const { data } = props;
+    const { data, isOwner } = props;
     const text = {
         fontFamily: 'Georgia'
     }
@@ -25,9 +25,13 @@ const MyList = (props) => {
                 console.log(each)
                 return (<ListItem
                     secondaryAction={
+                        isOwner 
+                        ?
                         <IconButton edge="end" aria-label="delete">
                             <DeleteIcon />
                         </IconButton>
+                        :
+                        null
                     }
                 >
                     <ListItemAvatar>

@@ -11,6 +11,7 @@ import Typography from '@mui/material/Typography';
 import {makeStyles} from '@mui/styles';
 import Button from '@mui/material/Button';
 import history from '../history';
+import axios from 'axios';
 
 const useStyles = makeStyles({
   custom: {
@@ -26,10 +27,27 @@ const useStyles2 = makeStyles({
     fontFamily: "Georgia"
   }
 });
-
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs };
-}
+/*
+function userIdToName(collaborators)
+{
+    console.log(collaborators);
+    let collaborators_processed = [];
+    collaborators.forEach(element => {
+      if (typeof(element) === "string")
+      {
+        element = parseInt(element);
+      }
+      axios.get(`/api/users/idtouser/${element}`)
+        .then(res => {
+            console.log(res.data.username);
+            collaborators_processed.push(res.data.username)
+            console.log(collaborators_processed); 
+        })
+        .catch(err => console.error(err))
+      });
+    console.log(collaborators_processed); 
+    return collaborators_processed;
+}*/
 
 export default function ProjectTable(props) {
 
@@ -47,7 +65,8 @@ export default function ProjectTable(props) {
 
       var d = new Date(date_created)
       d = d.toDateString()
-
+      let real_collaborators = "";
+      let new_collaborators = [];
       var collaboratorsExist = false
       if (collaborators && collaborators.length) {
         if (collaborators.length > 0) {

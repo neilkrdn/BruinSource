@@ -23,9 +23,10 @@ const useStyles2 = makeStyles({
 const ProjectInfo = (props) => {
     const [projectInfo, setProjectInfo] = useState(null)
     const [shouldButtonDisplay, setShouldButtonDisplay] = useState(true)
-
-    const [alert, setAlert] = useState(null)
-
+    if (!history)
+    {
+        history.push('/');
+    }
     if (!history.location.state && !history.location.state[0]) {
         history.push('/dashboard')
     }
@@ -43,8 +44,7 @@ const ProjectInfo = (props) => {
         
         if (userName === null) 
         {
-            setAlert('Must be logged in to request access to a project.')
-            setTimeout((() => history.push('/'), 3000))
+               setTimeout((() => history.push('/'), 3000))
             return
         }
         
@@ -65,8 +65,7 @@ const ProjectInfo = (props) => {
         axios.post('/api/projects/requests/join', requesterData)
             .then(res => 
                 {
-                    setAlert('Team Joined!')
-                    console.log(res)
+                     console.log(res)
                 })
             .catch(err => {
                 console.error(err)

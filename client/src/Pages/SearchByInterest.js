@@ -88,35 +88,6 @@ const SearchByInterest = (props) => {
         }
     }
 
-    const renderTableData = () => {
-        if (!projects || projects.length === 0) {
-            return <tr> No entries exist for this search. </tr>
-        } else {
-            return projects.map((project, index) => {
-                const { id, name, description, tags, date_created, last_updated, author, collaborators, requests } = project
-
-                var d = new Date(date_created)
-                d = d.toDateString()
-
-                var collaboratorsExist = false
-                if (collaborators && collaborators.length) {
-                    if (collaborators.length > 0) {
-                        collaboratorsExist = true
-                    }
-                }
-
-                return (
-                    <tr key={index}>
-                        <td>{name}</td>
-                        <td>{author}</td>
-                        <td>{d}</td>
-                        <td>{collaboratorsExist ? collaborators : 'No collaborators'}</td>
-                    </tr>
-                )
-            })
-        }
-    }
-
     return (
         <div className="SearchByInterest">
             <img src={mainLogo} className="MainLogo" alt="mainLogo" />

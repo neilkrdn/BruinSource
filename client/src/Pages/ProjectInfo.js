@@ -32,6 +32,55 @@ const ProjectInfo = (props) => {
         history.push('/')
     }
 
+    const onJoinTeam = async () =>
+        {
+    /* let historyProject;
+
+        const auth = useAuth()
+
+        if (!auth.signedIn) {
+            history.push('/')
+        }
+        else 
+        {
+            historyProject = history.location.state[0];
+        }
+        */
+        let userName = auth.username
+        
+        if (userName === null) 
+        {
+            setAlert('Must be logged in to request access to a project.')
+            setTimeout((() => history.push('/'), 3000))
+            return
+        }
+        
+        let id = null
+        await axios.get(`api/users/${userName}`)
+            .then(res => {
+                id = res.data.id
+            })
+            .catch(err => console.log(err))
+
+        let requesterData = 
+        {
+            user: id,
+            project_id: historyProject,
+            date_created: getCurrentDate(),
+        }
+        console.log(requesterData)
+        axios.post('/api/projects/requests/create', requesterData)
+            .then(res => 
+                {
+                    console.log(res)
+                })
+            .catch(err => {
+                console.error(err)
+            })
+            setAlert('Team Joined!')
+    }
+
+
     useEffect(() => {
         let userid = null
         axios.get(`/api/users/${auth.username}`)
@@ -114,7 +163,7 @@ const ProjectInfo = (props) => {
                 <div className="Buttons">
                     <button type="button" className="BackToProjects" onClick={() => history.push('/dashboard')}>Back to Dashboard</button>
                     { shouldButtonDisplay && 
-                        <button type="button" className="RequestAccess">Join Team</button>
+                        <button type="button" className="RequestAccess" onClick={onJoinTeam}>Join Team</button>
                     }
                 </div>
             </React.Fragment>

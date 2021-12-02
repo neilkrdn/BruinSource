@@ -24,6 +24,11 @@ const SearchByInterest = (props) => {
     const [dataLoaded, setDataLoaded] = useState(false)
 
     const submitSearch = () => {
+
+        if (tags[0] === '') {
+            return getDefaultProjects();
+        }
+
         axios.post('/api/projects/tags', {tags: tags})
             .then(res => {
                 console.log(res.data);
@@ -80,7 +85,7 @@ const SearchByInterest = (props) => {
             }
         });
 
-        setTags([...tags].concat(tag_arr));
+        setTags(tag_arr);
         console.log(tags);
 
         if (tags.length > 0) {

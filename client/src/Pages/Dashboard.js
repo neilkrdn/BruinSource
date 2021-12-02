@@ -26,9 +26,11 @@ const Dashboard = (props) => {
     const submitSearch = () => {
         let userID = auth.ID
         console.log(userID)
-        if (!search) {
-            return
+
+        if (search === "") {
+            return getUserProjects();
         }
+
         axios.get(`api/projects/searchproject/${search}`)
             .then(res => {
                 axios.get(`/api/users/${auth.username}`)

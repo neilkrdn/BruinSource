@@ -17,6 +17,11 @@ const AllProjects = (props) => {
     const [dataLoaded, setDataLoaded] = useState(false)
 
     const submitSearch = () => {
+
+        if (search === "") {
+            return getDefaultProjects();
+        }
+
         axios.get(`api/projects/searchproject/${search}`)
             .then(res => {
                 console.log(res)

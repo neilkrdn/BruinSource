@@ -10,6 +10,8 @@ import { Bars } from 'react-loading-icons';
 import DeleteIcon from '@mui/icons-material/Delete';
 import MyList from '../Components/List';
 import { useAuth } from '../Shared/ProvideAuth';
+import { getCurrentDate } from '../Shared/CommonFunctions';
+
 
 const useStyles2 = makeStyles({
     custom: {
@@ -21,6 +23,8 @@ const useStyles2 = makeStyles({
 const ProjectInfo = (props) => {
     const [projectInfo, setProjectInfo] = useState(null)
     const [shouldButtonDisplay, setShouldButtonDisplay] = useState(true)
+
+    const [alert, setAlert] = useState(null)
 
     if (!history.location.state && !history.location.state[0]) {
         history.push('/dashboard')
@@ -79,7 +83,8 @@ const ProjectInfo = (props) => {
             })
             setAlert('Team Joined!')
     }
-
+    
+    let historyProject = history.location.state[0];
 
     useEffect(() => {
         let userid = null

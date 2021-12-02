@@ -282,7 +282,7 @@ async function joinTeam(req, res) {
     });
 }
 
-function deleteRequest(req, res) {
+async function deleteRequest(req, res) {
     
     const { userId, projectId } = req.body;
 
@@ -300,7 +300,7 @@ function deleteRequest(req, res) {
     {
         userId = parseInt(userId)
     }
-    
+
     let result = updatedCollaborators.filter(element => element != userId)
     console.log(result)
     

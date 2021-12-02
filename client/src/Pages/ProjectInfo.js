@@ -22,7 +22,7 @@ const ProjectInfo = (props) => {
     const [projectInfo, setProjectInfo] = useState(null)
     const [shouldButtonDisplay, setShouldButtonDisplay] = useState(true)
 
-    if (!history.location.state[0]) {
+    if (!history.location.state && !history.location.state[0]) {
         history.push('/dashboard')
     }
 

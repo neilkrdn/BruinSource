@@ -29,29 +29,33 @@ const SearchByInterest = (props) => {
         }
 
         axios.post('/api/projects/tags', {tags: tags})
-            .then(res => {
-                console.log(res.data);
-                setProjects(res.data);
-                /*
-                const projectIds = res.data;
-                for (const id in projectIds){
-                    const projectId = parseInt(projectIds[id]);
-                    console.log(projectId)
-                    console.log(typeof(projectId))
-                    axios.get(`/api/projects/projectidpath/${projectId}`)
-                    .then(proj => {
-                        console.log(proj);
-                        setProjects(proj.data);
-                    })
-                }
-                */
+                .then(res => {
+                    let data = res.data.map(element => {
+                        let copy = element
+                        if (!copy.collaborators) {
+                            copy.collaborators = 0
+                        } else {
+                            copy.collaborators = copy.collaborators.length
+                        }
+                        return copy
+                    });
+                    setProjects(data)
             });
     }
 
     const getDefaultProjects = () => {
         axios.get('/api/projects')
             .then(res => {
-                setProjects(res.data)
+                let data = res.data.map(element => {
+                    let copy = element
+                    if (!copy.collaborators) {
+                        copy.collaborators = 0
+                    } else {
+                        copy.collaborators = copy.collaborators.length
+                    }
+                    return copy
+                });
+                setProjects(data)
             });
     }
 

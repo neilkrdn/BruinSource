@@ -42,7 +42,6 @@ export default function ProjectTable(props) {
   const classes2 = useStyles2();
 
   const renderTableRows = () => {
-    console.log(data);
     return data.map((project, index) => {
       const { id, name, description, tags, date_created, last_updated, author, collaborators, requests, username, project_id } = project
 
@@ -62,6 +61,8 @@ export default function ProjectTable(props) {
       }
 
       let formattedTags = '';
+
+      /* console.log(tags) */
 
       tags.forEach(val => {
         if (tags.indexOf(val) !== tags.length - 1 ){

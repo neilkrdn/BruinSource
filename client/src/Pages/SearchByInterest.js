@@ -24,11 +24,19 @@ const SearchByInterest = (props) => {
     const [dataLoaded, setDataLoaded] = useState(false)
 
     const submitSearch = () => {
-        console.log('im hit');
         axios.post('/api/projects/tags', {tags: tags})
             .then(res => {
-                console.log(tags);
-                setProjects(res.data)
+                const projectIds = res.data;
+                for (const id in projectIds){
+                    const projectId = parseInt(projectIds[id]);
+                    console.log(projectId)
+                    console.log(typeof(projectId))
+                    axios.get(`/api/projects/projectidpath/${projectId}`)
+                    .then(proj => {
+                        console.log(proj.data);
+                    })
+                }
+                setProjects(res.data);
             });
     }
 
@@ -53,22 +61,30 @@ const SearchByInterest = (props) => {
     }, [])
 
     const submitTag = () => {
-        if (!tags.includes(search)) {
-        setTags([...tags, search]);
+        let arr = [];
+        let tag_arr = [];
+
+        if (search.indexOf(',')){
+            arr = search.split(',');
+        } else {
+            arr = [search];
         }
+
+        arr.forEach(tag => {
+            if (!tags.includes(tag.trim())) {
+                tag_arr.push(tag.trim())
+            }
+        });
+
+        setTags([...tags].concat(tag_arr));
         console.log(tags);
 
         if (tags.length > 0) {
-        submitSearch()
+            submitSearch()
         }
     }
-    /*
-    useEffect(() => {
-        submitTag()
-    }, [tags]);
-    */
+
     const renderTableData = () => {
-        console.log(projects)
         if (!projects || projects.length === 0) {
             return <tr> No entries exist for this search. </tr>
         } else {

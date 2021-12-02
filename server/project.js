@@ -212,20 +212,33 @@ function getProjectRequests(req, res) {
 
 function createRequest(req, res) {
 
-    const { user, project_id, date_created } = req.body;
+    let { user, project_id, date_created } = req.body;
     
+    if (typeof(project_id) === "string")
+    {
+        project_id = parseInt(project_id)
+    }
+    if (typeof(user) === "number") 
+    {
+        user = parseInt(user)
+    }
+
     if (user && project_id){
+
+        console.log(user);
+        console.log(project_id);
+        console.log(date_created);
 
         date_created = new Date();
 
-        const query = `INSERT INTO projects(user, project_id, date_created) values($1, $2, $3)`;
+        const query = `INSERT INTO requests(user_id, project_id, date_created) values($1, $2, $3)`;
         const vals = [user, project_id, date_created];
 
         client
         .query(query, vals)
         .catch(err => {
             console.log(err);
-            res.status(201).send(err);
+            res.status(201).send({ msg: 'too bad'});
         });
     } else {
         res.status(201).send({msg: 'invalid_input'});

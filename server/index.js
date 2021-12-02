@@ -82,7 +82,7 @@ app.get('/api/projects/requests', project.getAllRequests);
 app.get('/api/projects/requests/:projectId', project.getProjectRequests);
 
 /** Create a request for a project **/
-app.get('/api/projects/requests/create', project.createRequest);
+app.post('/api/projects/requests/create', project.createRequest);
 
 /** Approve a request for a project **/
 app.get('/api/projects/requests/approve/:requestId', project.approveRequest, project.deleteRequest);

@@ -71,6 +71,7 @@ const ProjectInfo = (props) => {
             .catch(err => {
                 console.error(err)
             })
+        history.push('/dashboard')
     }
 
     let historyProject = history.location.state[0];

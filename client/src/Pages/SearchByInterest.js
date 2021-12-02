@@ -64,11 +64,11 @@ const SearchByInterest = (props) => {
 
         submitSearch()
     }
-
+    /*
     useEffect(() => {
         submitTag()
     }, [tags]);
-
+    */
     const renderTableData = () => {
         console.log(projects)
         if (!projects || projects.length === 0) {

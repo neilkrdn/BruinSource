@@ -1,19 +1,16 @@
 const { client, formatArrayToSql } = require('./db.js');
 
-class Project {
-    constructor(id, name, description, tags, github, date_created, last_updated, author, collaborators, requests) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.tags = tags;
-        this.github = github;
-        this.date_created = date_created;
-        this.last_updated = last_updated;
-        this.author = author;
-        this.collaborators = collaborators;
-        this.requests = requests;
-    }
-}
+/**
+ * Projects db representation
+ * id: int
+ * name: string
+ * description: string
+ * github: string
+ * date_created: Date
+ * last_updated: Date
+ * author: int
+ * collaborators: [int]
+ */
 
 function validateProjectName(projectName) {
 
@@ -63,7 +60,6 @@ function createProject(req, res) {
         client
             .query(query, vals)
             .then(response => {
-                console.log(response)
                 res.send(response)
             })
             .catch(err => {
@@ -82,11 +78,9 @@ function searchProjects(req, res) {
     client
         .query(query)
         .then(projects => {
-            console.log(projects)
             res.status(200).send(projects.rows)
         })
         .catch(err => {
-            console.log(err)
             res.status(201).send(err)
         })
 }
@@ -126,8 +120,6 @@ function getProjectById(req, res) {
 async function getProjectsByUser(req, res) {
     const { username } = req.params;
 
-    console.log('called')
-
     let userValid = false;
     const idQuery = `select * from users u where u.username = '${username}'`;
     let userId = null
@@ -150,7 +142,6 @@ async function getProjectsByUser(req, res) {
         client
             .query(isAuthorQuery)
             .then(projects => {
-                console.log(projects)
                 res.status(200).send(projects.rows);
             })
             .catch(() => {
@@ -169,7 +160,6 @@ function searchProjectsByTags(req, res) {
     .query(query)
     .then(projects => {
         let allProjects = projects.rows;
-        console.log(allProjects)
         let projectsWithTags = [];
 
         for (const p in allProjects){
@@ -181,8 +171,6 @@ function searchProjectsByTags(req, res) {
                 }
             }
         }
-        
-        console.log('projects: ', projectsWithTags);
         res.status(200).send(projectsWithTags);
     })
     .catch(err => {
@@ -225,10 +213,6 @@ function createRequest(req, res) {
 
     if (user && project_id){
 
-        console.log(user);
-        console.log(project_id);
-        console.log(date_created);
-
         date_created = new Date();
 
         const query = `INSERT INTO requests(user_id, project_id, date_created) values($1, $2, $3)`;
@@ -248,9 +232,6 @@ function createRequest(req, res) {
 async function joinTeam(req, res) {
 
     const { userId, projectId, date_created } = req.body;
-    console.log("user", userId)
-    console.log("proj", projectId)
-    console.log("d8", date_created)
 
     if (typeof(userId) === "string")
     {
@@ -262,11 +243,7 @@ async function joinTeam(req, res) {
     .query(getProjectQuery)
     .then(project => {
         updatedCollaborators = project.rows[0].collaborators;
-        console.log(typeof(updatedCollaborators));
-        // find way to add to this array
-        console.log("before", updatedCollaborators)
         updatedCollaborators.push(userId);
-        console.log("after",updatedCollaborators)
     })
     .catch(err => {
         console.log(err)

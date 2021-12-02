@@ -174,7 +174,7 @@ function searchProjectsByTags(req, res) {
             for (const t in tags){
                 const tag = tags[t]
                 if (project.tags.includes(tag)){
-                     projectsWithTags.push(project.id);
+                     projectsWithTags.push(project);
                 }
             }
         }

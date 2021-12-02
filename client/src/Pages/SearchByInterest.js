@@ -26,6 +26,9 @@ const SearchByInterest = (props) => {
     const submitSearch = () => {
         axios.post('/api/projects/tags', {tags: tags})
             .then(res => {
+                console.log(res.data);
+                setProjects(res.data);
+                /*
                 const projectIds = res.data;
                 for (const id in projectIds){
                     const projectId = parseInt(projectIds[id]);
@@ -33,10 +36,11 @@ const SearchByInterest = (props) => {
                     console.log(typeof(projectId))
                     axios.get(`/api/projects/projectidpath/${projectId}`)
                     .then(proj => {
-                        console.log(proj.data);
+                        console.log(proj);
+                        setProjects(proj.data);
                     })
                 }
-                setProjects(res.data);
+                */
             });
     }
 

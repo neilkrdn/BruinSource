@@ -87,12 +87,13 @@ const ProjectInfo = (props) => {
                             console.log(res2)
                             var d = new Date(res2.data.date_created)
                             d = d.toDateString()
-                            if (res2.data.requests) {
+                            if (res2.data.collaborators) {
                                 let usernames = []
-                                let length11 = res2.data.requests.length
-                                res2.data.requests.forEach((element, index) => {
+                                let length11 = res2.data.collaborators.length
+                                res2.data.collaborators.forEach((element, index) => {
                                     axios.get(`/api/users/idtouser/${element}`)
                                         .then(res3 => {
+                                            console.log(res3)
                                             usernames.push(res3.data.username)
                                             if (index === (length11 - 1)) {
                                                 console.log(userid)

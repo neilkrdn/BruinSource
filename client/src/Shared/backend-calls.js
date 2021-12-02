@@ -38,7 +38,7 @@ export const getUserData = (username) => {
 
 export const getIDfromUsername = async (username) => {
     console.log(username)
-    axios.get(`/api/users/${username}`)
+    await axios.get(`/api/users/${username}`)
         .then(res => {
             return res.data[0].id
         })

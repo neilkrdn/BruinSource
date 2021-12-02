@@ -24,14 +24,14 @@ const Dashboard = (props) => {
 
     
     const submitSearch = () => {
-        let userID = auth.ID
-        console.log(userID)
+        let userName = auth.username
+        console.log(userName)
         if (!search) {
             return
         }
-        axios.get(`api/projects/searchproject/${search}`)
+        axios.get(`api/projects/searchproject/${search}/${userName}`)
             .then(res => {
-
+                console.log(res.data)
                 setProjects(res.data)
             });
     }

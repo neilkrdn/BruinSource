@@ -90,6 +90,8 @@ app.get('/api/projects/requests/approve/:requestId', project.approveRequest, pro
 /** Search for a project **/
 app.get('/api/projects/searchproject/:search', project.searchProjects)
 
+app.get('/api/projects/searchproject/:search/:username', project.searchProjectsByUser)
+
 ////////  TASK APIs    ////////
 
 /** Create a task for a project **/

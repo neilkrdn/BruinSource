@@ -279,6 +279,45 @@ function deleteRequest(req, res) {
     });
 }
 
+async function searchProjectsByUser(req, res) {
+    const { username, search } = req.params;
+
+    console.log('called')
+
+    let userValid = false;
+    const idQuery = `select * from users u where u.username = '${username}'`;
+    let userId = null
+    await client
+        .query(idQuery)
+        .then(user => {
+            if (user.rowCount === 0) {
+                res.status(201).send({ msg: `invalid_username` });
+            }
+            userValid = true;
+            userId = user.rows[0].id;
+        })
+        .catch(() => {
+            res.status(201).send({ msg: `invalid_username` });
+            return
+        })
+
+    if (userValid) {
+        const isAuthorQuery = `select *, p.id as project_id from users u join projects p on p.author = u.id where p.author = '${userId}' and p."name" like '%${search}%'`;
+        client
+            .query(isAuthorQuery)
+            .then(projects => {
+                console.log(projects)
+                res.status(200).send(projects.rows);
+            })
+            .catch(() => {
+                res.status(201).send({ msg: `userId_invalid` })
+            })
+    }
+}
+
+
+
+
 module.exports = {
     createProject,
     deleteProject,
@@ -292,4 +331,5 @@ module.exports = {
     deleteRequest,
     searchProjects,
     searchProjectsByTags,
+    searchProjectsByUser,
 }

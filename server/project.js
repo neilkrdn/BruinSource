@@ -284,15 +284,36 @@ async function joinTeam(req, res) {
 
 function deleteRequest(req, res) {
     
-    const { requestID } = req.param;
+    const { userId, projectId } = req.body;
 
-    const query = `delete from requests r where r.id = '${requestID}'`;
-    client
-    .query(query)
+    const getProjectQuery = `select * from projects p where p.id = '${projectId}'`;
+    await client
+    .query(getProjectQuery)
+    .then(project => {
+        updatedCollaborators = project.rows[0].collaborators;
+    })
     .catch(err => {
-        console.log(err);
-        res.status(201).send(err);
+        console.log(err)
+        res.status(201).send({msg: "u stink"});
     });
+    if (typeof(userId) === "string") 
+    {
+        userId = parseInt(userId)
+    }
+    
+    let result = updatedCollaborators.filter(element => element != userId)
+    console.log(result)
+    
+
+    let formattedCollaborators = formatArrayToSql(result);
+
+    const modifyUserQuery = `update projects set collaborators = '${formattedCollaborators}' where id = '${projectId}'`;
+    client
+     .query(modifyUserQuery)
+     .catch(err => {
+         console.log(err);
+         res.status(201).send(err);
+     });
 }
 
 module.exports = {

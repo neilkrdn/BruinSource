@@ -97,7 +97,7 @@ const ProjectInfo = (props) => {
                 .then(res => 
                     {
                         console.log(res)
-                        setTimeout((() => history.push('/'), 3000))
+                        setTimeout((() => history.push('/dashboard'), 3000))
                         return
                     })
                 .catch(err => {

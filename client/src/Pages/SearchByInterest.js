@@ -27,7 +27,7 @@ const SearchByInterest = (props) => {
         console.log('im hit');
         axios.post('/api/projects/tags', {tags: tags})
             .then(res => {
-                // console.log(tags);
+                console.log(tags);
                 setProjects(res.data)
             });
     }
@@ -53,14 +53,21 @@ const SearchByInterest = (props) => {
     }, [])
 
     const submitTag = () => {
-        let arr = new Array(search)
-        let temp = tags.concat(arr)
-        if (!tags.includes(search)) {
-        setTags(temp)
-        }
-        console.log(tags)
+        const searches = search.split(',');
+        let arr = [];
+        searches.forEach(tag => {
+            arr.push(tag.trim());
+        });
+        console.log(arr)
+        setTags(arr);
+        console.log(tags);
+
         submitSearch()
     }
+
+    useEffect(() => {
+        submitTag()
+    }, [tags]);
 
     const renderTableData = () => {
         console.log(projects)

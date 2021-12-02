@@ -22,7 +22,7 @@ const Dashboard = (props) => {
 
     const [dataLoaded, setDataLoaded] = useState(false)
 
-    
+
     const submitSearch = () => {
         let userID = auth.ID
         console.log(userID)
@@ -31,17 +31,20 @@ const Dashboard = (props) => {
         }
         axios.get(`api/projects/searchproject/${search}`)
             .then(res => {
-
-                setProjects(res.data)
+                axios.get(`/api/users/${auth.username}`)
+                    .then(res2 => {
+                        let finalData = res.data.filter(each => {
+                            return each.author == res2.data.id
+                        })
+                        setProjects(finalData)
+                    })
             });
     }
-
+    
     const getUserProjects = () => {
-
         if (auth.username == null) {
             return
         }
-
         axios.get(`/api/projects/user/${auth.username}`)
             .then(res => {
                 console.log(res)

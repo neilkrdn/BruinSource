@@ -35,24 +35,33 @@ const Dashboard = (props) => {
             .then(res => {
                 axios.get(`/api/users/${auth.username}`)
                     .then(res2 => {
-                        if (res.data.collaborators && res.data.collaborators.length > 0) {
-                            let finalData = res.data.filter(each => {
-                                return (each.author == res2.data.id || each.collaborators.includes(`${res2.data.id}`))
-                            })
-                            setProjects(finalData)
-                        }
+                        let finalData = res.data.filter(each => {
+                            return (each.author == res2.data.id || each.collaborators.includes(`${res2.data.id}`))
+                        })
+
+                        let data = finalData.map(each => {
+                            let copy = each
+                            copy.collaborators = copy.collaborators.length
+                            return copy
+                        })
+
+                        setProjects(data)
                     })
             });
     }
-
+    
     const getUserProjects = () => {
         if (auth.username == null) {
             return
         }
         axios.get(`/api/projects/user/${auth.username}`)
             .then(res => {
-                console.log(res)
-                setProjects(res.data)
+                let data = res.data.map(element => {
+                    let copy = element
+                    copy.collaborators = copy.collaborators.length
+                    return copy
+                });
+                setProjects(data)
             })
             .catch(err => console.error(err))
     }

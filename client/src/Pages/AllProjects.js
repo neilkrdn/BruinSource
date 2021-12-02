@@ -24,16 +24,32 @@ const AllProjects = (props) => {
 
         axios.get(`api/projects/searchproject/${search}`)
             .then(res => {
-                console.log(res)
-                setProjects(res.data)
+                let data = res.data.map(element => {
+                    let copy = element
+                    if (!copy.collaborators) {
+                        copy.collaborators = 0
+                    } else {
+                        copy.collaborators = copy.collaborators.length
+                    }
+                    return copy
+                });
+                setProjects(data)
             });
     }
 
     const getDefaultProjects = () => {
         axios.get('/api/projects')
             .then(res => {
-                console.log(res)
-                setProjects(res.data)
+                let data = res.data.map(element => {
+                    let copy = element
+                    if (!copy.collaborators) {
+                        copy.collaborators = 0
+                    } else {
+                        copy.collaborators = copy.collaborators.length
+                    }
+                    return copy
+                });
+                setProjects(data)
             });
     }
 

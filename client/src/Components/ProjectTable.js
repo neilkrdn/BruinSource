@@ -49,10 +49,8 @@ export default function ProjectTable(props) {
       d = d.toDateString()
 
       var collaboratorsExist = false
-      if (collaborators && collaborators.length) {
-        if (collaborators.length > 0) {
+      if (collaborators) {
           collaboratorsExist = true
-        }
       }
 
       const onClickFunction = () => {

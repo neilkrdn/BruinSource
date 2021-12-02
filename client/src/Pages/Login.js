@@ -4,7 +4,7 @@ import history from '../history';
 import mainLogo from '../Files/bruinsource_logo.png'
 import axios from 'axios';
 import { useAuth } from '../Shared/ProvideAuth'
-import Circles from 'react-loading-icons/dist/components/circles';
+import BallTriangle from 'react-loading-icons/dist/components/ball-triangle';
 
 function Login(props) {
 
@@ -16,7 +16,7 @@ function Login(props) {
 
     const onLogin = () => {
 
-        setReponseText(<Circles fill="#005587" height={50} />)
+        setReponseText(<BallTriangle fill="#005587" height={50} />)
 
         if (username === '') {
             setReponseText('Please enter a username.')

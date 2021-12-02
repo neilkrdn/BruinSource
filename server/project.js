@@ -62,6 +62,10 @@ function createProject(req, res) {
         const vals = [name, description, formattedTags, github, date_created, last_updated, finalAuthor, collaborators];
         client
             .query(query, vals)
+            .then(response => {
+                console.log(response)
+                res.send(response)
+            })
             .catch(err => {
                 console.log(err)
                 res.status(201).send(err)

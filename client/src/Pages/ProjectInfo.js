@@ -9,6 +9,7 @@ import {makeStyles} from '@mui/styles';
 import { Bars } from 'react-loading-icons';
 import DeleteIcon from '@mui/icons-material/Delete';
 import MyList from '../Components/List';
+import { useAuth } from '../Shared/ProvideAuth';
 
 const useStyles2 = makeStyles({
     custom: {
@@ -19,53 +20,76 @@ const useStyles2 = makeStyles({
 
 const ProjectInfo = (props) => {
     const [projectInfo, setProjectInfo] = useState(null)
+    const [shouldButtonDisplay, setShouldButtonDisplay] = useState(true)
 
     if (!history.location.state[0]) {
         history.push('/dashboard')
     }
 
+    const auth = useAuth()
+
+    if (!auth.username) {
+        history.push('/')
+    }
+
     useEffect(() => {
-        axios.get(`/api/projects/projectidpath/${history.location.state[0]}`)
+        let userid = null
+        axios.get(`/api/users/${auth.username}`)
             .then(res => {
                 console.log(res)
-                var d = new Date(res.data.date_created)
-                d = d.toDateString()
-                if (res.data.requests) {
-                    let usernames = []
-                    let length11 = res.data.requests.length
-                    res.data.requests.forEach((element, index) => {
-                        axios.get(`/api/users/idtouser/${element}`)
-                            .then(res => {
-                                usernames.push(res.data.username)
-                                if (index === (length11 - 1)) {
-                                    console.log(usernames)
-                                    let myObject = {
-                                        name: res.data.name,
-                                        date_created: d,
-                                        description: res.data.description,
-                                        github: res.data.github,
-                                        requests: usernames
-                                    }
-                                    setProjectInfo(myObject)
+                if (res.data && res.data != '') {
+                    userid = res.data.id
+                    axios.get(`/api/projects/projectidpath/${history.location.state[0]}`)
+                        .then(res2 => {
+                            console.log(res2)
+                            var d = new Date(res2.data.date_created)
+                            d = d.toDateString()
+                            if (res2.data.requests) {
+                                let usernames = []
+                                let length11 = res2.data.requests.length
+                                res2.data.requests.forEach((element, index) => {
+                                    axios.get(`/api/users/idtouser/${element}`)
+                                        .then(res3 => {
+                                            usernames.push(res3.data.username)
+                                            if (index === (length11 - 1)) {
+                                                console.log(userid)
+                                                console.log(usernames)
+                                                let myObject = {
+                                                    name: res2.data.name,
+                                                    date_created: d,
+                                                    description: res2.data.description,
+                                                    github: res2.data.github,
+                                                    requests: usernames
+                                                }
+                                                if (userid == res.data.author) {
+                                                    setShouldButtonDisplay(false)
+                                                }
+                                                setProjectInfo(myObject)
+                                            }
+                                        })
+                                });
+                            } else {
+                                let myObject = {
+                                    name: res2.data.name,
+                                    date_created: d,
+                                    description: res2.data.description,
+                                    github: res2.data.github,
+                                    requests: null
                                 }
-                            })
-                    });
+                                if (userid == res2.data.author) {
+                                    setShouldButtonDisplay(false)
+                                }
+                                setProjectInfo(myObject)
+                            }
+                        })
+                        .catch(err => console.error(err))
                 } else {
-                    let myObject = {
-                        name: res.data.name,
-                        date_created: d,
-                        description: res.data.description,
-                        github: res.data.github,
-                        requests: null
-                    }
-                    setProjectInfo(myObject)
+                    history.push('/')
                 }
             })
-            .catch(err => console.error(err))
     }, [])
 
     const allProjectInfo = () => {
-        console.log('called')
         return (
             <React.Fragment>
                 <div className="MainInfoGrid">
@@ -87,6 +111,12 @@ const ProjectInfo = (props) => {
                         <MyList data={projectInfo.requests}></MyList>
                     </div>
                 </div>
+                <div className="Buttons">
+                    <button type="button" className="BackToProjects" onClick={() => history.push('/dashboard')}>Back to Dashboard</button>
+                    { shouldButtonDisplay && 
+                        <button type="button" className="RequestAccess">Join Team</button>
+                    }
+                </div>
             </React.Fragment>
         )
     }
@@ -99,10 +129,6 @@ const ProjectInfo = (props) => {
                 :
                 <div className="LoadingDiv"> <Bars fill="#005587" /> </div>
             }
-            <div className="Buttons">
-                <button type="button" className="BackToProjects" onClick={() => history.push('/dashboard')}>Back to Dashboard</button>
-                <button type="button" className="RequestAccess">Request Access</button>
-            </div>
         </div>
     );
 }

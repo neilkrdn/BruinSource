@@ -9,6 +9,8 @@ import {
     useLocation
 } from "react-router-dom";
 
+import axios from "axios";
+
 import { getIDfromUsername } from "./backend-calls";
 
 /** For more details on
@@ -44,7 +46,6 @@ function useProvideAuth() {
         setUsername(usernamep)
         setPassword(passwordp)
         setSignedIn(true)
-        setID(await getIDfromUsername(usernamep))
     };
 
     const signOut = () => {

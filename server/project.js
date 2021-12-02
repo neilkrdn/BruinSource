@@ -162,27 +162,27 @@ async function getProjectsByUser(req, res) {
 // TODO: return all projects that contains at least one tag defined by user
 function searchProjectsByTags(req, res) { 
 
-    const { tags } = req.body;
-    
+    const tags = req.body.tags;
+    console.log(tags);
+
     const query = `select * from projects`;
     client
     .query(query)
     .then(projects => {
         let allProjects = projects.rows;
-        let projectsWithTags = {};
+        console.log(allProjects)
+        let projectsWithTags = [];
 
-        for (const project in allProjects){
-            for (const tag in tags){
+        for (const p in allProjects){
+            const project = allProjects[p];
+            for (const t in tags){
+                const tag = tags[t]
                 if (project.tags.includes(tag)){
-                    if (!projectsWithTags[project.id]){
-                        projectsWithTags[project.id] = 1;
-                    } else {
-                        projectsWithTags[project.id] += 1;
-                    }
+                     projectsWithTags.push(project);
                 }
             }
         }
-        
+        console.log('projects: ', projectsWithTags);
         res.status(200).send(projectsWithTags);
     })
     .catch(err => {

@@ -45,11 +45,12 @@ const CreateProject = (props) => {
             })
             .catch(err => console.log(err))
 
+        let formattedTags = tags.split(',');
 
         let projectData = {
             name: name,
             description: description,
-            tags: tags,
+            tags: formattedTags,
             github: github,
             date_created: getCurrentDate(),
             last_updated: getCurrentDate(),
@@ -57,7 +58,6 @@ const CreateProject = (props) => {
             collaborators: collaborators,
             requests: requests,
         }
-        
 
         axios.post('/api/projects/create', projectData, axiosConfig)
             .then(res => {

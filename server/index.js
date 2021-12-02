@@ -93,7 +93,7 @@ app.get('/api/projects/searchproject/:search', project.searchProjects)
 ////////  TASK APIs    ////////
 
 /** Create a task for a project **/
-app.get('/api/projects/tasks/create', task.createTask);
+app.post('/api/projects/tasks/create', task.createTask);
 
 /** Delete a task **/
 app.get('/api/projects/tasks/delete/:taskId', task.deleteTask);

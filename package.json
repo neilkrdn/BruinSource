@@ -5,7 +5,7 @@
   "main": "server/index.js",
   "scripts": {
     "update": "cd client && npm i && cd .. && cd server && npm i && cd ..",
-    "start": "node server",
+    "start": "nodemon server",
     "frontend": "cd client && npm run start",
     "backend": "nodemon server",
     "dev": "concurrently \"npm start\" \"npm run frontend\"",

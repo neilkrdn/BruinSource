@@ -24,9 +24,23 @@ const SearchByInterest = (props) => {
     const [dataLoaded, setDataLoaded] = useState(false)
 
     const submitSearch = () => {
-        axios.get('/api/projects/tags', {tags: tags})
+        axios.post('/api/projects/tags', {tags: tags})
             .then(res => {
-                setProjects(res.data)
+                console.log(res.data);
+                setProjects(res.data);
+                /*
+                const projectIds = res.data;
+                for (const id in projectIds){
+                    const projectId = parseInt(projectIds[id]);
+                    console.log(projectId)
+                    console.log(typeof(projectId))
+                    axios.get(`/api/projects/projectidpath/${projectId}`)
+                    .then(proj => {
+                        console.log(proj);
+                        setProjects(proj.data);
+                    })
+                }
+                */
             });
     }
 
@@ -40,7 +54,7 @@ const SearchByInterest = (props) => {
     useEffect(() => {
         if (projects) {
             setDataLoaded(true)
-            if (projects.length == 0) {
+            if (projects.length === 0) {
                 // make some text to show that none exist for this search term
             }
         }
@@ -51,18 +65,31 @@ const SearchByInterest = (props) => {
     }, [])
 
     const submitTag = () => {
-        let arr = new Array(search)
-        let temp = tags.concat(arr)
-        if (!tags.includes(search)) {
-        setTags(temp)
+        let arr = [];
+        let tag_arr = [];
+
+        if (search.indexOf(',')){
+            arr = search.split(',');
+        } else {
+            arr = [search];
         }
-        console.log(tags)
-        submitSearch()
+
+        arr.forEach(tag => {
+            if (!tags.includes(tag.trim())) {
+                tag_arr.push(tag.trim())
+            }
+        });
+
+        setTags([...tags].concat(tag_arr));
+        console.log(tags);
+
+        if (tags.length > 0) {
+            submitSearch()
+        }
     }
 
     const renderTableData = () => {
-        console.log(projects)
-        if (!projects || projects.length == 0) {
+        if (!projects || projects.length === 0) {
             return <tr> No entries exist for this search. </tr>
         } else {
             return projects.map((project, index) => {
